@@ -11,7 +11,7 @@ async function createCategoriaTable() {
     await connection.query(`CREATE TABLE IF NOT EXISTS  categoria(
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
             nome VARCHAR(200)
-            descricao VARCHAR(2) NOT NULL,
+            descricao VARCHAR(200) NOT NULL,
             
         )`);
 
