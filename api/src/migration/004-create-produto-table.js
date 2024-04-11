@@ -1,6 +1,6 @@
 const mysql = require("mysql2/promise");
 
-const databaseConfig = require(".../config/database");
+const databaseConfig = require("../config/database");
 
 async function createProdutoTable() {
   try {
