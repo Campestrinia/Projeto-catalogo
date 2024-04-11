@@ -7,11 +7,11 @@ async function createUsuarioTable() {
 
     await connection.query(`USE ${databaseConfig.database}`);
 
-    await oon.query(`CREATE TABLE IF NOT EXISTS usuario (
+    await connection.query(`CREATE TABLE IF NOT EXISTS usuario (
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         email VARCHAR(200) NOT NULL,
         CPF VARCHAR(200) NOT NULL,
-        telefone VARCHAR(200) NOT NULL
+        telefone VARCHAR(200) NOT NULL,
         senha VARCHAR(200) NOT NULL
 
        )`);

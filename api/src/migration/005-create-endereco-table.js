@@ -13,7 +13,8 @@ async function createEnderecoTable() {
         CEP VARCHAR(200) NOT NULL,
         cidade VARCHAR(200) NOT NULL,
         numero INT NOT NULL,
-        FOREIGN KEY (id) REFERENCES usuario (id)
+        idUsuario INT NOT NULL,
+        FOREIGN KEY (idUsuario) REFERENCES usuario (id)
     )`);
 
     await connection.end();
