@@ -18,6 +18,7 @@ async function createProdutoTable() {
             FOREIGN KEY (idCategoria) REFERENCES categoria (id)
             idUsuario INT NOT NULL,
             FOREIGN KEY (idUsuario) REFERENCES usuario (id)
+            
           )`);
 
     await connection.end();
