@@ -19,8 +19,4 @@ async function createDataBase() {
     console.log(`Error creating database: ${error}`);
   }
 }
-
- 
-
-
 createDataBase();
