@@ -15,10 +15,10 @@ async function createProdutoTable() {
             descricao VARCHAR(200),
             quantidade INT,
             idCategoria INT NOT NULL,
-            FOREIGN KEY (idCategoria) REFERENCES categoria (id)
             idUsuario INT NOT NULL,
+            FOREIGN KEY (idCategoria) REFERENCES categoria (id),
             FOREIGN KEY (idUsuario) REFERENCES usuario (id)
-            
+
           )`);
 
     await connection.end();
