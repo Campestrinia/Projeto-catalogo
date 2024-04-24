@@ -9,6 +9,7 @@ async function createUsuarioTable() {
 
     await connection.query(`CREATE TABLE IF NOT EXISTS usuario (
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        nome VARCHAR(200) NOT NULL,
         email VARCHAR(200) NOT NULL,
         CPF VARCHAR(200) NOT NULL,
         telefone VARCHAR(200) NOT NULL,
