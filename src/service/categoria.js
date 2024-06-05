@@ -35,7 +35,7 @@ async function deleteCategoria(id) {
 async function getAllcategoriaById(id) {
   const connection = await mysql.createConnection(databaseConfig);
   const [categoria] = await connection.query(
-    "SELECT * FROM product WHERE id = ?",
+    "SELECT * FROM categoria WHERE id = ?",
     [id]
   );
 
