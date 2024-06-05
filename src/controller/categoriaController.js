@@ -1,9 +1,9 @@
 const { categoria } = require("../config/database.js");
-const usuarioService = require("../service/usuario.js");
+const categoriaService = require("../service/usuario.js");
 
 async function getAllCategoria(req, res) {
     try {
-        const rows = await userService.getAllCategoria();
+        const rows = await categoriaService.getAllCategoria();
 
         res.status(200).json(rows);
     } catch (error) {
@@ -18,7 +18,7 @@ async function createCategoria(req, res) {
     const { nome, email, CPF, telefone, senha } = req.body;
 
     try {
-        await userService.createCategoria(nome, email, CPF, telefone, senha);
+        await categoriaService.createCategoria(nome, email, CPF, telefone, senha);
 
         res.status(201).json({ message: `Success` });
     } catch (eror) {
@@ -32,7 +32,7 @@ async function updateCategoria(req, res) {
     try {
         const { id } = req.params;
         const { nome, email, CPF, telefone, senha } = req.params;
-        await userService.updateCategoria(id, nome, email, CPF, telefone, senha);
+        await categoriaService.updateCategoria(id, nome, email, CPF, telefone, senha);
 
         res.status(204).json("Success");
     } catch (error) {
@@ -47,7 +47,7 @@ async function deleteCategoria(req, res) {
     try {
         const { id } = req.params;
 
-        await userService.deleteCategoria(id);
+        await categoriaService.deleteCategoria(id);
         res.status(200).send({ message: "Deleted user" });
     } catch (error) {
         res.status(500).send({
@@ -61,7 +61,7 @@ async function getCategoriaById(req, res) {
     try {
         const { id } = req.params;
 
-        const user = await userService.getCategoriaById(id);
+        const user = await categoriaService.getCategoriaById(id);
 
         res.status(200).json(user);
     } catch (error) {
