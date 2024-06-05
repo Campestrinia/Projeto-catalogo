@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-
+const usuarioRouter = require("./router/usuarioRouter.js")
 
 
 const PORT = 3001;
@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.use(bodyParser.json());
-app.use("/api", produtoRouter);
+app.use("/api", usuarioRouter);
 
 
 app.listen(PORT, () => {
