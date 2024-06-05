@@ -1,9 +1,9 @@
 const { categoria } = require("../config/database.js");
 const usuarioService = require("../service/usuario.js");
 
-async function getAllUsuario(req, res) {
+async function getAllCategoria(req, res) {
     try {
-        const rows = await userService.getAllUsuario();
+        const rows = await userService.getAllCategoria();
 
         res.status(200).json(rows);
     } catch (error) {
@@ -14,11 +14,11 @@ async function getAllUsuario(req, res) {
     }
 }
 
-async function createUsuario(req, res) {
+async function createCategoria(req, res) {
     const { nome, email, CPF, telefone, senha } = req.body;
 
     try {
-        await userService.createUsuario(nome, email, CPF, telefone, senha);
+        await userService.createCategoria(nome, email, CPF, telefone, senha);
 
         res.status(201).json({ message: `Success` });
     } catch (eror) {
@@ -28,11 +28,11 @@ async function createUsuario(req, res) {
         });
     }
 }
-async function updateUsuario(req, res) {
+async function updateCategoria(req, res) {
     try {
         const { id } = req.params;
         const { nome, email, CPF, telefone, senha } = req.params;
-        await userService.updateUsuario(id, nome, email, CPF, telefone, senha);
+        await userService.updateCategoria(id, nome, email, CPF, telefone, senha);
 
         res.status(204).json("Success");
     } catch (error) {
@@ -43,11 +43,11 @@ async function updateUsuario(req, res) {
     }
 }
 
-async function deleteUsuario(req, res) {
+async function deleteCategoria(req, res) {
     try {
         const { id } = req.params;
 
-        await userService.deleteUsuario(id);
+        await userService.deleteCategoria(id);
         res.status(200).send({ message: "Deleted user" });
     } catch (error) {
         res.status(500).send({
@@ -57,11 +57,11 @@ async function deleteUsuario(req, res) {
     }
 }
 
-async function getUsuarioById(req, res) {
+async function getCategoriaById(req, res) {
     try {
         const { id } = req.params;
 
-        const user = await userService.getUsuarioById(id);
+        const user = await userService.getCategoriaById(id);
 
         res.status(200).json(user);
     } catch (error) {
@@ -73,9 +73,9 @@ async function getUsuarioById(req, res) {
 }
 
 module.exports = {
-    getAllUsuario,
-    createUsuario,
-    updateUsuario,
-    deleteUsuario,
-    getUsuarioById
+    getAllCategoria,
+    createCategoria,
+    updateCategoria,
+    deleteCategoria,
+    getCategoriaById
 }

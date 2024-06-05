@@ -14,12 +14,7 @@ async function getAllproduct() {
 }
 
 async function createProduct(
-  nome,
-  preco,
-  descricao,
-  quantidade,
-  idCategoria,
-  idUsuario
+  nome, preco, descricao, quantidade, idCategoria, idUsuario
 ) {
   const connnetion = await mysql.createConnection(databaseConfig);
   const insertProduct =

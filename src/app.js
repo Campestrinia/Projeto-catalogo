@@ -1,6 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const usuarioRouter = require("./router/usuarioRouter.js")
+const produtoRouter = require('./router/produtoRouter.js')
+const enderecoRouter = require('./router/enderecoRouter.js')
+const categoriaRouter = require('./router/categoriaRouter.js')
 
 
 const PORT = 3001;
@@ -15,7 +18,10 @@ app.get("/", (req, res) => {
 });
 
 app.use(bodyParser.json());
-app.use("/api", usuarioRouter);
+app.use("/usuario", usuarioRouter);
+app.use("/produto", produtoRouter);
+app.use("/endereco", enderecoRouter);
+app.use("/categoria", categoriaRouter);
 
 
 app.listen(PORT, () => {
