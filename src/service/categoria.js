@@ -22,7 +22,10 @@ async function createCategoria(nome, descricao) {
 
 async function updateCategoria(nome, descricao) {
   const connection = await mysql.createCategoria(databaseConfig);
+  const updateCategoria =
+    "UPDATE categoria Set nome = ?,  descricao = ? WHERE id = ?";
   await connection.query(updateCategoria, [nome, descricao]);
+
   await connection.end();
 }
 
@@ -35,7 +38,7 @@ async function deleteCategoria(id) {
 async function getAllcategoriaById(id) {
   const connection = await mysql.createConnection(databaseConfig);
   const [categoria] = await connection.query(
-    "SELECT * FROM product WHERE id = ?",
+    "SELECT * FROM categoria WHERE id = ?",
     [id]
   );
 

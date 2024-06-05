@@ -3,9 +3,10 @@ const router = express.Router();
 const categoriaController = require("../controller/categoriaController.js");
 
 router.get("/categoria", categoriaController.getAllCategoria);
-router.post(`/usuario`, categoriaController.createCategoria);
-router.put("/usuario/:id", categoriaController.updateCategoria);
-router.delete("/usuario/:id", categoriaController.deleteCategoria);
-router.get("/usuario/:id", categoriaController.getCategoriaById);
+router.post(`/categoria`, categoriaController.createCategoria);
+router.put("/categoria/:id", categoriaController.updateCategoria);
+router.delete("/categoria/:id", categoriaController.deleteCategoria);
+router.get("/categoria/:id", categoriaController.getCategoriaById);
+
 
 module.exports = router;
