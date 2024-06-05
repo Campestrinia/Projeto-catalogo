@@ -1,7 +1,7 @@
 const mysql = require("mysql2/promise");
 const databaseConfig = require("../config/database.js");
 const { emit } = require("nodemon");
-const { updateProduto } = require("./product.js");
+const { updateProduto } = require("./produto.js");
 const { use } = require("../router/produtoRouter.js");
 const { Connection } = require("mysql2/typings/mysql/lib/Connection");
 
@@ -64,13 +64,13 @@ async function deleteProduto(id) {
 
 async function getAllprodutoById(id) {
   const connection = await mysql.createConnection(databaseConfig);
-  const [product] = await connection.query(
+  const [produto] = await connection.query(
     "SELECT * FROM produto WHERE id = ?",
     [id]
   );
 
   await connection.end();
-  return product;
+  return produto;
 }
 
 module.exports = {
