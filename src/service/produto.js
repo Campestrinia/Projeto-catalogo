@@ -2,7 +2,7 @@ const mysql = require("mysql2/promise");
 const databaseConfig = require("../config/database.js");
 const { emit } = require("nodemon");
 const { updateProduct } = require("./product.js");
-const { use } = require("../router/productRouter.js");
+const { use } = require("../router/produtoRouter.js");
 const { Connection } = require("mysql2/typings/mysql/lib/Connection");
 
 async function getAllproduct() {
