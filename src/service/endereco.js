@@ -23,7 +23,10 @@ async function createEndereco(rua, CEP, cidade, numero, idUsuario) {
 
 async function updateEndereco(rua, CEP, cidade, numero, idUsuario) {
   const connection = await mysql.createEndereco(databaseConfig);
+  const updateEndereco =
+    "UPDATE endereco Set rua = ?,  CEP = ?, cidade = ?, numero = ?, idUsuario = ? WHERE id = ?";
   await connection.query(updateEndereco, [rua, CEP, cidade, numero, idUsuario]);
+
   await connection.end();
 }
 

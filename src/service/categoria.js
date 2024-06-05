@@ -22,7 +22,10 @@ async function createCategoria(nome, descricao) {
 
 async function updateCategoria(nome, descricao) {
   const connection = await mysql.createCategoria(databaseConfig);
+  const updateCategoria =
+    "UPDATE categoria Set nome = ?,  descricao = ? WHERE id = ?";
   await connection.query(updateCategoria, [nome, descricao]);
+
   await connection.end();
 }
 
