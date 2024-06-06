@@ -1,9 +1,5 @@
 const mysql = require("mysql2/promise");
 const databaseConfig = require("../config/database.js");
-const { emit } = require("nodemon");
-const { updateEndereco } = require("./endereco.js");
-const { use } = require("../router/enderecoRouter.js");
-const { Connection } = require("mysql2/typings/mysql/lib/Connection");
 
 async function getAllendereco() {
   const connnetion = await mysql.createConnection(databaseConfig);

@@ -1,9 +1,5 @@
 const mysql = require("mysql2/promise");
 const databaseConfig = require("../config/database.js");
-const { emit } = require("nodemon");
-const { updateProduct } = require("./product.js");
-const { use } = require("../router/productRouter.js");
-const { Connection } = require("mysql2/typings/mysql/lib/Connection");
 
 async function getAllproduct() {
   const connnetion = await mysql.createConnection(databaseConfig);
@@ -54,6 +50,7 @@ async function updateProduct(
     idCategoria,
     idUsuario,
   ]);
+  await connection.end();
 }
 
 async function deleteProduct(id) {
