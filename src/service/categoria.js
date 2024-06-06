@@ -10,17 +10,17 @@ async function getAllCategoria() {
 }
 
 async function createCategoria(nome, descricao) {
-  const connection = await mysql.createCategoria(databaseConfig);
+  const connection = await mysql.createConnection(databaseConfig);
   const insertCategoria = "INSERT into categoria(nome, descricao) VALUES(?, ?)";
   await connection.query(insertCategoria, [nome, descricao]);
   await connection.end();
 }
 
-async function updateCategoria(nome, descricao) {
+async function updateCategoria(id, nome, descricao) {
   const connection = await mysql.createConnection(databaseConfig);
   const updateCategoria =
     "UPDATE categoria Set nome = ?,  descricao = ? WHERE id = ?";
-  await connection.query(updateCategoria, [nome, descricao]);
+  await connection.query(updateCategoria, [id, nome, descricao]);
 
   await connection.end();
 }
