@@ -1,19 +1,19 @@
 const mysql = require("mysql2/promise");
 const databaseConfig = require("../config/database.js");
 const { emit } = require("nodemon");
-const { updateProduto } = require("./produto.js");
-const { use } = require("../router/produtoRouter.js");
+const { updateProduct } = require("./product.js");
+const { use } = require("../router/productRouter.js");
 const { Connection } = require("mysql2/typings/mysql/lib/Connection");
 
-async function getAllproduto() {
+async function getAllproduct() {
   const connnetion = await mysql.createConnection(databaseConfig);
-  const [rows] = await Connection.query("SELECT * FROM produto");
+  const [rows] = await Connection.query("SELECT * FROM product");
 
   await connnetion.end();
   return rows;
 }
 
-async function createProduto(
+async function createProduct(
   nome,
   preco,
   descricao,
@@ -22,9 +22,9 @@ async function createProduto(
   idUsuario
 ) {
   const connnetion = await mysql.createConnection(databaseConfig);
-  const insertProduto =
+  const insertProduct =
     "INSERT into produ(nome, preco, descricao, quantidade, idCategoria, idUsuario) VALUES(?, ?, ?, ?, ?, ?)";
-  await connnetion.query(insertProduto, [
+  await connnetion.query(insertProduct, [
     nome,
     preco,
     descricao,
@@ -35,7 +35,7 @@ async function createProduto(
   await connnetion.end();
 }
 
-async function updateProduto(
+async function updateProduct(
   nome,
   preco,
   descricao,
@@ -44,9 +44,9 @@ async function updateProduto(
   idUsuario
 ) {
   const connection = await mysql.createConnection(databaseConfig);
-  const updateProduto =
-    "UPDATE produto Set nome = ?,  preco = ?, descricao = ?, quantidade = ?, idCategoria = ?, idUsuario = ?, WHERE id = ?";
-  await connection.query(updateProduto, [
+  const updateProduct =
+    "UPDATE product Set nome = ?,  preco = ?, descricao = ?, quantidade = ?, idCategoria = ?, idUsuario = ?, WHERE id = ?";
+  await connection.query(updateProduct, [
     nome,
     preco,
     descricao,
@@ -56,27 +56,27 @@ async function updateProduto(
   ]);
 }
 
-async function deleteProduto(id) {
+async function deleteProduct(id) {
   const connection = await mysql.createConnection(databaseConfig);
-  await connection.query("DELETE FROM produto WHERE id = ?", [id]);
+  await connection.query("DELETE FROM product WHERE id = ?", [id]);
   await connection.end();
 }
 
-async function getAllprodutoById(id) {
+async function getAllproductById(id) {
   const connection = await mysql.createConnection(databaseConfig);
-  const [produto] = await connection.query(
-    "SELECT * FROM produto WHERE id = ?",
+  const [product] = await connection.query(
+    "SELECT * FROM product WHERE id = ?",
     [id]
   );
 
   await connection.end();
-  return produto;
+  return product;
 }
 
 module.exports = {
-  getAllproduto,
-  createProduto,
-  updateProduto,
-  deleteProduto,
-  getAllprodutoById,
+  getAllproduct,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  getAllproductById,
 };
