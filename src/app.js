@@ -16,10 +16,10 @@ app.get("/", (req, res) => {
 });
 
 app.use(bodyParser.json());
-app.use("/usuaario", usuarioRouter);
-app.use("/produto", produtoRouter);
-app.use("/endereco", enderecoRouter);
-app.use("/categoria", categoriaRouter);
+app.use("/api", usuarioRouter);
+app.use("/api", produtoRouter);
+app.use("/api", enderecoRouter);
+app.use("/api", categoriaRouter);
 
 app.listen(PORT, () => {
   console.log("servidor online");

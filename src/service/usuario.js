@@ -65,5 +65,5 @@ module.exports = {
   createUsuario,
   updateUsuario,
   deleteUsuario,
-  getAllUsuario,
+  getUsuarioById,
 };
