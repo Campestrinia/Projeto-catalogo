@@ -16,7 +16,6 @@ async function createUsuario(nome, email, CPF, telefone, senha) {
 
   const insertUsuario =
     "INSERT INTO usuario(nome, email, CPF, telefone, senha) VALUES(?,?,?,?,?)";
-
   await connection.query(insertUsuario, [nome, email, CPF, telefone, senha]);
 
   await connection.end();
@@ -26,16 +25,9 @@ async function updateUsuario(id, nome, email, CPF, telefone, senha) {
   const connection = await mysql.createConnection(databaseConfig);
 
   const updateUsuario =
-    "UPDATE usuario Set name = ?, email = ?, CPF = ?, telefone = ?, senha = ? WHERE id = ?";
+    "UPDATE usuario Set nome = ?, email = ?, CPF = ?, telefone = ?, senha = ? WHERE id = ?";
 
-  await connection.query(updateUsuario, [
-    nome,
-    email,
-    CPF,
-    telefone,
-    senha,
-    id,
-  ]);
+  await connection.query(updateUsuario, [nome, email, CPF, telefone, senha, id]);
 
   await connection.end();
 }

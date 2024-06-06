@@ -31,10 +31,10 @@ async function createUsuario(req, res) {
 async function updateUsuario(req, res) {
   try {
     const { id } = req.params;
-    const { nome, email, CPF, telefone, senha } = req.params;
+    const { nome, email, CPF, telefone, senha } = req.body;
     await userService.updateUsuario(id, nome, email, CPF, telefone, senha);
 
-    res.status(204).json("Success");
+    res.status(200).json("Success");
   } catch (error) {
     res.status(500).send({
       message: `Error updating user`,
