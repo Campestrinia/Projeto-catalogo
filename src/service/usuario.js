@@ -11,7 +11,7 @@ async function getAllUsuario() {
   return rows;
 }
 
-async function createUsuario() {
+async function createUsuario(nome, email, CPF, telefone, senha) {
   const connection = await mysql.createConnection(databaseConfig);
 
   const insertUsuario =

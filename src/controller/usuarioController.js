@@ -24,7 +24,7 @@ async function createUsuario(req, res) {
   } catch (eror) {
     res.status(500).send({
       message: `error adding user!`,
-      error: error.message,
+      error: eror.message,
     });
   }
 }
