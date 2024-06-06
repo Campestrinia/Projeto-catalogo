@@ -10,7 +10,7 @@ async function getAllCategoria() {
 }
 
 async function createCategoria(nome, descricao) {
-  const connection = await mysql.createCategoria(databaseConfig);
+  const connection = await mysql.createConnection(databaseConfig);
   const insertCategoria = "INSERT into categoria(nome, descricao) VALUES(?, ?)";
   await connection.query(insertCategoria, [nome, descricao]);
   await connection.end();
