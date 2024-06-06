@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const enderecoController = require("../controller/enderecoController.js");
 
-router.get("/categoria", enderecoController.getAllEndereco);
-router.post(`/usuario`, enderecoController.createEndereco);
-router.put("/usuario/:id", enderecoController.updateEndereco);
-router.delete("/usuario/:id", enderecoController.deleteEndereco);
-router.get("/usuario/:id", enderecoController.getAllenderecoById);
+router.get("/endereco", enderecoController.getAllEndereco);
+router.post(`/endereco`, enderecoController.createEndereco);
+router.put("/endereco/:id", enderecoController.updateEndereco);
+router.delete("/endereco/:id", enderecoController.deleteEndereco);
+router.get("/endereco/:id", enderecoController.getAllenderecoById);
 
 module.exports = router;
