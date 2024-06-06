@@ -24,7 +24,7 @@ async function createCategoria(req, res) {
   } catch (eror) {
     res.status(500).send({
       message: `error adding categoria!`,
-      error: error.message,
+      error: eror.message,
     });
   }
 }
