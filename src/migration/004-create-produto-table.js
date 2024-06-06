@@ -8,7 +8,7 @@ async function createProdutoTable() {
 
     await connection.query(`USE ${databaseConfig.database}`);
 
-    await connection.query(`CREATE TABLE IF NOT EXISTS produto( 
+    await connection.query(`CREATE TABLE IF NOT EXISTS product         ( 
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
             nome VARCHAR(200),
             preco FLOAT,
@@ -23,7 +23,7 @@ async function createProdutoTable() {
 
     await connection.end();
 
-    console.log("Table produto created");
+    console.log("Table product created");
   } catch (error) {
     console.log(`Error creating table User: ${error}`);
   }
