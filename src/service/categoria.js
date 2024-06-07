@@ -19,9 +19,8 @@ async function createCategoria(nome, descricao) {
 async function updateCategoria(id, nome, descricao) {
   const connection = await mysql.createConnection(databaseConfig);
   const updateCategoria =
-    "UPDATE categoria Set nome = ?,  descricao = ? WHERE id = ?";
-  await connection.query(updateCategoria, [id, nome, descricao]);
-
+    "UPDATE categoria SET nome = ?, descricao = ? WHERE id = ?";
+  await connection.query(updateCategoria, [nome, descricao, id]); // Ordem correta dos parâmetros
   await connection.end();
 }
 
@@ -31,7 +30,7 @@ async function deleteCategoria(id) {
   await connection.end();
 }
 
-async function getAllcategoriaById(id) {
+async function getcategoriaById(id) {
   const connection = await mysql.createConnection(databaseConfig);
   const [categoria] = await connection.query(
     "SELECT * FROM categoria WHERE id = ?",
@@ -47,5 +46,5 @@ module.exports = {
   createCategoria,
   updateCategoria,
   deleteCategoria,
-  getAllcategoriaById,
+  getcategoriaById,
 };

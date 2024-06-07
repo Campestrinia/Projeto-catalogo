@@ -31,14 +31,13 @@ async function createCategoria(req, res) {
 async function updateCategoria(req, res) {
   try {
     const { id } = req.params;
-    const { nome, descricao } = req.params;
+    const { nome, descricao } = req.body; // Corrigido para obter os dados do corpo da requisição
     await categoriaService.updateCategoria(id, nome, descricao);
-
-    res.status(204).json("Success");
+    res.status(200).json("Success"); // Responde com um status 204 (sem conteúdo) e uma mensagem de sucesso
   } catch (error) {
     res.status(500).send({
       message: `Error updating categoria`,
-      body: error.message,
+      body: error.message, // Em caso de erro, responde com status 500 e uma mensagem de erro
     });
   }
 }
@@ -57,11 +56,11 @@ async function deleteCategoria(req, res) {
   }
 }
 
-async function getCategoriaById(req, res) {
+async function getcategoriaById(req, res) {
   try {
     const { id } = req.params;
 
-    const categoria = await categoriaService.getCategoriaById(id);
+    const categoria = await categoriaService.getcategoriaById(id);
 
     res.status(200).json(categoria);
   } catch (error) {
@@ -77,5 +76,5 @@ module.exports = {
   createCategoria,
   updateCategoria,
   deleteCategoria,
-  getCategoriaById,
+  getcategoriaById,
 };

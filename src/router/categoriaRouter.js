@@ -6,7 +6,6 @@ router.get("/categoria", categoriaController.getAllCategoria);
 router.post(`/categoria`, categoriaController.createCategoria);
 router.put("/categoria/:id", categoriaController.updateCategoria);
 router.delete("/categoria/:id", categoriaController.deleteCategoria);
-router.get("/categoria/:id", categoriaController.getCategoriaById);
-
+router.get("/categoria/:id", categoriaController.getcategoriaById);
 
 module.exports = router;
