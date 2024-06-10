@@ -38,7 +38,7 @@ async function updateEndereco(req, res) {
       numero,
       idUsuario
     );
-    res.status(204).json("Success");
+    res.status(200).json("Success");
   } catch (error) {
     res.status(500).send({
       message: `Error updating endereço`,
