@@ -3,7 +3,7 @@ const databaseConfig = require("../config/database.js");
 
 async function getAllproduct() {
   const connnetion = await mysql.createConnection(databaseConfig);
-  const [rows] = await Connection.query("SELECT * FROM product");
+  const [rows] = await connnetion.query("SELECT * FROM product");
 
   await connnetion.end();
   return rows;
@@ -19,7 +19,7 @@ async function createProduct(
 ) {
   const connnetion = await mysql.createConnection(databaseConfig);
   const insertProduct =
-    "INSERT into produ(nome, preco, descricao, quantidade, idCategoria, idUsuario) VALUES(?, ?, ?, ?, ?, ?)";
+    "INSERT into product(nome, preco, descricao, quantidade, idCategoria, idUsuario) VALUES(?, ?, ?, ?, ?, ?)";
   await connnetion.query(insertProduct, [
     nome,
     preco,
@@ -32,16 +32,17 @@ async function createProduct(
 }
 
 async function updateProduct(
+  id,
   nome,
   preco,
   descricao,
   quantidade,
   idCategoria,
-  idUsuario
+  idUsuario,
 ) {
   const connection = await mysql.createConnection(databaseConfig);
   const updateProduct =
-    "UPDATE product Set nome = ?,  preco = ?, descricao = ?, quantidade = ?, idCategoria = ?, idUsuario = ?, WHERE id = ?";
+    "UPDATE product Set nome = ?,  preco = ?, descricao = ?, quantidade = ?, idCategoria = ?, idUsuario = ? WHERE id = ?";
   await connection.query(updateProduct, [
     nome,
     preco,
@@ -49,6 +50,7 @@ async function updateProduct(
     quantidade,
     idCategoria,
     idUsuario,
+    id,
   ]);
   await connection.end();
 }

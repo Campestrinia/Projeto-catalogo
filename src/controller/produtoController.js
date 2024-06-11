@@ -17,21 +17,23 @@ async function createProduct(req, res) {
   const { nome, preco, descricao, quantidade, idCategoria, idUsuario } = req.body;
 
   try {
-    await produtoService.createUsuario(nome, preco, descricao, quantidade, idCategoria, idUsuario);
+    await produtoService.createProduct(nome, preco, descricao, quantidade, idCategoria, idUsuario);
 
     res.status(201).json({ message: `Success` });
   } catch (eror) {
     res.status(500).send({
       message: `error adding product!`,
-      error: error.message,
+      error: eror.message,
     });
   }
 }
 async function updateProduct(req, res) {
   try {
     const { id } = req.params;
-    const { nome, preco, descricao, quantidade, idCategoria, idUsuario } = req.params;
+    const { nome, preco, descricao, quantidade, idCategoria, idUsuario } = req.body;
+    console.log(id)
     await produtoService.updateProduct(id, nome, preco, descricao, quantidade, idCategoria, idUsuario);
+
 
     res.status(204).json("Success");
   } catch (error) {
