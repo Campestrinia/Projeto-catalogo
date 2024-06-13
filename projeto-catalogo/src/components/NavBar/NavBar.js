@@ -1,20 +1,21 @@
-import { Container, Logo, Menu } from "./navBar.css"
+import { Container, Logo, Menu, GlobalStyle } from "./navBar.css"
 export function NavBar() {
-    return (<>
+    return (
+
         <Container>
+            <GlobalStyle />
             <Logo>
                 <h1>T</h1>
             </Logo>
             <Menu>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                </ul>
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+
             </Menu>
 
 
         </Container>
-    </>
+
     );
 }
