@@ -1,16 +1,17 @@
-import { Container, Logo, Menu, GlobalStyle } from "./navBar.css"
+import { Container, Logo, Menu, GlobalStyle, NoLink, Foto } from "./navBar.css"
+import imagem from "../imagem.png"
 export function NavBar() {
     return (
 
         <Container>
             <GlobalStyle />
             <Logo>
-                <h1>T</h1>
+                <Foto src={imagem} alt="logo" />
             </Logo>
             <Menu>
-                <a href="/">Home</a>
-                <a href="/about">About</a>
-                <a href="/contact">Contact</a>
+                <NoLink href="/">Home</NoLink>
+                <NoLink href="/about">About</NoLink>
+                <NoLink href="/contact">Contact</NoLink>
 
             </Menu>
 
