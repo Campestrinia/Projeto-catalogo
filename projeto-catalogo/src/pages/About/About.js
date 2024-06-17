@@ -3,7 +3,9 @@ import { NavBar } from '../../components/NavBar';
 
 
 export function About() {
-    return(
-        <NavBar/>
+    return (<>
+        <NavBar />
+        <h1>About</h1>
+    </>
     )
 }

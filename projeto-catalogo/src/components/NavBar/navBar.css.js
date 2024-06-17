@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 
 const Container = styled.div`
   display: flex;
-  background-color: rgb(45, 86, 219);
+  background-color: rgba(45, 86, 219);
   justify-content: space-between;
   `;
 const Logo = styled.div`

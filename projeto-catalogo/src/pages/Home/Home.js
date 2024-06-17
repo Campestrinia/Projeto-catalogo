@@ -1,9 +1,13 @@
-// import React, { useState, useEffect } from 'react';
 import { NavBar } from '../../components/NavBar';
-// import axios from "axios";
+import { Footer } from '../../components/Footer'
+import { Highlight } from '../../components/Highlight/Highlights';
 
 export function Home() {
-    return (
+    const product = ["Placa mãe", "Processador", "SDD"]
+    return (<>
         <NavBar />
-    );
+        <Highlight product={product} />
+        <Footer />
+    </>
+    )
 }
