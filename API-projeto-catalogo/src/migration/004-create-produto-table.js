@@ -14,6 +14,7 @@ async function createProdutoTable() {
             preco FLOAT,
             descricao VARCHAR(200),
             quantidade INT,
+            imagem VARCHAR(255),
             idCategoria INT NOT NULL,
             idUsuario INT NOT NULL,
             FOREIGN KEY (idCategoria) REFERENCES categoria (id),

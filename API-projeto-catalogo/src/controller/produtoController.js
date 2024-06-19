@@ -15,9 +15,9 @@ async function getAllproduct(req, res) {
 
 async function createProduct(req, res) {
   const { nome, preco, descricao, quantidade, idCategoria, idUsuario } = req.body;
-
+  const imagem = req.file.filename; // Acesse o nome do arquivo diretamente
   try {
-    await produtoService.createProduct(nome, preco, descricao, quantidade, idCategoria, idUsuario);
+    await produtoService.createProduct(nome, preco, descricao, quantidade, idCategoria, idUsuario, imagem);
 
     res.status(201).json({ message: `Success` });
   } catch (eror) {

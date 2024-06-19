@@ -14,7 +14,7 @@ const Logo = styled.div`
   `;
 const Menu = styled.div`
   display: flex;
-  width: 330px;
+  width: auto;
 justify-content: center;
     align-items: center;
     justify-content: space-evenly;
@@ -30,10 +30,18 @@ const NoLink = styled.a`
     text-decoration: none;
     color: inherit;
     cursor: default;
+    margin: 10px;
 `;
 const Foto = styled.img`
     height: 70px;
 
 `;
 
-export { Container, Logo, Menu, GlobalStyle, NoLink, Foto };
+const LoginAndRegister = styled.div`
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    border: 1px solid;
+`;
+
+export { Container, Logo, Menu, GlobalStyle, NoLink, Foto, LoginAndRegister };

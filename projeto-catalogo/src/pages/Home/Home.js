@@ -7,6 +7,9 @@ export function Home() {
     return (<>
         <NavBar />
         <Highlight product={product} />
+        <h1>.</h1>
+        <h1>.</h1>
+        <h1>.</h1>
         <Footer />
     </>
     )

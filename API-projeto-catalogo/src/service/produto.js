@@ -15,11 +15,12 @@ async function createProduct(
   descricao,
   quantidade,
   idCategoria,
-  idUsuario
+  idUsuario,
+  imagem
 ) {
   const connnetion = await mysql.createConnection(databaseConfig);
   const insertProduct =
-    "INSERT into product(nome, preco, descricao, quantidade, idCategoria, idUsuario) VALUES(?, ?, ?, ?, ?, ?)";
+    "INSERT into product(nome, preco, descricao, quantidade, idCategoria, idUsuario, imagem) VALUES(?, ?, ?, ?, ?, ?,?)";
   await connnetion.query(insertProduct, [
     nome,
     preco,
@@ -27,6 +28,7 @@ async function createProduct(
     quantidade,
     idCategoria,
     idUsuario,
+    imagem,
   ]);
   await connnetion.end();
 }
