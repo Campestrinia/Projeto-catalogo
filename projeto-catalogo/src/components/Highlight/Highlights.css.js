@@ -51,17 +51,16 @@ const NavButton = styled.button`
   padding: 10px;
   cursor: pointer;
   z-index: 1;
-  /* Adiciona padding à esquerda e direita */
   padding-left: 20px;
   padding-right: 20px;
 `;
 
 const ButtonLeft = styled(NavButton)`
-  left: 10px; /* Ajusta a posição à esquerda */
+  left: 10px; 
 `;
 
 const ButtonRight = styled(NavButton)`
-  right: 10px; /* Ajusta a posição à direita */
+  right: 10px; 
 `;
 const Image = styled.img`
     width: 80%;

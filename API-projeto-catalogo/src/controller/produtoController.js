@@ -31,11 +31,28 @@ async function updateProduct(req, res) {
   try {
     const { id } = req.params;
     const { nome, preco, descricao, quantidade, idCategoria, idUsuario } = req.body;
-    console.log(id)
-    await produtoService.updateProduct(id, nome, preco, descricao, quantidade, idCategoria, idUsuario);
+    const imagem = req.file.filename; // Acesse o nome do arquivo diretamente
+
+    await produtoService.updateProduct(id, nome, preco, descricao, quantidade, imagem, idCategoria, idUsuario);
 
 
-    res.status(204).json("Success");
+    res.status(200).json("Success");
+  } catch (error) {
+    res.status(500).send({
+      message: `Error updating product`,
+      body: error.message,
+    });
+  }
+}
+
+async function updateProductNoImage(req, res) {
+  try {
+    const { id } = req.params;
+    const { nome, preco, descricao, quantidade, idCategoria, idUsuario } = req.body;
+    await produtoService.updateProductNoImage(id, nome, preco, descricao, quantidade, idCategoria, idUsuario);
+
+
+    res.status(200).json("Success");
   } catch (error) {
     res.status(500).send({
       message: `Error updating product`,
@@ -73,10 +90,27 @@ async function getAllproductById(req, res) {
   }
 }
 
+async function getAllproductByCategoria(req, res) {
+  try {
+    const { idCategoria } = req.params;
+
+    const product = await produtoService.getAllproductByCategoria(idCategoria);
+
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).send({
+      message: "Error getting product by categoria",
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   getAllproduct,
   createProduct,
   updateProduct,
   deleteProduct,
-  getAllproductById
+  getAllproductById,
+  updateProductNoImage,
+  getAllproductByCategoria
 }

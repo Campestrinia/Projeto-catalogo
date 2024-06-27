@@ -12,6 +12,7 @@ export function NavBar() {
                 <NoLink href="/">Home</NoLink>
                 <NoLink href="/about">About</NoLink>
                 <NoLink href="/contact">Contact</NoLink>
+                <NoLink href="/createProduct">Criar</NoLink>
                 <LoginAndRegister>
                     <NoLink href="/login">Login</NoLink>
                     <div>/</div>

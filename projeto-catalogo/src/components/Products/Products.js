@@ -1,24 +1,11 @@
-import React, { useRef } from 'react';
-import { CarouselContainer, Container, Card, ButtonRight, ButtonLeft, GlobalStyle, Image } from "./Highlights.css";
+import { CarouselContainer, Container, Card, Image } from "./products.css";
 import { Link } from 'react-router-dom';
+import React from "react";
 
-export function Highlight({ products }) {
-
-    const containerRef = useRef(null);
-
-    const scroll = (scrollOffset) => {
-        if (containerRef.current) {
-            containerRef.current.scrollBy({
-                left: scrollOffset,
-                behavior: 'smooth',
-            });
-        }
-    };
+export function Products({ products }) {
     return (<>
-        <GlobalStyle />
         <CarouselContainer>
-            <ButtonLeft onClick={() => scroll(-containerRef.current.offsetWidth)}>◀</ButtonLeft>
-            <Container ref={containerRef}>
+            <Container>
                 {
                     products.map((product) => (
                         <React.Fragment key={product.id}>
@@ -38,8 +25,6 @@ export function Highlight({ products }) {
 
 
             </Container>
-            <ButtonRight onClick={() => scroll(containerRef.current.offsetWidth)}>▶</ButtonRight>
         </CarouselContainer>
-    </>
-    );
+    </>)
 }

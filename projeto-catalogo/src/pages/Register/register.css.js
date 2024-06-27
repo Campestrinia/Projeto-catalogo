@@ -50,6 +50,7 @@ const NoLink = styled.a`
     color: inherit;
     cursor: default;
     margin: 10px;
+        height: 18px;
 `;
 
 export { Container, GlobalStyle, ContainerBox, ContainerRegister, H3, Button, NoLink }

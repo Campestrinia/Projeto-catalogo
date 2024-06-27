@@ -39,6 +39,32 @@ async function updateProduct(
   preco,
   descricao,
   quantidade,
+  imagem,
+  idCategoria,
+  idUsuario,
+) {
+  const connection = await mysql.createConnection(databaseConfig);
+  const updateProduct =
+    "UPDATE product Set nome = ?,  preco = ?, descricao = ?, quantidade = ?, imagem =?, idCategoria = ?, idUsuario = ? WHERE id = ?";
+  await connection.query(updateProduct, [
+    nome,
+    preco,
+    descricao,
+    quantidade,
+    imagem,
+    idCategoria,
+    idUsuario,
+    id,
+  ]);
+  await connection.end();
+}
+
+async function updateProductNoImage(
+  id,
+  nome,
+  preco,
+  descricao,
+  quantidade,
   idCategoria,
   idUsuario,
 ) {
@@ -69,6 +95,18 @@ async function getAllproductById(id) {
     "SELECT * FROM product WHERE id = ?",
     [id]
   );
+  const productClean = product[0]
+
+  await connection.end();
+  return productClean;
+}
+
+async function getAllproductByCategoria(idCategoria) {
+  const connection = await mysql.createConnection(databaseConfig);
+  const [product] = await connection.query(
+    "SELECT * FROM product WHERE idCategoria = ?",
+    [idCategoria]
+  );
 
   await connection.end();
   return product;
@@ -80,4 +118,6 @@ module.exports = {
   updateProduct,
   deleteProduct,
   getAllproductById,
+  updateProductNoImage,
+  getAllproductByCategoria
 };

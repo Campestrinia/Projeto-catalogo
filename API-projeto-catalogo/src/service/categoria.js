@@ -36,9 +36,9 @@ async function getcategoriaById(id) {
     "SELECT * FROM categoria WHERE id = ?",
     [id]
   );
-
+  const categoriaClean = categoria[0]
   await connection.end();
-  return categoria;
+  return categoriaClean;
 }
 
 module.exports = {

@@ -48,8 +48,10 @@ async function getUsuarioById(id) {
     [id]
   );
 
+  const usuarioClean = usuario[0]
+
   await connection.end();
-  return usuario;
+  return usuarioClean;
 }
 
 module.exports = {

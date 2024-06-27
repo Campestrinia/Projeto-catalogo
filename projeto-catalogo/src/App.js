@@ -5,6 +5,9 @@ import { About } from './pages/About'
 import { Contact } from './pages/Contact'
 import { Login } from './pages/Login';
 import { Register } from './pages/Register/Register';
+import { Product } from './pages/Product/Product';
+import { ManageProduct } from './pages/manage-product';
+import { CreateProduct } from './pages/CreateProduct/CreateProduct';
 
 function App() {
   return (
@@ -15,6 +18,9 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/product/:id" element={<Product />} />
+        <Route path="/manage-product/:id" element={<ManageProduct />} />
+        <Route path="/createProduct" element={<CreateProduct />} />
       </Routes>
     </Rauter>
   );
