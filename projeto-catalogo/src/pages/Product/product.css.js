@@ -29,7 +29,7 @@ const Imagi = styled.img`
 `;
 const About = styled.div`
     display: flex;
-    margin: 25px;
+    margin: 15px;
     flex-direction: column; 
     border: 2px solid;
     width: 400px;
@@ -63,6 +63,7 @@ const ContainerSemelhantes = styled.div`
     display: flex;
     box-sizing: border-box;
     width: 560px;
+    margin:10px;
     overflow: hidden;
 
     `;
@@ -76,9 +77,9 @@ const Card = styled.div`
   display: flex;
   flex-direction: column; 
   justify-content: center; 
-  align-items: center;
   scroll-snap-align: start;
   margin: 15px;
+
 `;
 
 const Image = styled.img`
@@ -110,7 +111,13 @@ const ButtonRight = styled(NavButton)`
   right: 11%; /* Ajusta a posição à direita */
 `;
 
+const AboutSemelhantes = styled.div`
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+`;
+
 export {
     ContainerDad, Container, Imagi, ContainerSon, About, Button, ImagamProduct, ContainerButton, ContainerButtonAndAbout,
-    ContainerSemelhantes, Card, Image, ButtonLeft, ButtonRight
+    ContainerSemelhantes, Card, Image, ButtonLeft, ButtonRight, AboutSemelhantes
 };

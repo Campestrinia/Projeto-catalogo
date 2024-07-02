@@ -6,7 +6,9 @@ export function NavBar() {
         <Container>
             <GlobalStyle />
             <Logo>
-                <Foto src={imagem} alt="logo" />
+                <NoLink href="/">
+                    <Foto src={imagem} alt="logo" />
+                </NoLink>
             </Logo>
             <Menu>
                 <NoLink href="/">Home</NoLink>

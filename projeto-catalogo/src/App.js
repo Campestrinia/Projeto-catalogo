@@ -8,6 +8,7 @@ import { Register } from './pages/Register/Register';
 import { Product } from './pages/Product/Product';
 import { ManageProduct } from './pages/manage-product';
 import { CreateProduct } from './pages/CreateProduct/CreateProduct';
+import { ProductWithCategoria } from './pages/ProductWithCategoria/ProductWithCategoria';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/product/:id" element={<Product />} />
         <Route path="/manage-product/:id" element={<ManageProduct />} />
         <Route path="/createProduct" element={<CreateProduct />} />
+        <Route path="/productWithCategoria/:id" element={<ProductWithCategoria />} />
       </Routes>
     </Rauter>
   );
