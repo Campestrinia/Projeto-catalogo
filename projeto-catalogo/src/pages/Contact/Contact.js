@@ -16,7 +16,7 @@ export function Contact() {
                 
                     <h1>Perguntas Frequentes</h1>
 
-                    <p>Tire todas as suas dúvidas sobre o HardwareHeroi! aqui, confira nossas perguntas frequentes sobre cadastro, compra, garantia e outros assuntos, e se não encontrar o que estava procurando, você também pode entrar em contato com nossos vigilantes do atendimento por chat ou telefone.</p> 
+                    <p>Tire todas as suas dúvidas sobre o HardwareHeroi! aqui, confira nossas perguntas frequentes sobre cadastro, compra, garantia e outros assuntos, e se não encontrar o que estava procurando, você também pode entrar em contato com nossos vigilantes do atendimento por email ou telefone.</p> 
   
 
                 </Text>
