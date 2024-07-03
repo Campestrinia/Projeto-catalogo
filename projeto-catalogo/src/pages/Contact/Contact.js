@@ -57,7 +57,7 @@ export function Contact() {
 
                                 Atenção: Caso você receba o contato do fabricante, será necessário acioná-lo diretamente, para solicitar a garantia de seu produto.
 
-                                Acompanhe seu protocolo de atendimento na aba 'Atendimento' que fica no canto superior direito em 'Minha Conta'. Neste local você poderá visualizar todo o andamento do seu pedido e, se tiver dúvidas, poderá interagir com um de nossos Ninjas no mesmo local.</p>
+                                Acompanhe seu protocolo de atendimento na aba 'Atendimento' que fica no canto superior direito em 'Minha Conta'. Neste local você poderá visualizar todo o andamento do seu pedido e, se tiver dúvidas, poderá interagir com um de nossos vigilantes  no mesmo local.</p>
 
                       
                             </Conteiner>
@@ -73,7 +73,7 @@ export function Contact() {
 
                             <p>Após ter aberto este protocolo, somente terá de aguardar o retorno de nosso departamento responsável em até 3 dias úteis. Você receberá uma notificação em seu e-mail de cadastro, então, é importante que acompanhe sua caixa de entrada, caixa de spam ou lixo eletrônico!</p>
 
-                            <p>Acompanhe seu protocolo de atendimento na aba 'Atendimento' que fica no canto superior direito em 'Minha Conta'. Neste local você poderá visualizar todo o andamento do seu pedido e, se tiver dúvidas, poderá interagir com um de nossos Ninjas no mesmo local.</p>
+                            <p>Acompanhe seu protocolo de atendimento na aba 'Atendimento' que fica no canto superior direito em 'Minha Conta'. Neste local você poderá visualizar todo o andamento do seu pedido e, se tiver dúvidas, poderá interagir com um de nossos vigilantes  no mesmo local.</p>
 
                                                 
                             </Conteiner>
@@ -97,7 +97,7 @@ export function Contact() {
                         
                         <Conteiner>
                             <h4>Fiz a compra com cartão, apareceu aprovado, mas o pedido foi cancelado. Por quê?</h4>
-                            <p>Para segurança dos nossos clientes o KaBuM! possui um serviço de anti-fraude que faz toda a investigação dos dados das compras para garantir que tudo vai ocorrer de acordo com o esperado. Caso o pedido não seja aprovado por data divergente, limite ou outros, a reserva do seu limite será liberada em até 48 horas após o cancelamento oficia</p>
+                            <p>Para segurança dos nossos clientes o HardwareHeroi! possui um serviço de anti-fraude que faz toda a investigação dos dados das compras para garantir que tudo vai ocorrer de acordo com o esperado. Caso o pedido não seja aprovado por data divergente, limite ou outros, a reserva do seu limite será liberada em até 48 horas após o cancelamento oficia</p>
 
                         </Conteiner>
                         <Conteiner>
