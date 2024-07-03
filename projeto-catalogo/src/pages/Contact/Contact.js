@@ -129,7 +129,7 @@ export function Contact() {
                                 <img src={mail} alt="email" />
                                 <h4>Email</h4>
                                 </Boxn>
-                                <p>Envie um e-mail para nossos ninjas no endereço faleconosco@kabum.com.br, responderemos o seu contato em até 1 dia útil.</p>
+                                <p>Envie um e-mail para nossos ninjas no endereço HardwareHeroi@gmail.com.br, responderemos o seu contato em até 1 dia útil.</p>
                                 <Boxn>
                                 
                                 </Boxn>
