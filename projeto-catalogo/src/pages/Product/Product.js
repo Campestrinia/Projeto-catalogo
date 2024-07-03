@@ -3,9 +3,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from "axios";
 import {
     ContainerDad, Container, Imagi, ContainerSon, About, Button, ImagamProduct, ContainerButton,
-    ContainerButtonAndAbout, ContainerSemelhantes, Card, Image, ButtonLeft, ButtonRight
+    ContainerButtonAndAbout, ContainerSemelhantes, Card, Image, ButtonLeft, ButtonRight, AboutSemelhantes
 } from "./product.css"
 import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
+
+import styled from "styled-components";
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
+    height: 140px
+`;
 
 export function Product() {
     const { id } = useParams();
@@ -41,7 +49,7 @@ export function Product() {
                 try {
                     const response = await axios.get(`http://localhost:3001/api/productWithCategoria/${product.idCategoria}`);
                     const products = response.data.filter(item => item.id !== product.id);
-                    setProductsSemelhante(products);
+                    setProductsSemelhante(products.slice(-8));
                     console.log(response.data)
                 } catch (error) {
                     console.error("Error fetching product or image:", error);
@@ -116,16 +124,17 @@ export function Product() {
                             {productsSemelhante ? (
                                 productsSemelhante.map((productSemelhante) => (
                                     <React.Fragment key={productSemelhante.id}>
-                                        <Link to={`/product/${productSemelhante.id}`}>
+
+                                        <StyledLink to={`/product/${productSemelhante.id}`}>
                                             <Card>
                                                 <Image
                                                     src={`http://localhost:3001/images/${productSemelhante.imagem}`}
                                                     alt={productSemelhante.nome}
                                                 />
-                                                <div>R${productSemelhante.preco}</div>
-                                                <div>{productSemelhante.nome}</div>
+                                                <AboutSemelhantes>R${productSemelhante.preco}</AboutSemelhantes>
+                                                <AboutSemelhantes>{productSemelhante.nome}</AboutSemelhantes>
                                             </Card>
-                                        </Link>
+                                        </StyledLink>
                                     </React.Fragment>
                                 ))) : (<h3>Carregando....</h3>)
                             }
