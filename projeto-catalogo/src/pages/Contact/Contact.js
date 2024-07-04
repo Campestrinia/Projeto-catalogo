@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { NavBar } from '../../components/NavBar';
-import styled from "styled-components";
 import { GlobalStyle, BoxAll, Box1, Text, Img, Box2, Box3, Boxin, Box2mini, Box3Hidde, Conteiner, Cont, BoxUlt, Tend, Boxn, Arrow, Boxwn} from './contact.css';
 import TESTE from './TESTE.png';
 import arrow from './arrow.png'
