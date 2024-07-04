@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
 
 
 const BoxAll = styled.div`
-    background-color: blue;
+    background-color: rgba(45, 86, 219);;
     height: 120%;
     width: 100%;
     box-sizing: border-box
@@ -43,7 +43,7 @@ const Text= styled.div`
         margin: 0px;
         margin-top: 20px;
         margin-block-end: 10px;
-        border-left: solid red;
+        border-left: ridge #ff7c00;
 
     }
     p{
@@ -184,7 +184,7 @@ const BoxUlt= styled.div`
         h3{
         font-family: cursive;
         color: #ff6c00;
-        margin-right: 200px;
+        margin-right: 195px;
         
         }
         h5{
@@ -219,10 +219,14 @@ const Tend= styled.div`
 `
 const Boxn= styled.div`
     display: flex;
-    justify-content: space-between;
 
 `
 
+const Boxwn= styled.div`
+    display: flex;
+    justify-content: space-between;
+
+`
 const Arrow= styled.div`
     overflow: hidden;
     cursor: pointer;
@@ -245,4 +249,4 @@ const Arrow= styled.div`
     
 
 
-export { GlobalStyle,BoxAll, Box1, Text, Img, Box2, Box3, Boxin, Box2mini, Box3Hidde, Conteiner, Cont, BoxUlt, Tend, Boxn, Arrow};
+export { GlobalStyle,BoxAll, Box1, Text, Img, Box2, Box3, Boxin, Box2mini, Box3Hidde, Conteiner, Cont, BoxUlt, Tend, Boxn, Arrow, Boxwn};
