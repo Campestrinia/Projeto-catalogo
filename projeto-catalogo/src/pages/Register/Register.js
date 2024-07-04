@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, GlobalStyle, ContainerBox, ContainerRegister, H3, Button, NoLink } from "./register.css"
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 export function Register() {
     const apiUrl = process.env.REACT_APP_API_URL;
@@ -10,7 +11,7 @@ export function Register() {
     const [telefone, setTelefone] = useState('');
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
-
+    const navigate = useNavigate();
     const handleSubmit = async () => {
         try {
             const response = await axios.post(`${apiUrl}/api/usuario`, {
@@ -20,6 +21,7 @@ export function Register() {
                 telefone,
                 senha
             });
+            navigate("/")
             console.log(response.data);
         } catch (error) {
             console.error("Error posting data:", error);

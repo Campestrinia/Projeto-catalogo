@@ -19,6 +19,7 @@ justify-content: center;
     align-items: center;
     justify-content: space-evenly;
         font-size: 20px;
+        font-family:monospace;
   `;
 const GlobalStyle = createGlobalStyle`
   body {

@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from "axios";
 import {
     ContainerDad, Container, Imagi, ContainerSon, About, Button, ImagamProduct, ContainerButton,
-    ContainerButtonAndAbout, ContainerSemelhantes, Card, Image, ButtonLeft, ButtonRight, AboutSemelhantes
+    ContainerButtonAndAbout, ContainerSemelhantes, Card, Image, AboutSemelhantes
 } from "./product.css"
 import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 
@@ -43,7 +43,7 @@ export function Product() {
             }
         };
         fetchProduct();
-    }, [id,apiUrl]);
+    }, [id, apiUrl]);
     useEffect(() => {
         if (product.idCategoria) {
             const fetchProduct = async () => {
@@ -58,7 +58,7 @@ export function Product() {
             };
             fetchProduct();
         }
-    }, [product.idCategoria, product.id,apiUrl]);
+    }, [product.idCategoria, product.id, apiUrl]);
 
     useEffect(() => {
         if (product.idCategoria) {
@@ -86,16 +86,16 @@ export function Product() {
             };
             fetchUsuario();
         }
-    }, [product.idUsuario,apiUrl]);
+    }, [product.idUsuario, apiUrl]);
 
-    const scroll = (scrollOffset) => {
-        if (containerRef.current) {
-            containerRef.current.scrollBy({
-                left: scrollOffset,
-                behavior: 'smooth',
-            });
-        }
-    };
+    // const scroll = (scrollOffset) => {
+    //     if (containerRef.current) {
+    //         containerRef.current.scrollBy({
+    //             left: scrollOffset,
+    //             behavior: 'smooth',
+    //         });
+    //     }
+    // };
     return (
         <>
             <NavBar />
@@ -121,7 +121,7 @@ export function Product() {
                         </ContainerButtonAndAbout>
                         <h3>Produtos semelhantes:</h3>
                         <ContainerSemelhantes ref={containerRef}>
-                            <ButtonLeft onClick={() => scroll(-containerRef.current.offsetWidth)}>◀</ButtonLeft>
+                            {/* <ButtonLeft onClick={() => scroll(-containerRef.current.offsetWidth)}>◀</ButtonLeft> */}
                             {productsSemelhante ? (
                                 productsSemelhante.map((productSemelhante) => (
                                     <React.Fragment key={productSemelhante.id}>
@@ -139,7 +139,7 @@ export function Product() {
                                     </React.Fragment>
                                 ))) : (<h3>Carregando....</h3>)
                             }
-                            <ButtonRight onClick={() => scroll(containerRef.current.offsetWidth)}>▶</ButtonRight>
+                            {/* <ButtonRight onClick={() => scroll(containerRef.current.offsetWidth)}>▶</ButtonRight> */}
 
                         </ContainerSemelhantes>
                     </ContainerSon>
