@@ -25,7 +25,7 @@ export function Highlight({ products }) {
                             <Link to={`/product/${product.id}`}>
                                 <Card>
                                     <Image
-                                        src={`http://localhost:3001/images/${product.imagem}`}
+                                        src={`http://13.58.52.42:3001/images/${product.imagem}`}
                                         alt={product.nome}
                                     />
                                     <div>R${product.preco}</div>
