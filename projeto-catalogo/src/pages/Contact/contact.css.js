@@ -43,7 +43,7 @@ const Text= styled.div`
         margin: 0px;
         margin-top: 20px;
         margin-block-end: 10px;
-        border-left: solid red;
+        border-left: ridge #ff7c00;
 
     }
     p{
