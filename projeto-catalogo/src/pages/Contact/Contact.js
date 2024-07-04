@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { NavBar } from '../../components/NavBar';
 import styled from "styled-components";
-import { GlobalStyle, BoxAll, Box1, Text, Img, Box2, Box3, Boxin, Box2mini, Box3Hidde, Conteiner, Cont, BoxUlt, Tend, Boxn, Arrow } from './contact.css';
+import { GlobalStyle, BoxAll, Box1, Text, Img, Box2, Box3, Boxin, Box2mini, Box3Hidde, Conteiner, Cont, BoxUlt, Tend, Boxn, Arrow, Boxwn} from './contact.css';
 import TESTE from './TESTE.png';
 import tell from './tell.png'
 import mail from './mail.png'
 import arrow from './arrow.png'
+
+
 
 
 export function Contact() {
@@ -57,7 +59,7 @@ export function Contact() {
         <GlobalStyle />
         <NavBar />
         <BoxAll>
-            <Box1>
+        <Box1>
                 <Text>
                 
                     <h1>Perguntas Frequentes</h1>
@@ -93,7 +95,7 @@ export function Contact() {
                    
                     <Box3Hidde>
                         <Conteiner>
-                            <Boxn>
+                            <Boxwn>
                             <Tend>
                                 <h4>Preciso acionar a garantia de um produto. Como proceder?</h4>
                             </Tend>
@@ -101,7 +103,7 @@ export function Contact() {
                             <Arrow  onClick={exibirGrantia}>
                                 <img src={arrow} alt='arrow'/>
                             </Arrow>
-                            </Boxn>
+                            </Boxwn>
 
                             </Conteiner>
                             {garantia?(
@@ -121,7 +123,7 @@ export function Contact() {
                             ):null}
 
                         <Conteiner >
-                            <Boxn>
+                            <Boxwn>
                                 <Tend>
                                     <h4>Como acionar o Direito de Arrependimento?</h4>
                                 </Tend>
@@ -129,7 +131,7 @@ export function Contact() {
                                 <Arrow  onClick={exibirArrependimento}>
                                     <img src={arrow} alt='arrow'/>
                                 </Arrow>
-                                </Boxn>
+                                </Boxwn>
                             
                             </Conteiner>
                             {arrependimento?(
@@ -156,7 +158,7 @@ export function Contact() {
                         </Tend>
                         
                         <Conteiner>
-                            <Boxn>
+                            <Boxwn>
                                 <Tend>
                                  <h4>Duvida sobre status do pedido</h4>
                                 </Tend>
@@ -164,7 +166,7 @@ export function Contact() {
                                 <Arrow  onClick={exibirPedido}>
                                     <img src={arrow} alt='arrow'/>
                                 </Arrow>
-                            </Boxn>
+                            </Boxwn>
                             
                         </Conteiner>
                         {pedido?(
@@ -177,7 +179,7 @@ export function Contact() {
                             <h2 id='Pagamento'>Pagamento e Estorno </h2>
                          </Tend>
                          <Conteiner>
-                            <Boxn>
+                            <Boxwn>
                                 <Tend>
                                 <h4>Fiz a compra com cartão, apareceu aprovado, mas o pedido foi cancelado. Por quê?</h4>
                                 </Tend>
@@ -185,7 +187,7 @@ export function Contact() {
                                 <Arrow  onClick={exibircartao}>
                                     <img src={arrow} alt='arrow'/>
                                 </Arrow>
-                            </Boxn>
+                            </Boxwn>
                             
                         </Conteiner> 
                         {cartao?(
@@ -194,8 +196,8 @@ export function Contact() {
                         </Conteiner>
                         ):null}
 
-                        <Conteiner onClick={exibirprazo}>
-                            <Boxn>
+                        <Conteiner>
+                            <Boxwn>
                                 <Tend>
                                  <h4>Qual é o prazo para confirmação de pagamento?</h4>
                                 </Tend>
@@ -203,7 +205,7 @@ export function Contact() {
                                 <Arrow  onClick={exibirprazo}>
                                     <img src={arrow} alt='arrow'/>
                                 </Arrow>
-                            </Boxn>
+                            </Boxwn>
                             
                         
                         </Conteiner> 
@@ -220,23 +222,24 @@ export function Contact() {
                         <Cont>
                             <BoxUlt>
                                 <Boxn>
-                                <img src={tell} alt="tel" />
-                                <h4>Telefone</h4>
+                                <img src={tell} alt="logo" />
+                                <h4> Telefone</h4>
 
                                 </Boxn>
                                 <p>Segunda à sexta das 8:00 às 20:00, sábado das 09:00 às 15:00. Horário de Brasília. Exceto domingo e feriados</p>
                                 <Boxn>
-                                <h3>98191-19101</h3>
+                               
+                                <h3>47 12345-6789</h3>
                                     <h5>ONLINE</h5>
                                 </Boxn>
                                 
                             </BoxUlt>
                             <BoxUlt>
                                 <Boxn>
-                                <img src={mail} alt="email" />
-                                <h4>Email</h4>
+                                <img src={mail} alt="logo" />
+                                <h4> Email</h4>
                                 </Boxn>
-                                <p>Envie um e-mail para nossos ninjas no endereço HardwareHeroi@gmail.com.br, responderemos o seu contato em até 1 dia útil.</p>
+                                <p>Envie um e-mail para nossos herois no endereço HardwareHeroi@gmail.com, responderemos o seu contato em até 1 dia útil.</p>
                                 <Boxn>
                                 
                                 </Boxn>
@@ -252,7 +255,7 @@ export function Contact() {
             </Boxin>
             
 
-          
+          <br/>
         </BoxAll>
         
     </>
