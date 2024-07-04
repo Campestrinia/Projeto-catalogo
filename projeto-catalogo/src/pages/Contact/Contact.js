@@ -3,8 +3,6 @@ import { NavBar } from '../../components/NavBar';
 import styled from "styled-components";
 import { GlobalStyle, BoxAll, Box1, Text, Img, Box2, Box3, Boxin, Box2mini, Box3Hidde, Conteiner, Cont, BoxUlt, Tend, Boxn, Arrow, Boxwn} from './contact.css';
 import TESTE from './TESTE.png';
-import tell from './tell.png'
-import mail from './mail.png'
 import arrow from './arrow.png'
 import { Footer } from '../../components/Footer/Footer';
 import { FaPhone } from "react-icons/fa6";
