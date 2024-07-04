@@ -1,6 +1,6 @@
 import { NavBar } from '../../components/NavBar';
 import { Footer } from '../../components/Footer';
-import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { CarouselContainer, ContainerProduct, Card, Image, ContainerMenu, Container } from "./productWithCategoria.css";
@@ -23,7 +23,7 @@ export function ProductWithCategoria() {
             }
         };
         fetchProduct();
-    }, [id]);
+    }, [id, apiUrl]);
     return (<>
         <NavBar />
         <CarouselContainer>

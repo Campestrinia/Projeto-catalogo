@@ -10,7 +10,7 @@ import { GlobalStyle } from './home.css';
 export function Home() {
     const [products, setProducts] = useState([]);
     const apiBackEnd = process.env.REACT_APP_API_URL;
-
+    console.log(apiBackEnd)
     useEffect(() => {
         const fetchProducts = async () => {
             try {

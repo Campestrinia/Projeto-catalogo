@@ -46,7 +46,7 @@ export function ManageProduct() {
             }
         };
         fetchProducts();
-    }, [id]);
+    }, [id,apiUrl]);
 
     useEffect(() => {
         const fetchCategori = async () => {
@@ -60,7 +60,7 @@ export function ManageProduct() {
             }
         };
         fetchCategori();
-    }, [categoriaSelecionada]);
+    }, [categoriaSelecionada,apiUrl]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
