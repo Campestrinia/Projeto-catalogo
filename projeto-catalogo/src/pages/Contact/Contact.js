@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavBar } from '../../components/NavBar';
 import { GlobalStyle, BoxAll, Box1, Text, Img, Box2, Box3, Boxin, Box2mini, Box3Hidde, Conteiner, Cont, BoxUlt, Tend, Boxn } from './contact.css';
 import TESTE from './TESTE.png';
@@ -7,6 +7,50 @@ import mail from './mail.png'
 
 
 export function Contact() {
+    const [garantia, setGarantia] = useState(false);
+    const [arrependimento, setArrependimento] = useState(false);
+    const [pedido, setpedido] = useState(false);
+    const [cartao, setcartao] = useState(false);
+    const [prazo, setprazo] = useState(false);
+
+    const exibirGrantia= ()=>{
+        if(garantia){
+            setGarantia(false)
+        }else(
+            setGarantia(true)
+        )
+    }
+
+    const exibirArrependimento= ()=>{
+        if(arrependimento  ){
+            setArrependimento(false)
+        }else(
+            setArrependimento(true)
+        )
+    }
+
+    const exibirPedido= ()=>{
+        if(pedido  ){
+            setpedido(false)
+        }else(
+            setpedido(true)
+        )
+    }
+
+    const exibircartao= ()=>{
+        if(cartao  ){
+            setcartao(false)
+        }else(
+            setcartao(true)
+        )
+    }
+    const exibirprazo= ()=>{
+        if(prazo  ){
+            setprazo(false)
+        }else(
+            setprazo(true)
+        )
+    }
     return (<>
         <GlobalStyle />
         <NavBar />
@@ -46,8 +90,11 @@ export function Contact() {
                     </Tend>
                    
                     <Box3Hidde>
-                        <Conteiner>
+                        <Conteiner onClick={exibirGrantia}>
                             <h4>Preciso acionar a garantia de um produto. Como proceder?</h4>
+                            </Conteiner>
+                            {garantia?(
+                        <Conteiner>
                             <p>1. Faça o login em nosso site, usando seu e-mail e senha;</p>
                                 <p>2. Depois, você irá localizar o pedido referente ao item que deseja acionar a garantia; selecione 'Detalhes do pedido'.</p>
                                 <p> 3. Busque o produto que deseja solicitar garantia, clique em 'Garantia' e, depois em 'Continuar';</p>
@@ -59,10 +106,14 @@ export function Contact() {
 
                                 Acompanhe seu protocolo de atendimento na aba 'Atendimento' que fica no canto superior direito em 'Minha Conta'. Neste local você poderá visualizar todo o andamento do seu pedido e, se tiver dúvidas, poderá interagir com um de nossos vigilantes  no mesmo local.</p>
 
-                      
                             </Conteiner>
-                        <Conteiner>
+                            ):null}
+
+                        <Conteiner onClick={exibirArrependimento}>
                             <h4>Como acionar o Direito de Arrependimento?</h4>
+                            </Conteiner>
+                            {arrependimento?(
+                        <Conteiner>
                             <p>O Direito de Arrependimento só pode ser acionado após o recebimento da compra em sua casa, no prazo de até 7 dias corridos. Nesse caso, siga o passo a passo abaixo:</p>
 
                             <p>1. Faça o login em nosso site, usando seu e-mail e senha;</p>
@@ -77,34 +128,42 @@ export function Contact() {
 
                                                 
                             </Conteiner>
-                            
+                            ):null}
 
                     </Box3Hidde>
                         <Tend>
                         <h2 id='Pedido'>Pedido </h2>
                         </Tend>
                         
-                        <Conteiner>
+                        <Conteiner onClick={exibirPedido}>
                             <h4>Duvida sobre status do pedido</h4>
-                            <p>Para verificar o status do seu pedido, acesse sua conta e clique no pedido que deseja ter informações. Logo abaixo do item, você visualizará uma barra de status que mostrará em que momento seu pedido está. Essa barra é atualizada conforme o pedido for avançando no processo de aprovação da compra ou entrega, caso ocorra algum problema com o seu pedido, entraremos em contato para notificar e levar a melhor solução. Fique de atento ao seu e-mail, nossa comunicação acontece por este canal.</p>
-
                         </Conteiner>
+                        {pedido?(
+                        <Conteiner>
+                            <p>Para verificar o status do seu pedido, acesse sua conta e clique no pedido que deseja ter informações. Logo abaixo do item, você visualizará uma barra de status que mostrará em que momento seu pedido está. Essa barra é atualizada conforme o pedido for avançando no processo de aprovação da compra ou entrega, caso ocorra algum problema com o seu pedido, entraremos em contato para notificar e levar a melhor solução. Fique de atento ao seu e-mail, nossa comunicação acontece por este canal.</p>
+                        </Conteiner>
+                        ):null}
 
                         <Tend>
                             <h2 id='Pagamento'>Pagamento e Estorno </h2>
                          </Tend>
-                                                
-                        
-                        <Conteiner>
+                         <Conteiner onClick={exibircartao}>
                             <h4>Fiz a compra com cartão, apareceu aprovado, mas o pedido foi cancelado. Por quê?</h4>
-                            <p>Para segurança dos nossos clientes o HardwareHeroi! possui um serviço de anti-fraude que faz toda a investigação dos dados das compras para garantir que tudo vai ocorrer de acordo com o esperado. Caso o pedido não seja aprovado por data divergente, limite ou outros, a reserva do seu limite será liberada em até 48 horas após o cancelamento oficia</p>
-
-                        </Conteiner>
+                        </Conteiner> 
+                        {cartao?(
                         <Conteiner>
-                            <h4>Qual é o prazo para confirmação de pagamento?</h4>
-                            <p>Pagamentos efetuados via Boleto Bancário e Cartão de Crédito têm um prazo de 1 a 2 dias úteis para confirmação; já para pagamentos via PIX, o prazo de confirmação é de até 30 minutos. Se esse período for expirado e o pagamento de seu pedido permanecer indicado como pendente, será necessário entrar em contato com o nosso Atendimento.</p>
-
+                            <p>Para segurança dos nossos clientes o HardwareHeroi! possui um serviço de anti-fraude que faz toda a investigação dos dados das compras para garantir que tudo vai ocorrer de acordo com o esperado. Caso o pedido não seja aprovado por data divergente, limite ou outros, a reserva do seu limite será liberada em até 48 horas após o cancelamento oficia</p>
                         </Conteiner>
+                        ):null}
+
+                        <Conteiner onClick={exibirprazo}>
+                        <h4>Qual é o prazo para confirmação de pagamento?</h4>
+                        </Conteiner> 
+                        {prazo?(
+                        <Conteiner>
+                            <p>Pagamentos efetuados via Boleto Bancário e Cartão de Crédito têm um prazo de 1 a 2 dias úteis para confirmação; já para pagamentos via PIX, o prazo de confirmação é de até 30 minutos. Se esse período for expirado e o pagamento de seu pedido permanecer indicado como pendente, será necessário entrar em contato com o nosso Atendimento.</p>
+                        </Conteiner>
+                        ):null}                 
                         <Tend>
                         <h2 id='Contato'> Contato </h2>
                         </Tend>
