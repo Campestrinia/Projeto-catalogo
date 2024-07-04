@@ -75,9 +75,9 @@ const Box2= styled.div`
     box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
 
     ul{
-    list-style: none
-    }
     list-style: none;
+    padding-left: 0px
+    }
     a{
     text-decoration: none;
     margin: 10px;
@@ -119,12 +119,14 @@ const Box3= styled.div`
      h4{
         text-align: center;
         font-family: sans-serif;
+        font-size: 18px;
      }
     H6{
      text-align: center;
     font-size: 20px;
     font-family: monospace;
     color: #faebd79c;
+    margin-top: 20px;
 
         
     }
@@ -217,6 +219,24 @@ const Tend= styled.div`
 `
 const Boxn= styled.div`
     display: flex;
+    justify-content: space-between;
+
+`
+
+const Arrow= styled.div`
+    overflow: hidden;
+    cursor: pointer;
+    transform: rotate(180deg);
+    img{
+    -webkit-transition: -webkit-transform .5s ease;
+    transition: transform .5s ease;
+    }
+    img:hover{
+        -webkit-transform: scale(1.1);
+   transform: scale(1.1);
+   transform: rotate(-180deg);
+    }
+
 
 `
 
@@ -225,4 +245,4 @@ const Boxn= styled.div`
     
 
 
-export { GlobalStyle,BoxAll, Box1, Text, Img, Box2, Box3, Boxin, Box2mini, Box3Hidde, Conteiner, Cont, BoxUlt, Tend, Boxn};
+export { GlobalStyle,BoxAll, Box1, Text, Img, Box2, Box3, Boxin, Box2mini, Box3Hidde, Conteiner, Cont, BoxUlt, Tend, Boxn, Arrow};

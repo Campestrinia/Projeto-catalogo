@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { NavBar } from '../../components/NavBar';
-import { GlobalStyle, BoxAll, Box1, Text, Img, Box2, Box3, Boxin, Box2mini, Box3Hidde, Conteiner, Cont, BoxUlt, Tend, Boxn } from './contact.css';
+import styled from "styled-components";
+import { GlobalStyle, BoxAll, Box1, Text, Img, Box2, Box3, Boxin, Box2mini, Box3Hidde, Conteiner, Cont, BoxUlt, Tend, Boxn, Arrow } from './contact.css';
 import TESTE from './TESTE.png';
 import tell from './tell.png'
 import mail from './mail.png'
+import arrow from './arrow.png'
 
 
 export function Contact() {
@@ -90,8 +92,17 @@ export function Contact() {
                     </Tend>
                    
                     <Box3Hidde>
-                        <Conteiner onClick={exibirGrantia}>
-                            <h4>Preciso acionar a garantia de um produto. Como proceder?</h4>
+                        <Conteiner>
+                            <Boxn>
+                            <Tend>
+                                <h4>Preciso acionar a garantia de um produto. Como proceder?</h4>
+                            </Tend>
+                          
+                            <Arrow  onClick={exibirGrantia}>
+                                <img src={arrow} alt='arrow'/>
+                            </Arrow>
+                            </Boxn>
+
                             </Conteiner>
                             {garantia?(
                         <Conteiner>
@@ -109,8 +120,17 @@ export function Contact() {
                             </Conteiner>
                             ):null}
 
-                        <Conteiner onClick={exibirArrependimento}>
-                            <h4>Como acionar o Direito de Arrependimento?</h4>
+                        <Conteiner >
+                            <Boxn>
+                                <Tend>
+                                    <h4>Como acionar o Direito de Arrependimento?</h4>
+                                </Tend>
+                            
+                                <Arrow  onClick={exibirArrependimento}>
+                                    <img src={arrow} alt='arrow'/>
+                                </Arrow>
+                                </Boxn>
+                            
                             </Conteiner>
                             {arrependimento?(
                         <Conteiner>
@@ -135,8 +155,17 @@ export function Contact() {
                         <h2 id='Pedido'>Pedido </h2>
                         </Tend>
                         
-                        <Conteiner onClick={exibirPedido}>
-                            <h4>Duvida sobre status do pedido</h4>
+                        <Conteiner>
+                            <Boxn>
+                                <Tend>
+                                 <h4>Duvida sobre status do pedido</h4>
+                                </Tend>
+                            
+                                <Arrow  onClick={exibirPedido}>
+                                    <img src={arrow} alt='arrow'/>
+                                </Arrow>
+                            </Boxn>
+                            
                         </Conteiner>
                         {pedido?(
                         <Conteiner>
@@ -147,8 +176,17 @@ export function Contact() {
                         <Tend>
                             <h2 id='Pagamento'>Pagamento e Estorno </h2>
                          </Tend>
-                         <Conteiner onClick={exibircartao}>
-                            <h4>Fiz a compra com cartão, apareceu aprovado, mas o pedido foi cancelado. Por quê?</h4>
+                         <Conteiner>
+                            <Boxn>
+                                <Tend>
+                                <h4>Fiz a compra com cartão, apareceu aprovado, mas o pedido foi cancelado. Por quê?</h4>
+                                </Tend>
+                            
+                                <Arrow  onClick={exibircartao}>
+                                    <img src={arrow} alt='arrow'/>
+                                </Arrow>
+                            </Boxn>
+                            
                         </Conteiner> 
                         {cartao?(
                         <Conteiner>
@@ -157,7 +195,17 @@ export function Contact() {
                         ):null}
 
                         <Conteiner onClick={exibirprazo}>
-                        <h4>Qual é o prazo para confirmação de pagamento?</h4>
+                            <Boxn>
+                                <Tend>
+                                 <h4>Qual é o prazo para confirmação de pagamento?</h4>
+                                </Tend>
+                            
+                                <Arrow  onClick={exibirprazo}>
+                                    <img src={arrow} alt='arrow'/>
+                                </Arrow>
+                            </Boxn>
+                            
+                        
                         </Conteiner> 
                         {prazo?(
                         <Conteiner>
