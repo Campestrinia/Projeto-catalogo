@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
 
 
 const BoxAll = styled.div`
-    background-color: blue;
+    background-color: rgba(45, 86, 219);;
     height: 120%;
     width: 100%;
     box-sizing: border-box
@@ -182,7 +182,7 @@ const BoxUlt= styled.div`
         h3{
         font-family: cursive;
         color: #ff6c00;
-        margin-right: 200px;
+        margin-right: 195px;
         
         }
         h5{

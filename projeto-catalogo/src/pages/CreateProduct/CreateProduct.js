@@ -47,7 +47,7 @@ export function CreateProduct() {
         };
         fetchCategori();
         fetchUsuario();
-    }, [categoriaSelecionada]);
+    }, [categoriaSelecionada,apiUrl]);
 
     //define cada item do fromData
     const handleChange = (e) => {

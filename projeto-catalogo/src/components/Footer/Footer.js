@@ -1,12 +1,13 @@
 import { Container, Separator, NoLink } from "./footer.css"
-
+import { GoMail} from "react-icons/go";
+import { FaPhone } from "react-icons/fa6";
 
 export function Footer() {
     return (
         <>
             <Container>
                 <Separator>
-                    <h3>Nome da empresa</h3>
+                    <h1>HardwareHeroi</h1>
                     <p>Aqui falamos sobre a gente ou algo da empresa</p>
                 </Separator>
                 <Separator>
@@ -27,8 +28,8 @@ export function Footer() {
                 </Separator>
                 <Separator>
                     <h3>Contatos</h3>
-                    <p>e-mail: teste@teste.com</p>
-                    <p>Telefone: 47 12345678</p>
+                    <p><GoMail/> HardwareHeroi@gmail.com</p>
+                    <p><FaPhone/>  47 12345-6789</p>
                 </Separator>
             </Container>
         </>

@@ -43,7 +43,7 @@ export function Product() {
             }
         };
         fetchProduct();
-    }, [id]);
+    }, [id,apiUrl]);
     useEffect(() => {
         if (product.idCategoria) {
             const fetchProduct = async () => {
@@ -58,7 +58,7 @@ export function Product() {
             };
             fetchProduct();
         }
-    }, [product.idCategoria, product.id]);
+    }, [product.idCategoria, product.id,apiUrl]);
 
     useEffect(() => {
         if (product.idCategoria) {
@@ -72,7 +72,7 @@ export function Product() {
             };
             fetchProductsCategoria();
         }
-    }, [product.idCategoria]);
+    }, [product.idCategoria, apiUrl]);
 
     useEffect(() => {
         if (product.idUsuario) {
@@ -86,7 +86,7 @@ export function Product() {
             };
             fetchUsuario();
         }
-    }, [product.idUsuario]);
+    }, [product.idUsuario,apiUrl]);
 
     const scroll = (scrollOffset) => {
         if (containerRef.current) {
