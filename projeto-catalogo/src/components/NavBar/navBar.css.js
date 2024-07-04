@@ -19,7 +19,7 @@ justify-content: center;
     align-items: center;
     justify-content: space-evenly;
         font-size: 20px;
-        font-family:monospace;
+        font-family:mon
   `;
 const GlobalStyle = createGlobalStyle`
   body {
@@ -35,7 +35,6 @@ const NoLink = styled.a`
 `;
 const Foto = styled.img`
     height: 70px;
-
 `;
 
 const LoginAndRegister = styled.div`

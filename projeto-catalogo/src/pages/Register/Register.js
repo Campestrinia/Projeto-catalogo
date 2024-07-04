@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Container, GlobalStyle, ContainerBox, ContainerRegister, H3, Button, NoLink } from "./register.css"
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { NavBar } from '../../components/NavBar';
+import { Footer } from '../../components/Footer';
 
 export function Register() {
     const apiUrl = process.env.REACT_APP_API_URL;
@@ -29,8 +31,8 @@ export function Register() {
     };
     return (<>
         <GlobalStyle />
+        <NavBar />
         <Container>
-            <NoLink href="/"> {`<--- `}Voltar</NoLink>
             <ContainerBox>
                 <ContainerRegister>
                     <h1>Registrar</h1>
@@ -50,5 +52,6 @@ export function Register() {
                 </ContainerRegister>
             </ContainerBox>
         </Container>
+        <Footer />
     </>)
 }
