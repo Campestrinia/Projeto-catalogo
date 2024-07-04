@@ -16,6 +16,7 @@ const StyledLink = styled(Link)`
 `;
 
 export function Product() {
+    const apiUrl = process.env.REACT_APP_API_URL;
     const { id } = useParams();
     const navigate = useNavigate();
     const location = useLocation();
@@ -35,7 +36,7 @@ export function Product() {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/api/product/${id}`);
+                const response = await axios.get(`${apiUrl}/api/product/${id}`);
                 setProduct(response.data);
             } catch (error) {
                 console.error("Error fetching product or image:", error);
@@ -47,7 +48,7 @@ export function Product() {
         if (product.idCategoria) {
             const fetchProduct = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:3001/api/productWithCategoria/${product.idCategoria}`);
+                    const response = await axios.get(`${apiUrl}/api/productWithCategoria/${product.idCategoria}`);
                     const products = response.data.filter(item => item.id !== product.id);
                     setProductsSemelhante(products.slice(-8));
                     console.log(response.data)
@@ -63,7 +64,7 @@ export function Product() {
         if (product.idCategoria) {
             const fetchProductsCategoria = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:3001/api/categoria/${product.idCategoria}`);
+                    const response = await axios.get(`${apiUrl}/api/categoria/${product.idCategoria}`);
                     setCategoria(response.data);
                 } catch (error) {
                     console.error("Error fetching product or image:", error);
@@ -77,7 +78,7 @@ export function Product() {
         if (product.idUsuario) {
             const fetchUsuario = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:3001/api/usuario/${product.idUsuario}`);
+                    const response = await axios.get(`${apiUrl}/api/usuario/${product.idUsuario}`);
                     setUsuario(response.data);
                 } catch (error) {
                     console.error("Error fetching product or image:", error);
@@ -102,7 +103,7 @@ export function Product() {
                 <h1>{product.nome || "Não encontrado"}</h1>
                 <Container>
                     <ImagamProduct>
-                        <Imagi src={`http://localhost:3001/images/${product.imagem}`} alt={product.nome || "Imagem não encontrada"} />
+                        <Imagi src={`${apiUrl}/images/${product.imagem}`} alt={product.nome || "Imagem não encontrada"} />
                     </ImagamProduct>
                     <ContainerSon>
                         <ContainerButtonAndAbout>
@@ -128,7 +129,7 @@ export function Product() {
                                         <StyledLink to={`/product/${productSemelhante.id}`}>
                                             <Card>
                                                 <Image
-                                                    src={`http://localhost:3001/images/${productSemelhante.imagem}`}
+                                                    src={`${apiUrl}/images/${productSemelhante.imagem}`}
                                                     alt={productSemelhante.nome}
                                                 />
                                                 <AboutSemelhantes>R${productSemelhante.preco}</AboutSemelhantes>

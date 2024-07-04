@@ -6,6 +6,7 @@ import axios from "axios";
 import { CarouselContainer, ContainerProduct, Card, Image, ContainerMenu, Container } from "./productWithCategoria.css";
 
 export function ProductWithCategoria() {
+    const apiUrl = process.env.REACT_APP_API_URL;
     const { id } = useParams();
     console.log(id)
     const [product, setProduct] = useState([]);
@@ -14,7 +15,7 @@ export function ProductWithCategoria() {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/api/productWithCategoria/${id}`);
+                const response = await axios.get(`${apiUrl}/api/productWithCategoria/${id}`);
                 setProduct(response.data)
                 console.log(response.data)
             } catch (error) {
@@ -36,7 +37,7 @@ export function ProductWithCategoria() {
                                 <Link to={`/product/${product.id}`}>
                                     <Card>
                                         <Image
-                                            src={`http://localhost:3001/images/${product.imagem}`}
+                                            src={`${apiUrl}/images/${product.imagem}`}
                                             alt={product.nome}
                                         />
                                         <div>R${product.preco}</div>

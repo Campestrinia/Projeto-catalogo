@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import React from "react";
 
 export function Products({ products }) {
+    const apiUrl = process.env.REACT_APP_API_URL;
     return (<>
         <CarouselContainer>
             <Container>
@@ -12,7 +13,7 @@ export function Products({ products }) {
                             <Link to={`/product/${product.id}`}>
                                 <Card>
                                     <Image
-                                        src={`http://localhost:3001/images/${product.imagem}`}
+                                        src={`${apiUrl}/images/${product.imagem}`}
                                         alt={product.nome}
                                     />
                                     <div>R${product.preco}</div>

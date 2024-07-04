@@ -3,6 +3,7 @@ import { Container, GlobalStyle, ContainerBox, ContainerRegister, H3, Button, No
 import axios from "axios";
 
 export function Register() {
+    const apiUrl = process.env.REACT_APP_API_URL;
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [CPF, setCpf] = useState('');
@@ -12,7 +13,7 @@ export function Register() {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post('http://localhost:3001/api/usuario', {
+            const response = await axios.post(`${apiUrl}/api/usuario`, {
                 nome,
                 email,
                 CPF,

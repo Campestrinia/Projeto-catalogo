@@ -5,6 +5,7 @@ import { ContainerDad, Container, Imagi, ContainerSon, About, Button, ImagamProd
 import { useNavigate, useLocation } from 'react-router-dom';
 
 export function CreateProduct() {
+    const apiUrl = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
     const location = useLocation();
     const previousPage = location.state?.from || '/';
@@ -28,7 +29,7 @@ export function CreateProduct() {
     useEffect(() => {
         const fetchCategori = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/api/categoria`);
+                const response = await axios.get(`${apiUrl}/api/categoria`);
                 console.log(response.data)
                 setCategorias(response.data)
             } catch (error) {
@@ -37,7 +38,7 @@ export function CreateProduct() {
         };
         const fetchUsuario = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/api/usuario`);
+                const response = await axios.get(`${apiUrl}/api/usuario`);
                 console.log(response.data)
                 setUsuarios(response.data)
             } catch (error) {
@@ -112,7 +113,7 @@ export function CreateProduct() {
         console.log(formDataWithImage)
         console.log(formData)
         try {
-            const response = await axios.post(`http://localhost:3001/api/product`, formDataWithImage);
+            const response = await axios.post(`${apiUrl}/api/product`, formDataWithImage);
             console.log(response.data);
             navigate(previousPage);
         } catch (error) {

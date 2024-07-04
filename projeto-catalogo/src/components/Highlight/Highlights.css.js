@@ -20,11 +20,12 @@ const CarouselContainer = styled.div`
 
 const Container = styled.div`
   display: flex;
-  overflow: hidden; /* Removido overflow-x: hidden para esconder todas as barras de rolagem */
+  overflow: hidden; /* Esconde as barras de rolagem */
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   box-sizing: border-box;
-  padding: 0 20px; /* Adiciona padding à esquerda e à direita */
+  width: 100%;
+  max-width: 100vw; /* Define uma largura máxima para evitar expansão */
 `;
 
 const Card = styled.div`
@@ -39,7 +40,6 @@ const Card = styled.div`
   align-items: center; /* Center items vertically */
   scroll-snap-align: start;
 `;
-
 
 const NavButton = styled.button`
   position: absolute;
@@ -62,10 +62,11 @@ const ButtonLeft = styled(NavButton)`
 const ButtonRight = styled(NavButton)`
   right: 10px; 
 `;
-const Image = styled.img`
-    width: 80%;
-    height: 100px;
-    margin: 10px 0;
 
+const Image = styled.img`
+  width: 80%;
+  height: 100px;
+  margin: 10px 0;
 `;
+
 export { CarouselContainer, Container, Card, ButtonLeft, ButtonRight, GlobalStyle, Image };

@@ -5,6 +5,7 @@ import { ContainerDad, Container, Imagi, ContainerSon, About, Button, ImagamProd
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
 export function ManageProduct() {
+    const apiUrl = process.env.REACT_APP_API_URL;
     const { id } = useParams();
     const navigate = useNavigate();
     const location = useLocation();
@@ -26,7 +27,7 @@ export function ManageProduct() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/api/product/${id}`);
+                const response = await axios.get(`${apiUrl}/api/product/${id}`);
                 setFormData({
                     id: response.data.id,
                     idCategoria: response.data.idCategoria,
@@ -50,7 +51,7 @@ export function ManageProduct() {
     useEffect(() => {
         const fetchCategori = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/api/categoria`);
+                const response = await axios.get(`${apiUrl}/api/categoria`);
                 console.log(response.data)
                 setCategorias(response.data)
 
@@ -97,7 +98,7 @@ export function ManageProduct() {
         try {
             console.log(id);
             navigate('/');
-            const response = await axios.delete(`http://localhost:3001/api/product/${id}`);
+            const response = await axios.delete(`${apiUrl}/api/product/${id}`);
             console.log(response.data);
         } catch (error) {
             console.error("Error deleting product:", error);
@@ -125,11 +126,11 @@ export function ManageProduct() {
         try {
             console.log(ifImage)
             if (ifImage) {
-                const response = await axios.put(`http://localhost:3001/api/product/${id}`, formDataWithImage);
+                const response = await axios.put(`${apiUrl}/api/product/${id}`, formDataWithImage);
                 console.log(response.data);
             } else if (!ifImage) {
                 console.log(!ifImage)
-                const response = await axios.put(`http://localhost:3001/api/productNoImage/${id}`, formData);
+                const response = await axios.put(`${apiUrl}/api/productNoImage/${id}`, formData);
                 console.log(response.data);
 
             }
@@ -148,7 +149,7 @@ export function ManageProduct() {
                     <h1>Editando produto</h1>
                     <Container>
                         <ImagamProduct>
-                            <Imagi src={imagePreview || `http://localhost:3001/images/${formData.imagem || "Não encontrado"}`} alt={formData.imagem} />
+                            <Imagi src={imagePreview || `${apiUrl}/images/${formData.imagem || "Não encontrado"}`} alt={formData.imagem} />
                             <input type="file" accept="image/*" onChange={handleImageChange} />
                         </ImagamProduct>
                         <ContainerSon>
