@@ -6,6 +6,9 @@ import TESTE from './TESTE.png';
 import tell from './tell.png'
 import mail from './mail.png'
 import arrow from './arrow.png'
+import { Footer } from '../../components/Footer/Footer';
+import { FaPhone } from "react-icons/fa6";
+import { GoMail} from "react-icons/go"
 
 
 
@@ -220,15 +223,13 @@ export function Contact() {
                        
                         <h6>Não encontrou o que procurava, use nossos canais de contato </h6>
                         <Cont>
-                            <BoxUlt>
+                        <BoxUlt>
                                 <Boxn>
-                                <img src={tell} alt="logo" />
-                                <h4> Telefone</h4>
+                                <h4><FaPhone/> Telefone</h4>
 
                                 </Boxn>
                                 <p>Segunda à sexta das 8:00 às 20:00, sábado das 09:00 às 15:00. Horário de Brasília. Exceto domingo e feriados</p>
                                 <Boxn>
-                               
                                 <h3>47 12345-6789</h3>
                                     <h5>ONLINE</h5>
                                 </Boxn>
@@ -236,8 +237,7 @@ export function Contact() {
                             </BoxUlt>
                             <BoxUlt>
                                 <Boxn>
-                                <img src={mail} alt="logo" />
-                                <h4> Email</h4>
+                                <h4><GoMail/> Email</h4>
                                 </Boxn>
                                 <p>Envie um e-mail para nossos herois no endereço HardwareHeroi@gmail.com, responderemos o seu contato em até 1 dia útil.</p>
                                 <Boxn>
@@ -258,6 +258,7 @@ export function Contact() {
           <br/>
         </BoxAll>
         
+        <Footer/>
     </>
     )
 }

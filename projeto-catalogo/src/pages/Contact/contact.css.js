@@ -225,7 +225,6 @@ const Boxn= styled.div`
 const Boxwn= styled.div`
     display: flex;
     justify-content: space-between;
-
 `
 const Arrow= styled.div`
     overflow: hidden;
