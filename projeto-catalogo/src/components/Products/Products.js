@@ -1,5 +1,4 @@
-import { CarouselContainer, Container, Card, Image } from "./products.css";
-import { Link } from 'react-router-dom';
+import { CarouselContainer, Container, Card, Image, Text, StyledLink } from "./products.css";
 import React from "react";
 
 export function Products({ products }) {
@@ -10,16 +9,16 @@ export function Products({ products }) {
                 {
                     products.map((product) => (
                         <React.Fragment key={product.id}>
-                            <Link to={`/product/${product.id}`}>
+                            <StyledLink to={`/product/${product.id}`}>
                                 <Card>
                                     <Image
                                         src={`${apiUrl}/images/${product.imagem}`}
                                         alt={product.nome}
                                     />
-                                    <div>R${product.preco}</div>
-                                    <div>{product.nome}</div>
+                                    <Text>{product.nome}</Text>
+                                    <Text>R${product.preco}</Text>
                                 </Card>
-                            </Link>
+                            </StyledLink>
                         </React.Fragment>
                     ))
                 }

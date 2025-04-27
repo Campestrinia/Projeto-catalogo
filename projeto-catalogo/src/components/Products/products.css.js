@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { Link } from 'react-router-dom';
 
 const CarouselContainer = styled.div`
-  background-color: rgba(45, 86, 219);
+  background-color: #222731;
   position: relative;
   width: 100%;
   padding: 20px; /* Adiciona padding ao contêiner principal */
@@ -17,23 +18,37 @@ const Container = styled.div`
 `;
 
 const Card = styled.div`
-  background-color: white;
+  background-color: #f2f4f9;
   width: 200px;
   height: 250px;
-  margin-right: 10px;
+  margin: 25px 10px; /* ajustei aqui para manter espaçamento lateral e vertical */
   flex: 0 0 auto;
   display: flex;
-  flex-direction: column; /* Change to column to stack items vertically */
-  justify-content: center; /* Center items horizontally */
-  align-items: center; /* Center items vertically */
+  flex-direction: column;
+  align-items: center; /* Centraliza horizontalmente */
+  padding-top: 20px; /* NOVO: empurra o conteúdo um pouco pra baixo */
+  box-sizing: border-box; /* Garante que padding não estoura o card */
   scroll-snap-align: start;
-  margin: 25px;
+  border-radius: 20px;
 `;
 
 const Image = styled.img`
-    width: 80%;
-    height: 100px;
-    margin: 10px 0;
-
+  width: 80%;
+  height: 100px;
+  object-fit: contain; /* NOVO: imagem inteira visível sem distorcer */
+  margin-bottom: 10px; /* espaço entre imagem e texto */
 `;
-export { CarouselContainer, Container, Card, Image };
+
+
+const Text = styled.h4`
+  color: #222731;
+  margin: 10px;
+  text-decoration: none;
+  text-align: center;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit; /* opcional, para manter a cor dos textos dentro */
+`;
+export { CarouselContainer, Container, Card, Image, Text, StyledLink };

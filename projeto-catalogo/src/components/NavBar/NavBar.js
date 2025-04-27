@@ -11,14 +11,14 @@ export function NavBar() {
                 </NoLink>
             </Logo>
             <Menu>
-                <NoLink href="/">Home</NoLink>
-                <NoLink href="/about">About</NoLink>
-                <NoLink href="/contact">Contact</NoLink>
+                <NoLink href="/">Início</NoLink>
+                <NoLink href="/about">Sobre nós</NoLink>
+                <NoLink href="/contact">contato</NoLink>
                 <NoLink href="/createProduct">Criar</NoLink>
                 <LoginAndRegister>
                     <NoLink href="/login">Login</NoLink>
                     <div>/</div>
-                    <NoLink href="/register">Registrar</NoLink>
+                    <NoLink href="/register">Cadastrar-se</NoLink>
                 </LoginAndRegister>
 
             </Menu>

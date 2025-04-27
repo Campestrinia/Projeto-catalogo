@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { CarouselContainer, Container, Card, ButtonRight, ButtonLeft, GlobalStyle, Image } from "./Highlights.css";
-import { Link } from 'react-router-dom';
+import { CarouselContainer, Container, Card, ButtonRight, ButtonLeft, GlobalStyle, Image, Text, StyledLink } from "./Highlights.css";
 
 export function Highlight({ products }) {
     const containerRef = useRef(null);
@@ -48,16 +47,16 @@ export function Highlight({ products }) {
                 <Container ref={containerRef}>
                     {products.map((product) => (
                         <React.Fragment key={product.id}>
-                            <Link to={`/product/${product.id}`}>
+                            <StyledLink to={`/product/${product.id}`}>
                                 <Card>
                                     <Image
                                         src={`${apiUrl}/images/${product.imagem}`}
                                         alt={product.nome}
                                     />
-                                    <div>R${product.preco}</div>
-                                    <div>{product.nome}</div>
+                                    <Text>R${product.preco}</Text>
+                                    <Text>{product.nome}</Text>
                                 </Card>
-                            </Link>
+                            </StyledLink>
                         </React.Fragment>
                     ))}
                 </Container>

@@ -9,6 +9,7 @@ const Container = styled.div`
   background-color: #222731;
   min-height: ${window.innerHeight - 100}px;
   padding-bottom: 60px;
+  justify-content: center;
 `;
 
 const GlobalStyle = createGlobalStyle`
@@ -50,6 +51,17 @@ const NoLink = styled.a`
     margin: 10px;
         height: 18px;
 `;
+// const InputStyled = styled.input`
+//     width: 94%;
+//     height: 25px;
+//     padding-left: 10px;
+//     font-size: 16px;
+//     border: none;
+//     border-bottom: 2px solid #222731; /* ou outra cor */
+//     outline: none; /* remove a borda azul ao clicar */
+//     background-color:#f2f4f9;
+//     margin-top: 5px;
+// `;
 
 const InputStyled = styled.input`
   width: 100%;
@@ -74,7 +86,6 @@ const Title = styled.h1`
   margin-bottom: 24px;
   text-align: center;
   color: #222731;
-  margin: 0px 15px 5px 15px;
 `;
 
 const Alert = styled.div`
@@ -184,11 +195,32 @@ const LinkButton = styled.button`
   }
 `;
 
+const ForgotPassword = styled.button`
+  background: none;
+  border: none;
+  color: #3498db;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+  align-self: flex-end; /* manda para direita */
+  margin-top: -34px;
+  margin-right: 0px;
+
+  &:hover {
+    color: #2980b9;
+    opacity: 0.8;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+`;
 
 
 
 export {
   Container, GlobalStyle, ContainerBox, ContainerRegister,
   Button, NoLink, InputStyled, Title, Alert, InputWithIcon, IconButton,
-  LeftIconWrapper, LinkButton
+  LeftIconWrapper, LinkButton, ForgotPassword
 }

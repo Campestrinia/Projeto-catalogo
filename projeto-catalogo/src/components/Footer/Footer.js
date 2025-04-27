@@ -28,7 +28,7 @@ export function Footer() {
                 </Separator>
                 <Separator>
                     <h3>Contatos</h3>
-                    <p><GoMail /> HardwareHeroi@gmail.com</p>
+                    <p><GoMail /> suporte@hardwareheroi.com</p>
                     <p><FaPhone />  47 12345678</p>
                 </Separator>
             </Container>

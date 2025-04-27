@@ -12,6 +12,7 @@ import { ProductWithCategoria } from './pages/ProductWithCategoria/ProductWithCa
 
 function App() {
   return (
+
     <Rauter>
       <Routes>
         <Route path="/" element={<Home />} />

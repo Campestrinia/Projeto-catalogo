@@ -9,7 +9,7 @@ import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
-  background-color: rgba(45, 86, 219);
+  background-color: #f2f4f9;
   justify-content: space-between;
   `;
 
@@ -22,7 +22,7 @@ const Separator = styled.div`
 
 const NoLink = styled.a`  
     text-decoration: none;
-    color: inherit;
+    color: #222731;
     cursor: default;
     margin: 5px;
     `;
