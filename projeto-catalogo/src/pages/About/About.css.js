@@ -50,10 +50,18 @@ const Title = styled.h1`
   margin-bottom: 20px;
 `;
 
-const Bar = styled.div`
+const BarW = styled.div`
   width: 80px;
   height: 4px;
-  background: #4caf50;
+  background: #f2f4f9;
+  margin: 10px auto 20px;
+  border-radius: 2px;
+`;
+
+const BarB = styled.div`
+  width: 80px;
+  height: 4px;
+  background: #222731;
   margin: 10px auto 20px;
   border-radius: 2px;
 `;
@@ -114,7 +122,8 @@ export {
     Right,
     Card,
     Title,
-    Bar,
+    BarW,
+    BarB,
     Text,
     CardsValores,
     ValorCard,

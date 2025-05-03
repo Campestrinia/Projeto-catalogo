@@ -14,7 +14,7 @@ export function About() {
                     <S.Left>
                         <S.Card>
                             <S.Title>QUEM SOMOS?</S.Title>
-                            <S.Bar />
+                            <S.BarB />
                             <S.TextOne>
                                 A Hardware Herói nasceu de um sonho compartilhado entre colegas de faculdade, todos apaixonados por tecnologia e inovação. Durante longas noites de estudo e projetos, eles perceberam uma lacuna significativa no mercado de hardware de TI: a falta de um fornecedor confiável que oferecesse produtos de alta qualidade a preços acessíveis. Unidos por essa visão, decidiram transformar essa ideia em realidade.
                             </S.TextOne>
@@ -28,11 +28,11 @@ export function About() {
                 <S.Section>
                     <S.Card>
                         <S.Title>NOSSOS VALORES</S.Title>
-                        <S.Bar />
+                        <S.BarB />
                         <S.CardsValores>
                             <S.ValorCard>
                                 <S.ValorTitle>Missão</S.ValorTitle>
-                                <S.ValorBar />
+                                <S.BarW />
                                 <S.Text>
                                     Nossa missão é fornecer soluções tecnológicas de ponta, oferecendo hardwares de alta qualidade com um atendimento personalizado e suporte técnico especializado. Buscamos capacitar nossos clientes com as melhores ferramentas e produtos, contribuindo para o avanço tecnológico de suas atividades.
                                 </S.Text>
@@ -40,7 +40,7 @@ export function About() {
 
                             <S.ValorCard>
                                 <S.ValorTitle>Visão</S.ValorTitle>
-                                <S.ValorBar />
+                                <S.BarW />
                                 <S.Text>
                                     Nossa visão é nos tornarmos a empresa líder de mercado em revenda de hardwares de TI, reconhecida pela inovação, excelência e confiança. Aspiramos ser a primeira escolha para entusiastas e profissionais de TI, continuando a expandir nosso portfólio de produtos e serviços, mantendo-nos na vanguarda das tendências tecnológicas.
                                 </S.Text>
@@ -48,7 +48,7 @@ export function About() {
 
                             <S.ValorCard>
                                 <S.ValorTitle>Valores</S.ValorTitle>
-                                <S.ValorBar />
+                                <S.BarW />
                                 <S.Text>
                                     Prezamos pela integridade, transparência, inovação e compromisso com a qualidade. Acreditamos que o sucesso de nossos clientes é o nosso sucesso, e trabalhamos constantemente para superar expectativas.
                                 </S.Text>

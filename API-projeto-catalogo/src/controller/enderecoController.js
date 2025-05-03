@@ -13,10 +13,10 @@ async function getAllEndereco(req, res) {
 }
 
 async function createEndereco(req, res) {
-  const { rua, CEP, cidade, numero, idUsuario } = req.body;
+  const { CEP, rua, numero, complemento, bairro, cidade, estado, idUsuario } = req.body;
 
   try {
-    await enderecoService.createEndereco(rua, CEP, cidade, numero, idUsuario);
+    await enderecoService.createEndereco(CEP, rua, numero, complemento, bairro, cidade, estado, idUsuario);
     res.status(201).json({ message: `Success` });
   } catch (error) {
     res.status(500).send({
@@ -29,14 +29,9 @@ async function createEndereco(req, res) {
 async function updateEndereco(req, res) {
   try {
     const { id } = req.params;
-    const { rua, CEP, cidade, numero, idUsuario } = req.body; // Correção: obter dados do corpo da requisição
+    const { CEP, rua, numero, complemento, bairro, cidade, estado, idUsuario } = req.body; // Correção: obter dados do corpo da requisição
     await enderecoService.updateEndereco(
-      id,
-      rua,
-      CEP,
-      cidade,
-      numero,
-      idUsuario
+      id, CEP, rua, numero, complemento, bairro, cidade, estado, idUsuario
     );
     res.status(200).json("Success");
   } catch (error) {

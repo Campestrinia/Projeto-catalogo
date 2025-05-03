@@ -15,18 +15,21 @@ async function getAllEndereco() {
   }
 }
 
-async function createEndereco(rua, CEP, cidade, numero, idUsuario) {
+async function createEndereco(CEP, rua, numero, complemento, bairro, cidade, estado, idUsuario) {
   let connection;
   try {
     connection = await mysql.createConnection(databaseConfig);
     const insertEndereco =
-      "INSERT INTO endereco(rua, CEP, cidade, numero, idUsuario) VALUES(?, ?, ?, ?, ?)";
+      "INSERT INTO endereco(CEP, rua, numero, complemento, bairro, cidade, estado, idUsuario) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
     await connection.query(insertEndereco, [
-      rua,
       CEP,
-      cidade,
+      rua,
       numero,
-      idUsuario,
+      complemento,
+      bairro,
+      cidade,
+      estado,
+      idUsuario
     ]);
   } catch (error) {
     console.error("Error creating endereco:", error);
@@ -36,20 +39,15 @@ async function createEndereco(rua, CEP, cidade, numero, idUsuario) {
   }
 }
 
-async function updateEndereco(id, rua, CEP, cidade, numero, idUsuario) {
+async function updateEndereco(id, CEP, rua, numero, complemento, bairro, cidade, estado, idUsuario) {
   // Corrigir a assinatura da função para incluir 'id'
   let connection;
   try {
     connection = await mysql.createConnection(databaseConfig);
     const updateEndereco =
-      "UPDATE endereco SET rua = ?, CEP = ?, cidade = ?, numero = ?, idUsuario = ? WHERE id = ?";
+      "UPDATE endereco SET CEP = ?, rua = ?, numero = ?, complemento = ?, bairro = ?, cidade = ?, estado = ?, idUsuario = ? WHERE id = ?";
     await connection.query(updateEndereco, [
-      rua,
-      CEP,
-      cidade,
-      numero,
-      idUsuario,
-      id,
+      CEP, rua, numero, complemento, bairro, cidade, estado, idUsuario, id
     ]);
   } catch (error) {
     console.error("Error updating endereco:", error);
@@ -63,7 +61,12 @@ async function deleteEndereco(id) {
   let connection;
   try {
     connection = await mysql.createConnection(databaseConfig);
-    await connection.query("DELETE FROM endereco WHERE id = ?", [id]);
+    const [result] = await connection.query("DELETE FROM endereco WHERE id = ?", [id]);
+
+    if (result.affectedRows === 0) {
+      throw new Error("Endereço não encontrado.");
+    }
+
   } catch (error) {
     console.error("Error deleting endereco:", error);
     throw error;
@@ -71,6 +74,7 @@ async function deleteEndereco(id) {
     if (connection) await connection.end();
   }
 }
+
 
 async function getEnderecoById(id) {
   // Corrigir o nome da função
