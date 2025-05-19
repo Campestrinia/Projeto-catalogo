@@ -18,9 +18,19 @@ async function createUsuario(req, res) {
   const { nome, email, CPF, telefone, senha } = req.body;
 
   try {
-    await userService.createUsuario(nome, email, CPF, telefone, senha);
-
-    res.status(201).json({ message: `Success` });
+    const validarEmail = await userService.getEmailById(email)
+    console.log('aqui')
+    console.log(validarEmail)
+    if (validarEmail.id) {
+      res.status(400).send({ message: "E-mail já cadastrado" })
+      return
+    }
+    const usuario = await userService.createUsuario(nome, email, CPF, telefone, senha);
+    console.log('aqui 2')
+    console.log(usuario)
+    console.log('aqui 3')
+    res.status(201).json({ message: `Success`, idUsuario: usuario.id, token: usuario.token });
+    console.log('aqui 4')
   } catch (eror) {
     res.status(500).send({
       message: `error adding user!`,
@@ -28,6 +38,7 @@ async function createUsuario(req, res) {
     });
   }
 }
+
 async function updateUsuario(req, res) {
   try {
     const { id } = req.params;
@@ -72,10 +83,35 @@ async function getUsuarioById(req, res) {
   }
 }
 
+async function login(req, res) {
+  try {
+    const { email, senha } = req.body;
+
+    const user = await userService.login(email, senha);
+
+    if (user == 'E-mail inválido') {
+      res.status(401).json({ error: 'Email inválido' });
+    } else if (user == 'Senha inválido') {
+      res.status(401).json({ error: 'Senha inválida' });
+    } else if (user.length == 0) {
+      res.status(401).json({ error: 'Email ou senha inválida' });
+    } else {
+      res.status(200).json(user);
+    }
+
+  } catch (error) {
+    res.status(500).send({
+      message: "Error login",
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   getAllUsuario,
   createUsuario,
   updateUsuario,
   deleteUsuario,
-  getUsuarioById
+  getUsuarioById,
+  login
 }

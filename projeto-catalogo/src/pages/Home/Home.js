@@ -6,8 +6,8 @@ import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import { GlobalStyle } from './home.css';
 
-
 export function Home() {
+
     const [products, setProducts] = useState([]);
     const apiBackEnd = process.env.REACT_APP_API_URL;
     console.log(apiBackEnd)

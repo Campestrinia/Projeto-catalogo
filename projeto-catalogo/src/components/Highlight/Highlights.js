@@ -1,13 +1,26 @@
 import React, { useRef, useEffect } from 'react';
-import { CarouselContainer, Container, Card, ButtonRight, ButtonLeft, GlobalStyle, Image, Text, StyledLink } from "./Highlights.css";
+import {
+    CarouselContainer,
+    Container,
+    Card,
+    ButtonRight,
+    ButtonLeft,
+    GlobalStyle,
+    Image,
+    Text,
+    StyledLink,
+} from "./Highlights.css";
 
 export function Highlight({ products }) {
     const containerRef = useRef(null);
+    const cardRef = useRef(null);
     const apiUrl = process.env.REACT_APP_API_URL;
-    const scroll = (scrollOffset) => {
-        if (containerRef.current) {
+
+    const scroll = (direction) => {
+        if (containerRef.current && cardRef.current) {
+            const cardWidth = cardRef.current.offsetWidth;
             containerRef.current.scrollBy({
-                left: scrollOffset,
+                left: direction * cardWidth,
                 behavior: 'smooth',
             });
         }
@@ -15,12 +28,9 @@ export function Highlight({ products }) {
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            if (containerRef.current) {
+            if (containerRef.current && cardRef.current) {
                 const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
-                console.log("Posição atual:", scrollLeft);
-                console.log("Total rolável:", scrollWidth);
-                console.log("Área vista:", clientWidth);
-                console.log("Soma (scrollLeft + clientWidth):", scrollLeft + clientWidth);
+                const cardWidth = cardRef.current.offsetWidth;
 
                 if (scrollLeft + clientWidth + 1 >= scrollWidth) {
                     containerRef.current.scrollTo({
@@ -29,7 +39,7 @@ export function Highlight({ products }) {
                     });
                 } else {
                     containerRef.current.scrollBy({
-                        left: clientWidth / 1,
+                        left: cardWidth,
                         behavior: 'smooth',
                     });
                 }
@@ -43,12 +53,12 @@ export function Highlight({ products }) {
         <>
             <GlobalStyle />
             <CarouselContainer>
-                <ButtonLeft onClick={() => scroll(-containerRef.current.offsetWidth)}>◀</ButtonLeft>
+                <ButtonLeft onClick={() => scroll(-1)}>◀</ButtonLeft>
                 <Container ref={containerRef}>
-                    {products.map((product) => (
+                    {products.map((product, index) => (
                         <React.Fragment key={product.id}>
                             <StyledLink to={`/product/${product.id}`}>
-                                <Card>
+                                <Card ref={index === 0 ? cardRef : null}>
                                     <Image
                                         src={`${apiUrl}/images/${product.imagem}`}
                                         alt={product.nome}
@@ -60,7 +70,7 @@ export function Highlight({ products }) {
                         </React.Fragment>
                     ))}
                 </Container>
-                <ButtonRight onClick={() => scroll(containerRef.current.offsetWidth)}>▶</ButtonRight>
+                <ButtonRight onClick={() => scroll(1)}>▶</ButtonRight>
             </CarouselContainer>
         </>
     );

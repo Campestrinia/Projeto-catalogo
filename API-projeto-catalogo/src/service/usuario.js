@@ -1,5 +1,7 @@
 const mysql = require("mysql2/promise");
 const databaseConfig = require("../config/database");
+// const bcrypt = require('bcrypt')
+const jwt = require('./../token.js')
 
 async function getAllUsuario() {
   const connection = await mysql.createConnection(databaseConfig);
@@ -16,10 +18,18 @@ async function createUsuario(nome, email, CPF, telefone, senha) {
 
   const insertUsuario =
     "INSERT INTO usuario(nome, email, CPF, telefone, senha) VALUES(?,?,?,?,?)";
-  await connection.query(insertUsuario, [nome, email, CPF, telefone, senha]);
+  const [result] = await connection.query(insertUsuario, [nome, email, CPF, telefone, senha]);
+
+  const token = jwt.createJWT(result.insertId);
+  const UsuarioIdNome = {
+    id: result.insertId,
+    token: token
+  };
 
   await connection.end();
+  return UsuarioIdNome;
 }
+
 
 async function updateUsuario(id, nome, email, CPF, telefone, senha) {
   const connection = await mysql.createConnection(databaseConfig);
@@ -54,10 +64,41 @@ async function getUsuarioById(id) {
   return usuarioClean;
 }
 
+async function getEmailById(email) {
+  const connection = await mysql.createConnection(databaseConfig);
+
+  const [results] = await connection.query(
+    `SELECT * FROM usuario WHERE email = ?`, [email]
+  );
+
+  await connection.end();
+  return results.length > 0 ? results[0] : [];
+}
+
+async function login(email, senha) {
+  const usuario = await getEmailById(email)
+  if (usuario.length == 0) {
+    return 'E-mail inválido'
+  } else {
+    // if (await bcrypt.compare(senha, usuario.senha)) {
+    if (usuario.senha === senha) {
+      delete usuario.senha
+      delete usuario.CPF
+      delete usuario.telefone
+      usuario.token = jwt.createJWT(usuario.id)
+      return usuario
+    } else {
+      return 'Senha inválida'
+    }
+  }
+}
+
 module.exports = {
   getAllUsuario,
   createUsuario,
   updateUsuario,
   deleteUsuario,
   getUsuarioById,
+  login,
+  getEmailById
 };
