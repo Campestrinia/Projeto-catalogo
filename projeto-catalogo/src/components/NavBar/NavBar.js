@@ -33,11 +33,7 @@ export function NavBar() {
                         <NoLink href="/register">Cadastrar-se</NoLink>
                     </LoginAndRegister>
                 )}
-
-
             </Menu>
-
-
         </Container>
 
     );
