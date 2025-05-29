@@ -1,11 +1,13 @@
 import { NavBar } from "../../components/NavBar";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from "axios";
 import { ContainerDad, Container, Imagi, ContainerSon, About, Button, ImagamProduct, Itens, Input, Select, ContainerButton } from "./createProduct.css";
 import { useNavigate, useLocation } from 'react-router-dom';
+import { LoginContext } from '../../context/Lcontext';
 
 export function CreateProduct() {
     const apiUrl = process.env.REACT_APP_API_URL;
+    const { user } = useContext(LoginContext);
     const navigate = useNavigate();
     const location = useLocation();
     const previousPage = location.state?.from || '/';
@@ -47,7 +49,7 @@ export function CreateProduct() {
         };
         fetchCategori();
         fetchUsuario();
-    }, [categoriaSelecionada,apiUrl]);
+    }, [categoriaSelecionada, apiUrl]);
 
     //define cada item do fromData
     const handleChange = (e) => {
@@ -98,14 +100,14 @@ export function CreateProduct() {
     //quando adiciona o produto
     const finish = async (e) => {
         e.preventDefault();
-
+        console.log(user)
         const formDataWithImage = new FormData();
 
         if (imageFile) {
             formDataWithImage.append('imagem', imageFile);
         }
         formDataWithImage.append('idCategoria', formData.idCategoria);
-        formDataWithImage.append('idUsuario', formData.idUsuario);
+        formDataWithImage.append('idUsuario', user.id);
         formDataWithImage.append('nome', formData.nome);
         formDataWithImage.append('quantidade', formData.quantidade);
         formDataWithImage.append('preco', formData.preco);
@@ -205,27 +207,9 @@ export function CreateProduct() {
                                         </Select>
                                     </label>
                                 </Itens>
-                                <Itens>
-                                    <label>
-                                        Vendedor:
-                                        <Select
-                                            name="idUsuario"
-                                            value={categoriaSelecionada}
-                                            onChange={handleChangeCategori}
-                                            required={true}
-                                        >
-                                            <option value="" disabled>Selecione um vendedor</option>
-                                            {usuarios.map((usuario) => (
-                                                <option key={usuario.id} value={usuario.id}>
-                                                    {usuario.nome}
-                                                </option>
-                                            ))}
-                                        </Select>
-                                    </label>
-                                </Itens>
                             </About>
                             <ContainerButton>
-                                <Button type="submit">Criar produto</Button>
+                                <Button type="submit" disabled={!user?.id}>Criar produto</Button>
                                 <Button type="button" onClick={Back}>Cancelar</Button>
                             </ContainerButton>
                         </ContainerSon>

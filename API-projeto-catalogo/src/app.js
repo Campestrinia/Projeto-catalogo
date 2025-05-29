@@ -4,6 +4,7 @@ const usuarioRouter = require("./router/usuarioRouter.js");
 const produtoRouter = require("./router/produtoRouter.js");
 const enderecoRouter = require("./router/enderecoRouter.js");
 const categoriaRouter = require("./router/categoriaRouter.js");
+const favoritoRouter = require("./router/favoritoRouter.js")
 const cors = require('cors')
 const path = require('path');
 
@@ -23,6 +24,7 @@ app.use("/api", usuarioRouter);
 app.use("/api", produtoRouter);
 app.use("/api", enderecoRouter);
 app.use("/api", categoriaRouter);
+app.use("/api", favoritoRouter);
 
 app.listen(PORT, () => {
   console.log("servidor online");

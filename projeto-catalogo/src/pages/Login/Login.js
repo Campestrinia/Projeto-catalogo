@@ -8,6 +8,7 @@ import {
     LinkButton, ForgotPassword
 } from "./Login.css"
 // import axios from "axios";
+import { message } from "antd";
 import { useNavigate } from 'react-router-dom';
 import { NavBar } from '../../components/NavBar';
 import { Footer } from '../../components/Footer';
@@ -19,6 +20,7 @@ export function Login() {
     const { signIn } = useContext(LoginContext)
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [loading, setLoading] = useState(false);
     const [isValid, setIsValid] = useState(true);
     const [isValidEmail, setIsValidEmail] = useState(true);
     const [isValidSenha, setIsValidSenha] = useState(true);
@@ -30,6 +32,7 @@ export function Login() {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,100}$/;
 
     const handleSubmit = async () => {
+        setLoading(true)
         // Verifica se todos os campos estão preenchidos
         const camposPreenchidos = email && senha;
 
@@ -44,9 +47,24 @@ export function Login() {
         }
 
         try {
-            await signIn(email, senha, 'Login')
-            navigate("/");
+            const response = await signIn(email, senha, 'Login')
+            console.log(response.data)
+            if (response.data === "Email inválido") {
+                message.error('Erro ao fazer login, Email não cadastrado')
+                setLoading(false)
+            } else if (response.data === "Senha inválida") {
+                message.error('Erro ao fazer login, senha inválida')
+                setLoading(false)
+            } else if (response.data.id) {
+                message.success('Login realizado com sucesso')
+                navigate('/')
+                setLoading(false)
+            } else {
+                message.error('Erro ao tentar fazer o login, tente novamente em alguns instantes')
+                setLoading(false)
+            }
         } catch (error) {
+            setLoading(false)
             console.error("Erro ao registrar usuário:", error);
         }
     };
@@ -120,9 +138,9 @@ export function Login() {
                             </Alert>
 
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-                                <Button type="submit">Entrar</Button>
+                                <Button type="submit">{loading ? 'Entrando' : 'Entrar'}</Button>
 
-                                <ForgotPassword onClick={() => navigate('/')}>
+                                < ForgotPassword onClick={() => navigate('/')}>
                                     Esqueceu a senha?
                                 </ForgotPassword>
 

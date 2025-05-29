@@ -39,11 +39,13 @@ export const LoginProvider = ({ children }) => {
             console.log(response.data);
 
             setUser(response.data);
+            console.log(response.response);
             localStorage.setItem('User', JSON.stringify(response.data));
+            return response
 
         } catch (error) {
-            console.log(error.response);
             console.log('Erro', 'Falha ao tentar realizar login');
+            return error
         }
     }
     async function Logout() {

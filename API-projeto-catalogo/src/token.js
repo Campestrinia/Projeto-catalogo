@@ -21,10 +21,28 @@ function validateJWT(req, res, next) {
         if (err) {
             res.status(401).send({ error: 'Token inválido' })
         }
-        req.idUsuario = decoded.idUsuario;
+        req.idUsuario = decoded.id;
 
         next()
     })
 }
 
-module.exports = { createJWT, validateJWT }
+function optionalJWT(req, res, next) {
+    const authToken = req.headers.authorization;
+
+    if (authToken) {
+        const [_, token] = authToken.split(" ");
+
+        jwt.verify(token, secretToken, (err, decoded) => {
+            if (!err) {
+                req.idUsuario = decoded.id;
+            }
+            // Se der erro no token, simplesmente ignora e segue como usuário não autenticado.
+        });
+    }
+
+    next();
+}
+
+
+module.exports = { createJWT, validateJWT, optionalJWT }

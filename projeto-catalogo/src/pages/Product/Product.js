@@ -1,11 +1,13 @@
 import { NavBar } from "../../components/NavBar"
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import axios from "axios";
 import {
     ContainerDad, Container, Imagi, ContainerSon, About, Button, ImagamProduct, ContainerButton,
     ContainerButtonAndAbout, ContainerSemelhantes, Card, Image, AboutSemelhantes
 } from "./product.css"
+import { LoginContext } from '../../context/Lcontext.js'
 import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 import styled from "styled-components";
 
@@ -16,34 +18,101 @@ const StyledLink = styled(Link)`
 `;
 
 export function Product() {
+    const { user } = useContext(LoginContext);
     const apiUrl = process.env.REACT_APP_API_URL;
     const { id } = useParams();
     const navigate = useNavigate();
     const location = useLocation();
     const containerRef = useRef(null);
-
-
-    const navigateToManageProduct = () => {
-        navigate(`/manage-product/${id}`, { state: { from: location.pathname } });
-    };
-
     const [product, setProduct] = useState({});
     const [productsSemelhante, setProductsSemelhante] = useState([]);
     const [usuario, setUsuario] = useState({});
     const [categoria, setCategoria] = useState({});
+    const [favoritado, setFavoritado] = useState(false)
 
+    const navigateToManageProduct = () => {
+        navigate(`/manage-product/${id}`, { state: { from: location.pathname } });
+    };
+    const favorito = async (idUsuario, idProduct) => {
+        try {
+            console.log(user)
+            if (user && Object.keys(user).length > 0) {
+
+                const response = await axios.post(`${apiUrl}/api/favorito/`,
+                    { idUsuario, idProduct },
+                    {
+                        headers: { Authorization: `Bearer ${user.token}` }
+                    }
+                );
+                console.log(response.data)
+                setFavoritado(true)
+                console.log("Produto favoritado:", response.data);
+            } else {
+                navigate('/login')
+            }
+        } catch (error) {
+            console.error("Erro ao favoritar produto:", error);
+        }
+    };
+    const desfavorito = async () => {
+        try {
+            const favorito = await axios.get(`${apiUrl}/api/favorito/${user.id}`,
+                {
+                    headers: { Authorization: `Bearer ${user.token}` }
+                }
+            );
+            const itemFavorito = favorito.data.find(item => Number(item.idProduct) === Number(id));
+            console.log(itemFavorito)
+            const response = await axios.delete(`${apiUrl}/api/favorito/${itemFavorito.id}`,
+                {
+                    headers: { Authorization: `Bearer ${user.token}` }
+                }
+            );
+            setFavoritado(false)
+            console.log(response.data);
+        } catch (error) {
+            console.error("Erro ao favoritar produto:", error);
+        }
+    };
 
     useEffect(() => {
         const fetchProduct = async () => {
             try {
                 const response = await axios.get(`${apiUrl}/api/product/${id}`);
                 setProduct(response.data);
+
             } catch (error) {
                 console.error("Error fetching product or image:", error);
             }
         };
         fetchProduct();
     }, [id, apiUrl]);
+
+    useEffect(() => {
+        const fetchfavorite = async () => {
+            try {
+                if (!user) {
+                    setFavoritado(false)
+                } else {
+                    console.log('User:', user);
+                    if (!user || !user.id || !user.token) return;
+
+                    const favorito = await axios.get(`${apiUrl}/api/favorito/${user.id}`,
+                        {
+                            headers: { Authorization: `Bearer ${user.token}` }
+                        }
+                    );
+                    const isFavorito = favorito.data.some(item => Number(item.idProduct) === Number(id));
+                    console.log(isFavorito)
+                    setFavoritado(isFavorito)
+                }
+
+            } catch (error) {
+                console.error("Error fetching product or image:", error);
+            }
+        };
+        fetchfavorite();
+    }, [user, apiUrl]);
     useEffect(() => {
         if (product.idCategoria) {
             const fetchProduct = async () => {
@@ -88,14 +157,6 @@ export function Product() {
         }
     }, [product.idUsuario, apiUrl]);
 
-    // const scroll = (scrollOffset) => {
-    //     if (containerRef.current) {
-    //         containerRef.current.scrollBy({
-    //             left: scrollOffset,
-    //             behavior: 'smooth',
-    //         });
-    //     }
-    // };
     return (
         <>
             <NavBar />
@@ -115,6 +176,11 @@ export function Product() {
                             </About>
                             <ContainerButton>
                                 <Button onClick={navigateToManageProduct}>Editar</Button>
+                                {favoritado ?
+                                    <FaHeart onClick={() => desfavorito()} /> :
+                                    <FaRegHeart onClick={() => favorito(user.id, product.id)} />
+
+                                }
                                 <Button>Comprar</Button>
                                 <Button>Carrinho</Button>
                             </ContainerButton>

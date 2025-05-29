@@ -71,10 +71,16 @@ async function deleteUsuario(req, res) {
 async function getUsuarioById(req, res) {
   try {
     const { id } = req.params;
+    const idUsuario = req.idUsuario;
 
-    const user = await userService.getUsuarioById(id);
+    console.log("ID do usuário autenticado:", idUsuario);
+
+    const user = idUsuario
+      ? await userService.getUsuarioById(id)   // Com token
+      : await userService.getUsuarioByIdSemToken(id); // Sem token
 
     res.status(200).json(user);
+
   } catch (error) {
     res.status(500).send({
       message: "Error getting user by ID",
@@ -82,6 +88,7 @@ async function getUsuarioById(req, res) {
     });
   }
 }
+
 
 async function login(req, res) {
   try {

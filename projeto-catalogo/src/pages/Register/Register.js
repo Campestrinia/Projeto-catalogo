@@ -9,6 +9,7 @@ import {
     LinkButton
 } from "./register.css"
 import axios from "axios";
+import { message } from "antd";
 import { useNavigate } from 'react-router-dom';
 import { NavBar } from '../../components/NavBar';
 import { Footer } from '../../components/Footer';
@@ -51,6 +52,7 @@ export function Register() {
 
         if (!camposPreenchidos || !validacoesOk || !senhasIguais) {
             setIsValid(false); // Mostra alerta genérico
+            message.error('Erro ao se registrar, tente novamente em alguns instantes')
             return;
         }
 
@@ -65,6 +67,7 @@ export function Register() {
             console.log("Usuário registrado:", response.data);
             navigate("/");
         } catch (error) {
+            message.error('Erro ao se registrar, tente novamente em alguns instantes')
             console.error("Erro ao registrar usuário:", error);
         }
     };
