@@ -7,12 +7,15 @@ const categoriaRouter = require("./router/categoriaRouter.js");
 const favoritoRouter = require("./router/favoritoRouter.js")
 const cors = require('cors')
 const path = require('path');
+const carrinhoRouter = require("./router/carrinhoRouter.js");
+const carrinhoItemRouter = require("./router/carrinhoItemRouter.js");
+const cors = require("cors");
+const path = require("path");
 
 const PORT = 3001;
 
 const app = express();
 app.use(cors());
-
 app.use(bodyParser.json());
 app.use('/images', express.static(path.join(__dirname, '/image/product')));
 
@@ -20,11 +23,14 @@ app.use('/images', express.static(path.join(__dirname, '/image/product')));
 app.get("/", (req, res) => {
   res.send(`<h1>Hello Word!</h1>`);
 });
+
 app.use("/api", usuarioRouter);
 app.use("/api", produtoRouter);
 app.use("/api", enderecoRouter);
 app.use("/api", categoriaRouter);
 app.use("/api", favoritoRouter);
+app.use("/api", carrinhoRouter);
+app.use("/api", carrinhoItemRouter);
 
 app.listen(PORT, () => {
   console.log("servidor online");
