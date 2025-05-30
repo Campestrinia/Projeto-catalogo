@@ -9,8 +9,6 @@ const cors = require('cors')
 const path = require('path');
 const carrinhoRouter = require("./router/carrinhoRouter.js");
 const carrinhoItemRouter = require("./router/carrinhoItemRouter.js");
-const cors = require("cors");
-const path = require("path");
 
 const PORT = 3001;
 

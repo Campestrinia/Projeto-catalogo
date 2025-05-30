@@ -107,9 +107,12 @@ export function Login() {
                                 </LeftIconWrapper>
                                 <InputStyled placeholder='E-mail' value={email} onChange={handleEmailChange} />
                             </InputWithIcon>
-                            <Alert visible={!isValidEmail}>
-                                <FaExclamationCircle /> Por favor, insira um e-mail válido.
-                            </Alert>
+                            {!isValidEmail && (
+                                <Alert>
+                                    <FaExclamationCircle /> Por favor, insira um e-mail válido.
+                                </Alert>
+                            )}
+
 
                             <InputWithIcon>
                                 <LeftIconWrapper>
@@ -133,20 +136,24 @@ export function Login() {
                                 <p style={{ margin: '2px' }}>Esse item é obrigatorio</p>
                             </Tooltip>
 
-                            <Alert visible={!isValidSenha}>
-                                <FaExclamationCircle /> Por favor, insira uma senha válida.
-                            </Alert>
+                            {!isValidSenha && (
+                                <Alert>
+                                    <FaExclamationCircle /> Por favor, insira uma senha válida.
+                                </Alert>
+                            )}
 
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', gap: '15px' }}>
                                 <Button type="submit">{loading ? 'Entrando' : 'Entrar'}</Button>
 
                                 < ForgotPassword onClick={() => navigate('/')}>
                                     Esqueceu a senha?
                                 </ForgotPassword>
 
-                                <Alert visible={!isValid} style={{ marginTop: '20px' }}>
-                                    <FaExclamationCircle /> Preencha todas as informações.
-                                </Alert>
+                                {!isValid && (
+                                    <Alert style={{ marginTop: '20px' }}>
+                                        <FaExclamationCircle /> Preencha todas as informações.
+                                    </Alert>
+                                )}
 
                                 <LinkButton onClick={() => navigate('/register')}>
                                     Deseja se cadastrar? Criar Conta

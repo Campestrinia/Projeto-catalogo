@@ -29,13 +29,13 @@ export function Profile() {
     const [myProducts, setMyProducts] = useState(null);
     const [modalEndereco, setModalEndereco] = useState(false);
     const [enviandoEndereco, setEnviandoEndereco] = useState(false);
-    const [CEP, setCEP] = useState();
-    const [rua, setRua] = useState();
-    const [numero, setNumero] = useState();
-    const [complemento, setComplemento] = useState();
-    const [bairro, setBairro] = useState();
-    const [cidade, setCidade] = useState();
-    const [estado, setEstado] = useState();
+    const [CEP, setCEP] = useState('');
+    const [rua, setRua] = useState('');
+    const [numero, setNumero] = useState('');
+    const [complemento, setComplemento] = useState('');
+    const [bairro, setBairro] = useState('');
+    const [cidade, setCidade] = useState('');
+    const [estado, setEstado] = useState('');
     const navigate = useNavigate();
 
 
@@ -70,7 +70,7 @@ export function Profile() {
         };
         const fetchMyProducts = async () => {
             try {
-                const response = await axios.get(`${apiBackEnd}/api/products/${user.id}`, {
+                const response = await axios.get(`${apiBackEnd}/api/product/usuario/${user.id}`, {
                     headers: {
                         Authorization: `Bearer ${user.token}`,
                     },
@@ -157,8 +157,6 @@ export function Profile() {
             setBairro(response.data.bairro)
             setCidade(response.data.localidade)
             setEstado(response.data.estado)
-            setNumero('')
-            setComplemento('')
         }
     };
     const handleRuaChange = async (value) => {
@@ -210,7 +208,8 @@ export function Profile() {
                             'Content-Type': 'application/json'
                         },
                     });
-                if (response.data.message === 'Sucess') {
+                console.log(response)
+                if (response.data.message === "Success") {
                     console.log("Form enviado!");
                     console.log(response.data);
                     fetchEnderecos()
@@ -223,11 +222,11 @@ export function Profile() {
                     setCidade('')
                     setEstado('')
                     setEnviandoEndereco(false)
+                    message.success('Endereço cadastrado com sucesso')
                 } else {
                     message.error('Erro ao adicionar seu endereço, tente novamente em alguns instantes')
                 }
             }
-            message.error('Erro ao adicionar seu endereço, tente novamente em alguns instantes')
         } catch (error) {
             setEnviandoEndereco(false)
             console.error("Erro ao buscar usuário:", error);
@@ -329,7 +328,7 @@ export function Profile() {
                                 <InputStyled
                                     type="text"
                                     placeholder="Complemento (opcional)"
-                                    value={complemento}
+                                    value={complemento || ''}
                                     onChange={handleComplementoChange}
                                 />
                             </InputWithIcon>
@@ -414,7 +413,7 @@ export function Profile() {
                         <Cards>
                             <Title>Minhas Vendas</Title>
                             {myProducts?.length > 0 ? (
-                                favoritos.map((addr, key) => (
+                                myProducts.map((addr, key) => (
                                     <StyledLink to={`/product/${addr.id}`} key={key}>
                                         <p><strong>produto</strong> {key + 1}</p>
                                         <ProductImage src={`${apiBackEnd}/images/${addr.imagem}`} alt={addr.nome || "Imagem não encontrada"} />

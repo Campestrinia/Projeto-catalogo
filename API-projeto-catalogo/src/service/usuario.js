@@ -68,15 +68,19 @@ async function getUsuarioByIdSemToken(id) {
   const connection = await mysql.createConnection(databaseConfig);
 
   const [usuario] = await connection.query(
-    `SELECT nome FROM usuario WHERE id = ?`,
+    `SELECT id, nome FROM usuario WHERE id = ?`,
     [id]
   );
 
-  const usuarioClean = { 'nome': usuario[0]?.nome }; // Pega apenas o nome
+  const usuarioClean = {
+    id: usuario[0]?.id,
+    nome: usuario[0]?.nome
+  };
 
   await connection.end();
   return usuarioClean;
 }
+
 
 async function getEmailById(email) {
   const connection = await mysql.createConnection(databaseConfig);

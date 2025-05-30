@@ -10,6 +10,7 @@ import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 import styled from "styled-components";
+import { message } from "antd";
 
 const StyledLink = styled(Link)`
     text-decoration: none;
@@ -33,10 +34,17 @@ export function Product() {
     const navigateToManageProduct = () => {
         navigate(`/manage-product/${id}`, { state: { from: location.pathname } });
     };
-    const favorito = async (idUsuario, idProduct) => {
+    const favorito = async (idUsuario, idProduct, idUsuarioProduct) => {
         try {
             console.log(user)
             if (user && Object.keys(user).length > 0) {
+                console.log(user.id)
+                console.log(idUsuarioProduct)
+                console.log(Number(user.id) === Number(idUsuarioProduct))
+                if (Number(user.id) === Number(idUsuarioProduct)) {
+                    message.error('Você não pode favoritar um produto vendido por você!')
+                    return
+                }
 
                 const response = await axios.post(`${apiUrl}/api/favorito/`,
                     { idUsuario, idProduct },
@@ -47,6 +55,7 @@ export function Product() {
                 console.log(response.data)
                 setFavoritado(true)
                 console.log("Produto favoritado:", response.data);
+                message.success("Produto favoritado com sucesso!");
             } else {
                 navigate('/login')
             }
@@ -70,6 +79,7 @@ export function Product() {
             );
             setFavoritado(false)
             console.log(response.data);
+            message.success("Produto desfavoritado com sucesso!");
         } catch (error) {
             console.error("Erro ao favoritar produto:", error);
         }
@@ -112,7 +122,7 @@ export function Product() {
             }
         };
         fetchfavorite();
-    }, [user, apiUrl]);
+    }, [user, apiUrl, id]);
     useEffect(() => {
         if (product.idCategoria) {
             const fetchProduct = async () => {
@@ -175,10 +185,12 @@ export function Product() {
                                 <h3>Categoria: {categoria.nome || "Não encontrado"}</h3>
                             </About>
                             <ContainerButton>
-                                <Button onClick={navigateToManageProduct}>Editar</Button>
+                                {usuario.id === user.id &&
+                                    <Button onClick={navigateToManageProduct}>Editar</Button>
+                                }
                                 {favoritado ?
                                     <FaHeart onClick={() => desfavorito()} /> :
-                                    <FaRegHeart onClick={() => favorito(user.id, product.id)} />
+                                    <FaRegHeart onClick={() => favorito(user.id, product.id, product.idUsuario)} />
 
                                 }
                                 <Button>Comprar</Button>

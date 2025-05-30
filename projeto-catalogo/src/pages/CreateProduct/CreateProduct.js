@@ -5,12 +5,15 @@ import { ContainerDad, Container, Imagi, ContainerSon, About, Button, ImagamProd
 import { useNavigate, useLocation } from 'react-router-dom';
 import { LoginContext } from '../../context/Lcontext';
 
+// ...seus imports
+
 export function CreateProduct() {
     const apiUrl = process.env.REACT_APP_API_URL;
     const { user } = useContext(LoginContext);
     const navigate = useNavigate();
     const location = useLocation();
     const previousPage = location.state?.from || '/';
+
     const [formData, setFormData] = useState({
         nome: '',
         preco: '',
@@ -20,38 +23,31 @@ export function CreateProduct() {
         idUsuario: '',
         imagem: ''
     });
-    const [categorias, setCategorias] = useState([])
-    const [usuarios, setUsuarios] = useState([])
+    const [categorias, setCategorias] = useState([]);
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState('');
     const [categoriaSelecionada, setCategoriaSelecionada] = useState('');
-    const [usuarioSelecionado, setusuarioSelecionado] = useState('');
 
-    //pega todas as categorias e usuarios no mySql
+    // 🔐 Se não tiver user, volta para login
+    useEffect(() => {
+        if (!Object.keys(user).length > 0) {
+            navigate('/login');
+        }
+    }, [user, navigate]);
+
     useEffect(() => {
         const fetchCategori = async () => {
             try {
                 const response = await axios.get(`${apiUrl}/api/categoria`);
-                console.log(response.data)
-                setCategorias(response.data)
+                setCategorias(response.data);
             } catch (error) {
                 console.error("Error fetching categorias:", error);
             }
         };
-        const fetchUsuario = async () => {
-            try {
-                const response = await axios.get(`${apiUrl}/api/usuario`);
-                console.log(response.data)
-                setUsuarios(response.data)
-            } catch (error) {
-                console.error("Error fetching categorias:", error);
-            }
-        };
-        fetchCategori();
-        fetchUsuario();
-    }, [categoriaSelecionada, apiUrl]);
 
-    //define cada item do fromData
+        fetchCategori();
+    }, [apiUrl]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -60,7 +56,6 @@ export function CreateProduct() {
         }));
     };
 
-    //Salva a imagem e atualiza a imagem que esta mostrando
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         setImageFile(file);
@@ -73,34 +68,22 @@ export function CreateProduct() {
             reader.readAsDataURL(file);
         }
     };
-    //Alterna a categoria
+
     const handleChangeCategori = (e) => {
         const { name, value } = e.target;
-        setCategoriaSelecionada(value)
+        setCategoriaSelecionada(value);
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
     };
 
-    const handleChangeUsuario = (e) => {
-        const { name, value } = e.target;
-        setusuarioSelecionado(value)
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
-
-    //Volta pra tela anterior
     const Back = () => {
         navigate(previousPage);
     };
 
-    //quando adiciona o produto
     const finish = async (e) => {
         e.preventDefault();
-        console.log(user)
         const formDataWithImage = new FormData();
 
         if (imageFile) {
@@ -112,110 +95,111 @@ export function CreateProduct() {
         formDataWithImage.append('quantidade', formData.quantidade);
         formDataWithImage.append('preco', formData.preco);
         formDataWithImage.append('descricao', formData.descricao);
-        console.log(formDataWithImage)
-        console.log(formData)
+
         try {
-            const response = await axios.post(`${apiUrl}/api/product`, formDataWithImage);
-            console.log(response.data);
+            await axios.post(`${apiUrl}/api/product`, formDataWithImage);
             navigate(previousPage);
         } catch (error) {
-            console.error("Error updating product:", error);
+            console.error("Error creating product:", error);
         }
     };
 
     return (
         <>
             <NavBar />
-            <form onSubmit={finish}>
-                <ContainerDad>
-                    <h1>Criando produto</h1>
-                    <Container>
-                        <ImagamProduct>{
-                            imagePreview ? (
-                                <Imagi src={imagePreview || "Não encontrado"} alt={formData.imagem} />
-                            ) : (
-                                <h3>Selecione uma imagem</h3>
-                            )
-                        }
-                            <input type="file" accept="image/*" onChange={handleImageChange} required={true} />
-                        </ImagamProduct>
-                        <ContainerSon>
-                            <About>
-                                <Itens>
-                                    <label>
-                                        Nome:
-                                        <Input
-                                            type="text"
-                                            name="nome"
-                                            value={formData.nome}
-                                            onChange={handleChange}
-                                            required={true}
-                                        />
-                                    </label>
-                                </Itens>
-                                <Itens>
-                                    <label>
-                                        Preço:
-                                        <Input
-                                            type="text"
-                                            name="preco"
-                                            value={formData.preco}
-                                            onChange={handleChange}
-                                            required={true}
-                                        />
-                                    </label>
-                                </Itens>
-                                <Itens>
-                                    <label>
-                                        Descrição:
-                                        <Input
-                                            type="text"
-                                            name="descricao"
-                                            value={formData.descricao}
-                                            onChange={handleChange}
-                                            required={true}
-                                        />
-                                    </label>
-                                </Itens>
-                                <Itens>
-                                    <label>
-                                        Quantidade:
-                                        <Input
-                                            type="text"
-                                            name="quantidade"
-                                            value={formData.quantidade}
-                                            onChange={handleChange}
-                                            required={true}
-                                        />
-                                    </label>
-                                </Itens>
-                                <Itens>
-                                    <label>
-                                        Categoria:
-                                        <Select
-                                            name="idCategoria"
-                                            value={usuarioSelecionado}
-                                            onChange={handleChangeUsuario}
-                                            required={true}
-                                        >
-                                            <option value="" disabled>Selecione uma categoria</option>
-                                            {categorias.map((categoria) => (
-                                                <option key={categoria.id} value={categoria.id}>
-                                                    {categoria.nome}
-                                                </option>
-                                            ))}
-                                        </Select>
-                                    </label>
-                                </Itens>
-                            </About>
-                            <ContainerButton>
-                                <Button type="submit" disabled={!user?.id}>Criar produto</Button>
-                                <Button type="button" onClick={Back}>Cancelar</Button>
-                            </ContainerButton>
-                        </ContainerSon>
-                    </Container>
-                </ContainerDad>
-            </form>
+            {user && user.id ?
+                <>
+                    <form onSubmit={finish}>
+                        <ContainerDad>
+                            <h1>Criando produto</h1>
+                            <Container>
+                                <ImagamProduct>
+                                    {imagePreview ? (
+                                        <Imagi src={imagePreview} alt="Preview" />
+                                    ) : (
+                                        <h3>Selecione uma imagem</h3>
+                                    )}
+                                    <input type="file" accept="image/*" onChange={handleImageChange} required />
+                                </ImagamProduct>
+                                <ContainerSon>
+                                    <About>
+                                        <Itens>
+                                            <label>
+                                                Nome:
+                                                <Input
+                                                    type="text"
+                                                    name="nome"
+                                                    value={formData.nome}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
+                                            </label>
+                                        </Itens>
+                                        <Itens>
+                                            <label>
+                                                Preço:
+                                                <Input
+                                                    type="text"
+                                                    name="preco"
+                                                    value={formData.preco}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
+                                            </label>
+                                        </Itens>
+                                        <Itens>
+                                            <label>
+                                                Descrição:
+                                                <Input
+                                                    type="text"
+                                                    name="descricao"
+                                                    value={formData.descricao}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
+                                            </label>
+                                        </Itens>
+                                        <Itens>
+                                            <label>
+                                                Quantidade:
+                                                <Input
+                                                    type="text"
+                                                    name="quantidade"
+                                                    value={formData.quantidade}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
+                                            </label>
+                                        </Itens>
+                                        <Itens>
+                                            <label>
+                                                Categoria:
+                                                <Select
+                                                    name="idCategoria"
+                                                    value={categoriaSelecionada}
+                                                    onChange={handleChangeCategori}
+                                                    required
+                                                >
+                                                    <option value="" disabled>Selecione uma categoria</option>
+                                                    {categorias.map((categoria) => (
+                                                        <option key={categoria.id} value={categoria.id}>
+                                                            {categoria.nome}
+                                                        </option>
+                                                    ))}
+                                                </Select>
+                                            </label>
+                                        </Itens>
+                                    </About>
+                                    <ContainerButton>
+                                        <Button type="submit">Criar produto</Button>
+                                        <Button type="button" onClick={Back}>Cancelar</Button>
+                                    </ContainerButton>
+                                </ContainerSon>
+                            </Container>
+                        </ContainerDad>
+                    </form>
+                </>
+                : <h1>Carregando...</h1>}
         </>
     );
 }

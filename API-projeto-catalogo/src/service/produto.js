@@ -111,6 +111,16 @@ async function getAllproductByCategoria(idCategoria) {
   await connection.end();
   return product;
 }
+async function getAllproductByUsuario(idUsuario) {
+  const connection = await mysql.createConnection(databaseConfig);
+  const [product] = await connection.query(
+    "SELECT * FROM product WHERE idUsuario = ?",
+    [idUsuario]
+  );
+
+  await connection.end();
+  return product;
+}
 
 module.exports = {
   getAllproduct,
@@ -119,5 +129,6 @@ module.exports = {
   deleteProduct,
   getAllproductById,
   updateProductNoImage,
-  getAllproductByCategoria
+  getAllproductByCategoria,
+  getAllproductByUsuario
 };

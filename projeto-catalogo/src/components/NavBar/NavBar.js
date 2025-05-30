@@ -1,5 +1,5 @@
 import { Container, Logo, Menu, GlobalStyle, NoLink, Foto, LoginAndRegister } from "./navBar.css"
-import { FaUserAlt } from "react-icons/fa";
+import { FaUserAlt, FaShoppingCart } from "react-icons/fa";
 import imagem from "../imagem.png"
 import { useContext } from 'react';
 import { LoginContext } from "../../context/Lcontext";
@@ -21,12 +21,13 @@ export function NavBar() {
                 <NoLink href="/">Início</NoLink>
                 <NoLink href="/about">Sobre nós</NoLink>
                 <NoLink href="/contact">contato</NoLink>
-                <NoLink href="/createProduct">Criar</NoLink>
-                <NoLink href="/cart">cart</NoLink>
                 {user && user.id ? (
-                    <LoginAndRegister>
-                        <NoLink href="/profile"><FaUserAlt /> </NoLink>
-                    </LoginAndRegister>
+                    <>
+                        <NoLink href="/cart"><FaShoppingCart /></NoLink>
+                        <LoginAndRegister>
+                            <NoLink href="/profile"><FaUserAlt /> </NoLink>
+                        </LoginAndRegister>
+                    </>
                 ) : (
                     <LoginAndRegister>
                         <NoLink href="/login">Login</NoLink>

@@ -3,6 +3,7 @@ import { FaEye, FaEyeSlash, FaExclamation, FaExclamationCircle, FaStarOfLife } f
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css';
 import InputMask from 'react-input-mask';
+
 import {
     Container, GlobalStyle, ContainerBox, ContainerRegister, Button,
     InputStyled, Title, Alert, InputWithIcon, IconButton, LeftIconWrapper,
