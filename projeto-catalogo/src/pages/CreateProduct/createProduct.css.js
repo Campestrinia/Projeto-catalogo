@@ -1,17 +1,29 @@
 import styled from "styled-components";
 
+const ContainerDadDad = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 40em;
+`;
 const ContainerDad = styled.div`
     margin:10px;
     margin: 0;
     padding: 0;
+    background-color: #f2f4f9;
+    box-shadow: 0px 8px 30px rgba(0, 0, 0);
+    color: #222731;
+    max-width: 75%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-radius: 15px;
 `;
 
 const Container = styled.div`
     display: flex;
-    margin: 0px 80px 0px 80px;
+    margin: 0px 80px;
     justify-content: space-around;
 `;
 
@@ -51,7 +63,6 @@ const ImagamProduct = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 63px 20px 60px 294px;
     flex-direction: column;
 `;
 
@@ -68,4 +79,4 @@ width: 99%;
 `;
 
 
-export { ContainerDad, Container, Imagi, ContainerSon, About, Button, ImagamProduct, Itens, Input, Select, ContainerButton };
+export { ContainerDad, Container, Imagi, ContainerSon, About, Button, ImagamProduct, Itens, Input, Select, ContainerButton, ContainerDadDad };

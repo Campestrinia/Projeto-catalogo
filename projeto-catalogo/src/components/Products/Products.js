@@ -7,7 +7,7 @@ import React from "react";
 
 export function Products({ products }) {
     const apiUrl = process.env.REACT_APP_API_URL;
-    
+    console.log(products)
     return (<>
         <CarouselContainer>
             <Container>

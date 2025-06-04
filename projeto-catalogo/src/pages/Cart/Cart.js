@@ -46,12 +46,7 @@ export function Cart() {
         });
         console.log("📦 Itens do carrinho:", itemsRes.data);
 
-        const mappedProducts = itemsRes.data.map(item => ({
-          ...item.produto,
-          quantidade: item.quantidade
-        }));
-
-        setProductsInCart(mappedProducts);
+        setProductsInCart(itemsRes.data);
       } catch (error) {
         console.error("❌ Erro ao carregar carrinho:", error);
       } finally {

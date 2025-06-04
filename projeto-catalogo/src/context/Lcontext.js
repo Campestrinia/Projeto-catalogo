@@ -7,7 +7,8 @@ export const LoginProvider = ({ children }) => {
 
     const API = 'http://localhost:3001/'
 
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const loadUserData = () => {
@@ -16,6 +17,7 @@ export const LoginProvider = ({ children }) => {
                 console.log('Storage:', JSON.parse(storedUser));
                 setUser(JSON.parse(storedUser));
             }
+            setLoading(false)
         };
 
         loadUserData();
@@ -80,7 +82,7 @@ export const LoginProvider = ({ children }) => {
     }
 
     return (
-        <LoginContext.Provider value={{ user, setUser, signIn, Logout, DeleteAccount }}>
+        <LoginContext.Provider value={{ user, loading, setUser, signIn, Logout, DeleteAccount }}>
             {children}
         </LoginContext.Provider>
     );
