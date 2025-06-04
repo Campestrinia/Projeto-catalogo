@@ -9,22 +9,23 @@ import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
-  background-color: #f2f4f9;
+  background-color: #222731;
   justify-content: space-between;
-  `;
+`;
 
 const Separator = styled.div`
+  color: #f2f4f9;
   display: flex;
   flex-direction: column;
   width: 300px;
-  margin: 15px
-  `;
+  margin: 15px;
+`;
 
-const NoLink = styled.a`  
-    text-decoration: none;
-    color: #222731;
-    cursor: default;
-    margin: 5px;
-    `;
+const NoLink = styled.a`
+  text-decoration: none;
+  color: #f2f4f9;
+  cursor: default;
+  margin: 5px;
+`;
 
 export { Container, Separator, NoLink };

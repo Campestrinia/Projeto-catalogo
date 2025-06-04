@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { createGlobalStyle } from 'styled-components';
-import 'react-tooltip/dist/react-tooltip.css'
+import { createGlobalStyle } from "styled-components";
+import "react-tooltip/dist/react-tooltip.css";
 
 const Container = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ const ContainerBox = styled.div`
   width: 100%;
   max-width: 500px;
   background-color: #f2f4f9;
-  margin: 0px auto 40px auto;
+  margin: 40px auto 40px auto;
   padding: 20px 30px;
   border-radius: 24px;
   box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.15);
@@ -31,24 +31,22 @@ const ContainerBox = styled.div`
   flex-direction: column;
 `;
 
-
-
 const ContainerRegister = styled.div`
-    display: flex;
-    justify-content: Center;
-    align-items: baseline;
-    align-content: flex-start;
-    flex-wrap: wrap;
-    flex-direction: column;
-    margin: 0px 20px 0px 20px;
+  display: flex;
+  justify-content: Center;
+  align-items: baseline;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin: 0px 20px 0px 20px;
 `;
 
 const NoLink = styled.a`
-    text-decoration: none;
-    color: inherit;
-    cursor: default;
-    margin: 10px;
-        height: 18px;
+  text-decoration: none;
+  color: inherit;
+  cursor: default;
+  margin: 10px;
+  height: 18px;
 `;
 
 const InputStyled = styled.input`
@@ -67,7 +65,6 @@ const InputStyled = styled.input`
     background-color: #fff;
   }
 `;
-
 
 const Title = styled.h1`
   font-size: 32px;
@@ -88,18 +85,17 @@ const Alert = styled.div`
   font-size: 14px;
   width: 94%;
   margin-bottom: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
   overflow: hidden;
-  max-height: ${({ visible }) => (visible ? '100px' : '0')};
-  opacity: ${({ visible }) => (visible ? '1' : '0')};
-  padding: ${({ visible }) => (visible ? '8px 12px' : '0 12px')};
+  max-height: ${({ visible }) => (visible ? "100px" : "0")};
+  opacity: ${({ visible }) => (visible ? "1" : "0")};
+  padding: ${({ visible }) => (visible ? "8px 12px" : "0 12px")};
 
   svg {
     margin-right: 8px;
   }
 `;
-
 
 const Button = styled.button`
   background-color: #f2f4f9;
@@ -128,7 +124,6 @@ const Button = styled.button`
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
   }
 `;
-
 
 const InputWithIcon = styled.div`
   display: flex;
@@ -170,7 +165,7 @@ const LinkButton = styled.button`
   transition: all 0.3s ease;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 
-&:hover {
+  &:hover {
     background-color: #222731;
     color: #f2f4f9;
     transform: translateY(-2px);
@@ -184,11 +179,18 @@ const LinkButton = styled.button`
   }
 `;
 
-
-
-
 export {
-  Container, GlobalStyle, ContainerBox, ContainerRegister,
-  Button, NoLink, InputStyled, Title, Alert, InputWithIcon, IconButton,
-  LeftIconWrapper, LinkButton
-}
+  Container,
+  GlobalStyle,
+  ContainerBox,
+  ContainerRegister,
+  Button,
+  NoLink,
+  InputStyled,
+  Title,
+  Alert,
+  InputWithIcon,
+  IconButton,
+  LeftIconWrapper,
+  LinkButton,
+};
