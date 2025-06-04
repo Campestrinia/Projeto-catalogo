@@ -1,8 +1,13 @@
 import { CarouselContainer, Container, Card, Image, Text, StyledLink } from "./products.css";
 import React from "react";
 
+
+
+
+
 export function Products({ products }) {
     const apiUrl = process.env.REACT_APP_API_URL;
+    
     return (<>
         <CarouselContainer>
             <Container>

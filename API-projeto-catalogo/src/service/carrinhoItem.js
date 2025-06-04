@@ -11,10 +11,29 @@ async function getAllCarrinhoItem() {
 
 async function createCarrinhoItem(quantidade, idCarrinho, idProduto) {
   const connection = await mysql.createConnection(databaseConfig);
-  const insertCategoria = "INSERT into carrinho(quantidade, idCarrinho, idProduto) VALUES(?, ?, ?)";
-  await connection.query(insertCategoria, [quantidade, idCarrinho, idProduto]);
-  await connection.end();
+
+  try {
+    const [existing] = await connection.query(
+      "SELECT * FROM carrinhoItem WHERE idCarrinho = ? AND idProduto = ?",
+      [idCarrinho, idProduto]
+    );
+    if (existing.length > 0) {
+      await connection.query(
+        "UPDATE carrinhoItem SET quantidade = quantidade + ? WHERE idCarrinho = ? AND idProduto = ?",
+        [quantidade, idCarrinho, idProduto]
+      );
+      console.log("Quantidade atualizada");
+    } else {
+      const insertItem = "INSERT INTO carrinhoItem (quantidade, idCarrinho, idProduto) VALUES (?, ?, ?)";
+      await connection.query(insertItem, [quantidade, idCarrinho, idProduto]);
+      console.log("Item inserido");
+    }
+  } finally {
+    await connection.end();
+  }
 }
+
+
 
 
 async function deleteCarrinhoItem(id) {
@@ -42,10 +61,30 @@ async function updateCarrinhoItem(id, quantidade) {
     await connection.end();
   }
 
+  async function getProdutosDoCarrinho(idCarrinho) {
+  const connection = await mysql.createConnection(databaseConfig);
+  const [rows] = await connection.query(
+    `SELECT 
+      p.id, 
+      p.nome, 
+      p.imagem, 
+      p.preco, 
+      p.descricao, 
+      ci.quantidade
+     FROM carrinhoItem ci
+     JOIN product p ON ci.idProduto = p.id
+     WHERE ci.idCarrinho = ?`,
+    [idCarrinho]
+  );
+  await connection.end();
+  return rows;
+}
+
 module.exports = {
   getAllCarrinhoItem,
   createCarrinhoItem,
   deleteCarrinhoItem,
   getCarrinhoItemById,
-  updateCarrinhoItem
+  updateCarrinhoItem,
+  getProdutosDoCarrinho
 };

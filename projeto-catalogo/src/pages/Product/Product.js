@@ -8,9 +8,13 @@ import {
 import { LoginContext } from '../../context/Lcontext.js'
 import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { adicionarAoCarrinho } from '../../components/Cart/cartHelpers.js';
+
 
 import styled from "styled-components";
 import { message } from "antd";
+
+
 
 const StyledLink = styled(Link)`
     text-decoration: none;
@@ -194,7 +198,8 @@ export function Product() {
 
                                 }
                                 <Button>Comprar</Button>
-                                <Button>Carrinho</Button>
+                               <Button onClick={() => adicionarAoCarrinho(user, product.id)}>Carrinho</Button>
+
                             </ContainerButton>
                         </ContainerButtonAndAbout>
                         <h3>Produtos semelhantes:</h3>

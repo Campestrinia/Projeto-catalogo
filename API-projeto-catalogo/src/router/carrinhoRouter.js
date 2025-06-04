@@ -6,5 +6,7 @@ router.get("/carrinho", carrinhoController.getAllCarrinho);
 router.post(`/carrinho`, carrinhoController.createCarrinho);
 router.delete("/carrinho/:id", carrinhoController.deleteCarrinho);
 router.get("/carrinho/:id", carrinhoController.getCarrinhoById);
+router.get("/carrinho/usuario/:idUsuario", carrinhoController.getOrCreateCarrinhoByUsuarioId);
+
 
 module.exports = router;

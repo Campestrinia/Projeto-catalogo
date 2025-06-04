@@ -52,9 +52,24 @@ async function getCarrinhoById(req, res) {
   }
 }
 
+async function getOrCreateCarrinhoByUsuarioId(req, res) {
+  const { idUsuario } = req.params;
+
+  try {
+    const carrinho = await carrinhoService.getOrCreateCarrinhoByUsuarioId(idUsuario);
+    res.status(200).json(carrinho);
+  } catch (error) {
+    res.status(500).send({
+      message: "Error getting or creating carrinho",
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   getAllCarrinho,
   createCarrinho,
   deleteCarrinho,
   getCarrinhoById,
+  getOrCreateCarrinhoByUsuarioId, // ✅ exportação da nova função
 };

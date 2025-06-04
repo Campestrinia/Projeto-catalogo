@@ -69,10 +69,27 @@ async function updateCarrinhoItem(req, res) {
   }
 }
 
+async function getProdutosDoCarrinho(req, res) {
+  const { idCarrinho } = req.params;
+
+  try {
+    const produtos = await carrinhoItemService.getProdutosDoCarrinho(idCarrinho);
+    res.status(200).json(produtos);
+  } catch (error) {
+    res.status(500).json({
+      message: "Erro ao buscar produtos do carrinho",
+      error: error.message
+    });
+  }
+}
+
+
+
 module.exports = {
   getAllCarrinhoItem,
   createCarrinhoItem,
   deleteCarrinhoItem,
   getCarrinhoItemById,
   updateCarrinhoItem,
+  getProdutosDoCarrinho
 };
