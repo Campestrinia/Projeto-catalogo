@@ -26,14 +26,18 @@ export function NavBar() {
       <Menu>
         <NoLink href="/">Início</NoLink>
         <NoLink href="/about">Sobre nós</NoLink>
-        <NoLink href="/contact">Contato</NoLink>
-        <NoLink href="/createProduct">Criar</NoLink>
+        <NoLink href="/contact">contato</NoLink>
         {user && user.id ? (
-          <LoginAndRegister>
-            <NoLink href="/profile">
-              <FaUserAlt />{" "}
+          <>
+            <NoLink href="/cart">
+              <FaShoppingCart />
             </NoLink>
-          </LoginAndRegister>
+            <LoginAndRegister>
+              <NoLink href="/profile">
+                <FaUserAlt />{" "}
+              </NoLink>
+            </LoginAndRegister>
+          </>
         ) : (
           <LoginAndRegister>
             <NoLink href="/login">Login</NoLink>
