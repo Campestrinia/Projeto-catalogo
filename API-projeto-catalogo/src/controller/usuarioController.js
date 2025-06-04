@@ -1,10 +1,29 @@
-// const { usuario } = require("../config/database.js");
 const userService = require("../service/usuario.js");
+const mysql = require("mysql2/promise");
+const databaseConfig = require("../config/database");
+
+
+async function createCarrinhoIfNotExists(idUsuario) {
+  const connection = await mysql.createConnection(databaseConfig);
+  try {
+    const [rows] = await connection.query('SELECT * FROM carrinho WHERE idUsuario = ?', [idUsuario]);
+
+    if (rows.length === 0) {
+      await connection.query('INSERT INTO carrinho (idUsuario) VALUES (?)', [idUsuario]);
+      console.log(`Carrinho criado para o usuário ID ${idUsuario}`);
+    } else {
+      console.log(`Carrinho já existia para o usuário ID ${idUsuario}`);
+    }
+  } catch (error) {
+    console.error("Erro ao verificar/criar carrinho:", error);
+  } finally {
+    await connection.end();
+  }
+}
 
 async function getAllUsuario(req, res) {
   try {
     const rows = await userService.getAllUsuario();
-
     res.status(200).json(rows);
   } catch (error) {
     res.status(500).send({
@@ -18,23 +37,19 @@ async function createUsuario(req, res) {
   const { nome, email, CPF, telefone, senha } = req.body;
 
   try {
-    const validarEmail = await userService.getEmailById(email)
-    console.log('aqui')
-    console.log(validarEmail)
+    const validarEmail = await userService.getEmailById(email);
+
     if (validarEmail.id) {
-      res.status(400).send({ message: "E-mail já cadastrado" })
-      return
+      res.status(400).send({ message: "E-mail já cadastrado" });
+      return;
     }
+
     const usuario = await userService.createUsuario(nome, email, CPF, telefone, senha);
-    console.log('aqui 2')
-    console.log(usuario)
-    console.log('aqui 3')
     res.status(201).json({ message: `Success`, idUsuario: usuario.id, token: usuario.token });
-    console.log('aqui 4')
-  } catch (eror) {
+  } catch (error) {
     res.status(500).send({
       message: `error adding user!`,
-      error: eror.message,
+      error: error.message,
     });
   }
 }
@@ -57,8 +72,8 @@ async function updateUsuario(req, res) {
 async function deleteUsuario(req, res) {
   try {
     const { id } = req.params;
-
     await userService.deleteUsuario(id);
+
     res.status(200).send({ message: "Deleted user" });
   } catch (error) {
     res.status(500).send({
@@ -71,8 +86,11 @@ async function deleteUsuario(req, res) {
 async function getUsuarioById(req, res) {
   try {
     const { id } = req.params;
+    const idUsuario = req.idUsuario;
 
-    const user = await userService.getUsuarioById(id);
+    const user = idUsuario
+      ? await userService.getUsuarioById(id) // Com token
+      : await userService.getUsuarioByIdSemToken(id); // Sem token
 
     res.status(200).json(user);
   } catch (error) {
@@ -96,9 +114,10 @@ async function login(req, res) {
     } else if (user.length == 0) {
       res.status(401).json({ error: 'Email ou senha inválida' });
     } else {
+      await createCarrinhoIfNotExists(user.id);
+
       res.status(200).json(user);
     }
-
   } catch (error) {
     res.status(500).send({
       message: "Error login",
@@ -114,4 +133,4 @@ module.exports = {
   deleteUsuario,
   getUsuarioById,
   login
-}
+};

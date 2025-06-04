@@ -8,6 +8,7 @@ import {
     LinkButton, ForgotPassword
 } from "./Login.css"
 // import axios from "axios";
+import { message } from "antd";
 import { useNavigate } from 'react-router-dom';
 import { NavBar } from '../../components/NavBar';
 import { Footer } from '../../components/Footer';
@@ -19,6 +20,7 @@ export function Login() {
     const { signIn } = useContext(LoginContext)
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [loading, setLoading] = useState(false);
     const [isValid, setIsValid] = useState(true);
     const [isValidEmail, setIsValidEmail] = useState(true);
     const [isValidSenha, setIsValidSenha] = useState(true);
@@ -30,6 +32,7 @@ export function Login() {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,100}$/;
 
     const handleSubmit = async () => {
+        setLoading(true)
         // Verifica se todos os campos estão preenchidos
         const camposPreenchidos = email && senha;
 
@@ -44,9 +47,24 @@ export function Login() {
         }
 
         try {
-            await signIn(email, senha, 'Login')
-            navigate("/");
+            const response = await signIn(email, senha, 'Login')
+            console.log(response.data)
+            if (response.data === "Email inválido") {
+                message.error('Erro ao fazer login, Email não cadastrado')
+                setLoading(false)
+            } else if (response.data === "Senha inválida") {
+                message.error('Erro ao fazer login, senha inválida')
+                setLoading(false)
+            } else if (response.data.id) {
+                message.success('Login realizado com sucesso')
+                navigate('/')
+                setLoading(false)
+            } else {
+                message.error('Erro ao tentar fazer o login, tente novamente em alguns instantes')
+                setLoading(false)
+            }
         } catch (error) {
+            setLoading(false)
             console.error("Erro ao registrar usuário:", error);
         }
     };
@@ -89,9 +107,12 @@ export function Login() {
                                 </LeftIconWrapper>
                                 <InputStyled placeholder='E-mail' value={email} onChange={handleEmailChange} />
                             </InputWithIcon>
-                            <Alert visible={!isValidEmail}>
-                                <FaExclamationCircle /> Por favor, insira um e-mail válido.
-                            </Alert>
+                            {!isValidEmail && (
+                                <Alert>
+                                    <FaExclamationCircle /> Por favor, insira um e-mail válido.
+                                </Alert>
+                            )}
+
 
                             <InputWithIcon>
                                 <LeftIconWrapper>
@@ -115,20 +136,24 @@ export function Login() {
                                 <p style={{ margin: '2px' }}>Esse item é obrigatorio</p>
                             </Tooltip>
 
-                            <Alert visible={!isValidSenha}>
-                                <FaExclamationCircle /> Por favor, insira uma senha válida.
-                            </Alert>
+                            {!isValidSenha && (
+                                <Alert>
+                                    <FaExclamationCircle /> Por favor, insira uma senha válida.
+                                </Alert>
+                            )}
 
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-                                <Button type="submit">Entrar</Button>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', gap: '15px' }}>
+                                <Button type="submit">{loading ? 'Entrando' : 'Entrar'}</Button>
 
-                                <ForgotPassword onClick={() => navigate('/')}>
+                                < ForgotPassword onClick={() => navigate('/')}>
                                     Esqueceu a senha?
                                 </ForgotPassword>
 
-                                <Alert visible={!isValid} style={{ marginTop: '20px' }}>
-                                    <FaExclamationCircle /> Preencha todas as informações.
-                                </Alert>
+                                {!isValid && (
+                                    <Alert style={{ marginTop: '20px' }}>
+                                        <FaExclamationCircle /> Preencha todas as informações.
+                                    </Alert>
+                                )}
 
                                 <LinkButton onClick={() => navigate('/register')}>
                                     Deseja se cadastrar? Criar Conta

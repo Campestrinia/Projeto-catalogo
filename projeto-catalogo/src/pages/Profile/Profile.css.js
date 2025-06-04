@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import InputMask from "react-input-mask";
+import { Link } from "react-router-dom";
 
-const Container = styled.div`
-  background-color: #222731;
-`;
 const MainContainer = styled.div`
   width: 90%;
   max-width: 1400px;
@@ -19,24 +17,40 @@ const MainContainer = styled.div`
 
 const GridContainer = styled.div`
   display: flex;
-  gap: 20px;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-bottom: 80px;
 
   @media (max-width: 768px) {
     flex-direction: column;
   }
 `;
 
+const CardContainer = styled.div`
+  background: #222731;
+  border-radius: 12px;
+  padding: 0px 10px 10px;
+`;
 const Cards = styled.div`
   flex: 1;
   min-width: 280px;
-  background: #f2f4f9;
+  background: #222731;
   border-radius: 12px;
   padding: 10px 15px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   transition: 0.2s;
+  max-height: 520px;
+  min-height: 520px;
+  overflow-y: auto;
+
+  /* Esconde a scrollbar no Chrome, Edge e Safari */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Esconde a scrollbar no Firefox */
+  scrollbar-width: none;
+
+  /* Esconde a scrollbar no Internet Explorer e Edge antigo */
+  -ms-overflow-style: none;
 `;
 
 const Title = styled.h2`
@@ -140,11 +154,21 @@ const TitleModal = styled.div`
   text-align: center;
   color: #222731;
 `;
+const ProductImage = styled.img`
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+`;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit; /* opcional, para manter a cor dos textos dentro */
+`;
 
 export {
-  Container,
   MainContainer,
   GridContainer,
+  CardContainer,
   Cards,
   Title,
   Button,
@@ -153,4 +177,6 @@ export {
   LeftIconWrapper,
   TitleModal,
   ButtonOnSubmit,
+  ProductImage,
+  StyledLink,
 };

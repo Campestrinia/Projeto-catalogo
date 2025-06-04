@@ -104,6 +104,20 @@ async function getAllproductByCategoria(req, res) {
     });
   }
 }
+async function getAllproductByUsuario(req, res) {
+  try {
+    const { idUsuario } = req.params;
+
+    const product = await produtoService.getAllproductByUsuario(idUsuario);
+
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).send({
+      message: "Error getting product by Usuario",
+      error: error.message,
+    });
+  }
+}
 
 module.exports = {
   getAllproduct,
@@ -112,5 +126,6 @@ module.exports = {
   deleteProduct,
   getAllproductById,
   updateProductNoImage,
-  getAllproductByCategoria
+  getAllproductByCategoria,
+  getAllproductByUsuario
 }

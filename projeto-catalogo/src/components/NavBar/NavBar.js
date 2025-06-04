@@ -7,7 +7,7 @@ import {
   Foto,
   LoginAndRegister,
 } from "./navBar.css";
-import { FaUserAlt } from "react-icons/fa";
+import { FaUserAlt, FaShoppingCart } from "react-icons/fa";
 import imagem from "../imagem.png";
 import { useContext } from "react";
 import { LoginContext } from "../../context/Lcontext";

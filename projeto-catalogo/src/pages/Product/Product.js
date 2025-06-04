@@ -20,6 +20,7 @@ import {
 import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
 
 import styled from "styled-components";
+import { message } from "antd";
 
 const StyledLink = styled(Link)`
   text-decoration: none;

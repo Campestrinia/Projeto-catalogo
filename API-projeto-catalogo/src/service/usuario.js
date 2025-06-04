@@ -64,6 +64,24 @@ async function getUsuarioById(id) {
   return usuarioClean;
 }
 
+async function getUsuarioByIdSemToken(id) {
+  const connection = await mysql.createConnection(databaseConfig);
+
+  const [usuario] = await connection.query(
+    `SELECT id, nome FROM usuario WHERE id = ?`,
+    [id]
+  );
+
+  const usuarioClean = {
+    id: usuario[0]?.id,
+    nome: usuario[0]?.nome
+  };
+
+  await connection.end();
+  return usuarioClean;
+}
+
+
 async function getEmailById(email) {
   const connection = await mysql.createConnection(databaseConfig);
 
@@ -100,5 +118,6 @@ module.exports = {
   deleteUsuario,
   getUsuarioById,
   login,
-  getEmailById
+  getEmailById,
+  getUsuarioByIdSemToken
 };
