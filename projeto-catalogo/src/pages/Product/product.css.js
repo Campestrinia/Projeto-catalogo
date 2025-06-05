@@ -19,7 +19,6 @@ const ContainerDad = styled.div`
   h1 {
     font-size: 36px;
     font-weight: bold;
-    margin-bottom: 16px;
     position: relative;
     text-align: center;
 
@@ -29,7 +28,6 @@ const ContainerDad = styled.div`
       width: 100%;
       height: 3px;
       background-color: ${textColor};
-      margin: 8px auto 0 auto;
       border-radius: 2px;
     }
   }
@@ -37,7 +35,6 @@ const ContainerDad = styled.div`
 
 const Container = styled.div`
   display: flex;
-  margin: 40px 60px;
   justify-content: space-around;
   flex-wrap: wrap;
   gap: 30px;
@@ -75,8 +72,20 @@ const About = styled.div`
   width: 420px;
   border: 1px solid ${accent};
   border-radius: 16px;
-  background-color: ${accent};
+  background-color: ${textColor};
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+
+  h3 {
+    color: ${bgColor};
+  }
+
+  h4 {
+    color: ${bgColor};
+  }
+
+  h5 {
+    color: ${bgColor};
+  }
 `;
 
 const Button = styled.button`
@@ -96,6 +105,22 @@ const Button = styled.button`
   }
 `;
 
+const HeartIcon = styled.div`
+  font-size: 24px;
+  color: ${textColor};
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+`;
+
 const ContainerButton = styled.div`
   margin: 10px;
   display: flex;
@@ -106,7 +131,7 @@ const ImagamProduct = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 60px auto;
+  margin: 12px;
 `;
 
 const ContainerButtonAndAbout = styled.div`
@@ -118,14 +143,14 @@ const ContainerButtonAndAbout = styled.div`
 
 const ContainerSemelhantes = styled.div`
   display: flex;
-  width: 560px;
-  margin: 20px auto;
+  width: 73%;
+  margin: 10px 10px;
   overflow-x: auto;
   background-color: ${accent};
   border-radius: 16px;
   padding: 16px;
   gap: 12px;
-  height: 220px;
+  height: 205px;
 `;
 
 const Card = styled.div`
@@ -202,6 +227,7 @@ export {
   ContainerSon,
   About,
   Button,
+  HeartIcon,
   ImagamProduct,
   ContainerButton,
   ContainerButtonAndAbout,

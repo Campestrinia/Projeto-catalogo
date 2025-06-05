@@ -26,7 +26,7 @@ export function NavBar() {
       <Menu>
         <NoLink href="/">Início</NoLink>
         <NoLink href="/about">Sobre nós</NoLink>
-        <NoLink href="/contact">contato</NoLink>
+        <NoLink href="/contact">Contato</NoLink>
         {user && user.id ? (
           <>
             <NoLink href="/cart">
