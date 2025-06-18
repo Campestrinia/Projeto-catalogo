@@ -97,7 +97,6 @@ const ImagamProduct = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 63px 20px 60px 294px;
   flex-direction: column;
 `;
 

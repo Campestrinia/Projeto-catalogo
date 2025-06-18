@@ -118,8 +118,8 @@ const ContainerButtonAndAbout = styled.div`
 
 const ContainerSemelhantes = styled.div`
   display: flex;
-  width: 560px;
-  margin: 20px auto;
+  width: 600px;
+  margin: 0px auto;
   overflow-x: auto;
   background-color: ${accent};
   border-radius: 16px;
@@ -130,7 +130,7 @@ const ContainerSemelhantes = styled.div`
 
 const Card = styled.div`
   background-color: ${textColor};
-  width: 140px;
+  width: 7vw;
   height: 180px;
   flex: 0 0 auto;
   display: flex;
