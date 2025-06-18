@@ -230,26 +230,6 @@ export function CreateProduct() {
                     </Select>
                   </label>
                 </Itens>
-                <Itens>
-                  <label>
-                    Vendedor:
-                    <Select
-                      name="idUsuario"
-                      value={categoriaSelecionada}
-                      onChange={handleChangeCategori}
-                      required={true}
-                    >
-                      <option value="" disabled>
-                        Selecione um vendedor
-                      </option>
-                      {usuarios.map((usuario) => (
-                        <option key={usuario.id} value={usuario.id}>
-                          {usuario.nome}
-                        </option>
-                      ))}
-                    </Select>
-                  </label>
-                </Itens>
               </About>
               <ContainerButton>
                 <Button type="submit">Criar produto</Button>
