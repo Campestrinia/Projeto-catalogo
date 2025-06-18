@@ -42,8 +42,8 @@ const Container = styled.div`
 
 const ContainerSon = styled.div`
   display: flex;
-  margin: 25px;
-  padding: 20px;
+  margin: 20px;
+  padding: 15px;
   border: 2px solid ${accent};
   border-radius: 12px;
   background-color: ${accent};
@@ -97,7 +97,7 @@ const ImagamProduct = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 63px 20px 60px 294px;
+  margin: 63px 20px 60px 278px;
   flex-direction: column;
 `;
 
