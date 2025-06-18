@@ -3,12 +3,11 @@ import InputMask from "react-input-mask";
 import { Link } from "react-router-dom";
 
 const MainContainer = styled.div`
-  width: 90%;
-  max-width: 1400px;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
   padding: 24px;
   background-color: #222731;
-  border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   h1 {
     color: #f2f4f9;
@@ -41,6 +40,10 @@ const Cards = styled.div`
   min-height: 520px;
   overflow-y: auto;
 
+  p {
+    color: #f2f4f9;
+  }
+
   /* Esconde a scrollbar no Chrome, Edge e Safari */
   &::-webkit-scrollbar {
     display: none;
@@ -57,7 +60,7 @@ const Title = styled.h2`
   font-size: 1.5rem;
   margin-bottom: 12px;
   margin-top: 10px;
-  color: #222731;
+  color: #f2f4f9;
   font-weight: 600;
 `;
 
@@ -76,8 +79,6 @@ const Button = styled.button`
   align-self: center;
 
   &:hover {
-    background-color: #222731;
-    color: #f2f4f9;
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
     opacity: 0.95;
@@ -103,8 +104,6 @@ const ButtonOnSubmit = styled.button`
   align-self: center;
 
   &:hover {
-    background-color: #f2f4f9;
-    color: #222731;
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
     opacity: 0.95;
@@ -128,7 +127,7 @@ const InputStyled = styled(InputMask)`
   transition: border-color 0.3s ease, background-color 0.3s ease;
 
   &:focus {
-    border-color: #6c63ff;
+    border-color: #f2f4f9;
     background-color: #fff;
   }
 `;
@@ -152,7 +151,7 @@ const TitleModal = styled.div`
   font-size: 32px;
   margin-bottom: 24px;
   text-align: center;
-  color: #222731;
+  color: #f2f4f9;
 `;
 const ProductImage = styled.img`
   width: 120px;
