@@ -230,7 +230,15 @@ export function Product() {
                                 }
 
                                 <Button>Comprar</Button>
-                                <Button onClick={() => adicionarAoCarrinho(user, product.idUsuario, product.id)}>Carrinho</Button>
+                               <Button onClick={() => {
+                                if (user && Object.keys(user).length > 0) {
+                                         adicionarAoCarrinho(user, product.idUsuario, product.id);
+                                 } else {
+                                    message.warning("Você precisa estar logado para adicionar produtos ao carrinho.");
+                                    navigate('/login');
+                                }
+                                }}>Carrinho</Button>
+
                             </ContainerButton>
                         </ContainerButtonAndAbout>
                         <h3>Produtos semelhantes:</h3>
