@@ -1,6 +1,6 @@
 import { NavBar } from "../../components/NavBar";
 import { Footer } from "../../components/Footer";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import {
   ContainerDad,
@@ -15,10 +15,12 @@ import {
   Select,
   ContainerButton,
 } from "./createProduct.css.js";
+import { LoginContext } from '../../context/Lcontext.js'
 import { useNavigate, useLocation } from "react-router-dom";
 
 export function CreateProduct() {
   const apiUrl = process.env.REACT_APP_API_URL;
+  const { user } = useContext(LoginContext);
   const navigate = useNavigate();
   const location = useLocation();
   const previousPage = location.state?.from || "/";
@@ -32,10 +34,8 @@ export function CreateProduct() {
     imagem: "",
   });
   const [categorias, setCategorias] = useState([]);
-  const [usuarios, setUsuarios] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
-  const [categoriaSelecionada, setCategoriaSelecionada] = useState("");
   const [usuarioSelecionado, setusuarioSelecionado] = useState("");
 
   //pega todas as categorias e usuarios no mySql
@@ -49,18 +49,8 @@ export function CreateProduct() {
         console.error("Error fetching categorias:", error);
       }
     };
-    const fetchUsuario = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/api/usuario`);
-        console.log(response.data);
-        setUsuarios(response.data);
-      } catch (error) {
-        console.error("Error fetching categorias:", error);
-      }
-    };
     fetchCategori();
-    fetchUsuario();
-  }, [categoriaSelecionada, apiUrl]);
+  }, [apiUrl]);
 
   //define cada item do fromData
   const handleChange = (e) => {
@@ -83,15 +73,6 @@ export function CreateProduct() {
     if (file) {
       reader.readAsDataURL(file);
     }
-  };
-  //Alterna a categoria
-  const handleChangeCategori = (e) => {
-    const { name, value } = e.target;
-    setCategoriaSelecionada(value);
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
   };
 
   const handleChangeUsuario = (e) => {
@@ -118,7 +99,7 @@ export function CreateProduct() {
       formDataWithImage.append("imagem", imageFile);
     }
     formDataWithImage.append("idCategoria", formData.idCategoria);
-    formDataWithImage.append("idUsuario", formData.idUsuario);
+    formDataWithImage.append("idUsuario", user.id);
     formDataWithImage.append("nome", formData.nome);
     formDataWithImage.append("quantidade", formData.quantidade);
     formDataWithImage.append("preco", formData.preco);
@@ -128,7 +109,11 @@ export function CreateProduct() {
     try {
       const response = await axios.post(
         `${apiUrl}/api/product`,
-        formDataWithImage
+        formDataWithImage, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
       );
       console.log(response.data);
       navigate(previousPage);
@@ -225,26 +210,6 @@ export function CreateProduct() {
                       {categorias.map((categoria) => (
                         <option key={categoria.id} value={categoria.id}>
                           {categoria.nome}
-                        </option>
-                      ))}
-                    </Select>
-                  </label>
-                </Itens>
-                <Itens>
-                  <label>
-                    Vendedor:
-                    <Select
-                      name="idUsuario"
-                      value={categoriaSelecionada}
-                      onChange={handleChangeCategori}
-                      required={true}
-                    >
-                      <option value="" disabled>
-                        Selecione um vendedor
-                      </option>
-                      {usuarios.map((usuario) => (
-                        <option key={usuario.id} value={usuario.id}>
-                          {usuario.nome}
                         </option>
                       ))}
                     </Select>
