@@ -1,25 +1,26 @@
 import styled from "styled-components";
-import { createGlobalStyle } from "styled-components";
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    padding: 0;
-      background-color: #f2f4f9;
-  }
-`;
+export const Container = styled.div`
+  /* 1. Definindo o fundo claro que você quer */
+  background-color: #f2f4f9;
 
-const Container = styled.div`
+  /* 2. Adicionando uma borda inferior para separar do conteúdo escuro */
+  border-bottom: 1px solid #e0e2e7;
+
+  padding: 5px 5%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
-const Logo = styled.div`
+
+export const Logo = styled.div`
   display: flex;
   width: 100px;
   align-items: center;
   justify-content: center;
 `;
-const Menu = styled.div`
+
+export const Menu = styled.div`
   display: flex;
   width: auto;
   justify-content: center;
@@ -29,22 +30,34 @@ const Menu = styled.div`
   font-family: mon;
 `;
 
-const NoLink = styled.a`
+export const NoLink = styled.a`
   text-decoration: none;
+  /* 3. Garantindo que o texto seja escuro para ser lido no fundo claro */
   color: #222731;
-  cursor: default;
+  cursor: pointer;
   margin: 10px;
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--cor-superficie);
+  }
 `;
-const Foto = styled.img`
+
+export const Foto = styled.img`
   height: 70px;
 `;
 
-const LoginAndRegister = styled.div`
+export const LoginAndRegister = styled.div`
   margin: 10px;
   display: flex;
   align-items: center;
-  border: 1px solid;
+  border: 1px solid #b0b5be; /* Cor da borda mais suave */
   border-radius: 30px;
-`;
+  padding: 8px 15px;
+  transition: all 0.2s;
+  color: #222731; /* Cor do texto dentro do botão */
 
-export { Container, Logo, Menu, GlobalStyle, NoLink, Foto, LoginAndRegister };
+  &:hover {
+    border-color: var(--cor-superficie);
+  }
+`;

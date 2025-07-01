@@ -1,5 +1,3 @@
-import { NavBar } from "../../components/NavBar";
-import { Footer } from "../../components/Footer";
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import {
@@ -259,7 +257,6 @@ export function Profile() {
 
   return (
     <>
-      <NavBar />
       <MainContainer>
         <h1>Perfil de {user.nome}</h1>
         {/* <h1> {user.token}</h1> */}
@@ -479,8 +476,6 @@ export function Profile() {
           </CardContainer>
         </GridContainer>
       </MainContainer>
-
-      <Footer />
     </>
   );
 }

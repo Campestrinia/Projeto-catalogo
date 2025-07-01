@@ -1,63 +1,76 @@
-import React from 'react';
-import { NavBar } from '../../components/NavBar';
-import { Footer } from '../../components/Footer';
-import Img from './img/img.jpg'; // Ajuste conforme seu projeto
+import React from "react";
+import Img from "./img/img.jpg";
 
-import * as S from './About.css.js'; // usando * as S pra deixar o código mais limpo depois
+import * as S from "./About.css.js";
+
+const valores = [
+  {
+    titulo: "Missão",
+    texto:
+      "Nossa missão é fornecer soluções tecnológicas de ponta, oferecendo hardwares de alta qualidade com um atendimento personalizado e suporte técnico especializado. Buscamos capacitar nossos clientes com as melhores ferramentas e produtos, contribuindo para o avanço tecnológico de suas atividades.",
+  },
+  {
+    titulo: "Visão",
+    texto:
+      "Nossa visão é nos tornarmos a empresa líder de mercado em revenda de hardwares de TI, reconhecida pela inovação, excelência e confiança. Aspiramos ser a primeira escolha para entusiastas e profissionais de TI, continuando a expandir nosso portfólio de produtos e serviços.",
+  },
+  {
+    titulo: "Valores",
+    texto:
+      "Prezamos pela integridade, transparência, inovação e compromisso com a qualidade. Acreditamos que o sucesso de nossos clientes é o nosso sucesso, e trabalhamos constantemente para superar expectativas.",
+  },
+];
 
 export function About() {
-    return (
-        <>
-            <NavBar />
-            <S.Container>
-                <S.Geral>
-                    <S.Left>
-                        <S.Card>
-                            <S.Title>QUEM SOMOS?</S.Title>
-                            <S.BarB />
-                            <S.TextOne>
-                                A Hardware Herói nasceu de um sonho compartilhado entre colegas de faculdade, todos apaixonados por tecnologia e inovação. Durante longas noites de estudo e projetos, eles perceberam uma lacuna significativa no mercado de hardware de TI: a falta de um fornecedor confiável que oferecesse produtos de alta qualidade a preços acessíveis. Unidos por essa visão, decidiram transformar essa ideia em realidade.
-                            </S.TextOne>
-                        </S.Card>
-                    </S.Left>
-                    <S.Right>
-                        <img src={Img} alt="Imagem sobre nós" />
-                    </S.Right>
-                </S.Geral>
+  return (
+    // Usando o novo container principal
+    <S.AboutContainer>
+      {/* --- Seção Quem Somos --- */}
+      <S.Section>
+        {/* Usando o novo wrapper flex e as colunas renomeadas */}
+        <S.FlexWrapper>
+          <S.LeftColumn>
+            {/* Usando o novo card claro */}
+            <S.LightCard>
+              {/* Usando os novos componentes de Título, Divisor e Texto */}
+              <S.SectionTitle>QUEM SOMOS?</S.SectionTitle>
+              <S.Divider />
+              <S.Text>
+                A HardwareHerói nasceu de um sonho compartilhado entre colegas
+                de faculdade, todos apaixonados por tecnologia e inovação.
+                Durante longas noites de estudo e projetos, eles perceberam uma
+                lacuna significativa no mercado de hardware de TI: a falta de um
+                fornecedor confiável que oferecesse produtos de alta qualidade a
+                preços acessíveis. Unidos por essa visão, decidiram transformar
+                essa ideia em realidade.
+              </S.Text>
+            </S.LightCard>
+          </S.LeftColumn>
 
-                <S.Section>
-                    <S.Card>
-                        <S.Title>NOSSOS VALORES</S.Title>
-                        <S.BarB />
-                        <S.CardsValores>
-                            <S.ValorCard>
-                                <S.ValorTitle>Missão</S.ValorTitle>
-                                <S.BarW />
-                                <S.Text>
-                                    Nossa missão é fornecer soluções tecnológicas de ponta, oferecendo hardwares de alta qualidade com um atendimento personalizado e suporte técnico especializado. Buscamos capacitar nossos clientes com as melhores ferramentas e produtos, contribuindo para o avanço tecnológico de suas atividades.
-                                </S.Text>
-                            </S.ValorCard>
+          <S.RightColumn>
+            <img src={Img} alt="Imagem sobre nós" />
+          </S.RightColumn>
+        </S.FlexWrapper>
+      </S.Section>
 
-                            <S.ValorCard>
-                                <S.ValorTitle>Visão</S.ValorTitle>
-                                <S.BarW />
-                                <S.Text>
-                                    Nossa visão é nos tornarmos a empresa líder de mercado em revenda de hardwares de TI, reconhecida pela inovação, excelência e confiança. Aspiramos ser a primeira escolha para entusiastas e profissionais de TI, continuando a expandir nosso portfólio de produtos e serviços, mantendo-nos na vanguarda das tendências tecnológicas.
-                                </S.Text>
-                            </S.ValorCard>
+      {/* --- Seção Nossos Valores --- */}
+      {/* Note que esta seção inteira também está dentro de um LightCard, como no seu código original */}
+      <S.Section>
+        <S.LightCard>
+          <S.SectionTitle>NOSSOS VALORES</S.SectionTitle>
+          <S.Divider />
 
-                            <S.ValorCard>
-                                <S.ValorTitle>Valores</S.ValorTitle>
-                                <S.BarW />
-                                <S.Text>
-                                    Prezamos pela integridade, transparência, inovação e compromisso com a qualidade. Acreditamos que o sucesso de nossos clientes é o nosso sucesso, e trabalhamos constantemente para superar expectativas.
-                                </S.Text>
-                            </S.ValorCard>
-                        </S.CardsValores>
-                    </S.Card>
-                </S.Section>
-            </S.Container>
-            <Footer />
-        </>
-    );
+          {/* Usando o novo grid de valores e o array para gerar os cards */}
+          <S.ValuesGrid>
+            {valores.map((valor, index) => (
+              <S.ValueCard key={index}>
+                <h3>{valor.titulo}</h3>
+                <S.Text>{valor.texto}</S.Text>
+              </S.ValueCard>
+            ))}
+          </S.ValuesGrid>
+        </S.LightCard>
+      </S.Section>
+    </S.AboutContainer>
+  );
 }

@@ -97,7 +97,6 @@ const ImagamProduct = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 63px 20px 60px 278px;
   flex-direction: column;
 `;
 
@@ -106,7 +105,7 @@ const Itens = styled.div`
 `;
 
 const Input = styled.input`
-  width: 100%;
+  width: 95%;
   padding: 8px;
   margin-top: 5px;
   border-radius: 6px;

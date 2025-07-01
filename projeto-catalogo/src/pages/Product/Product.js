@@ -1,5 +1,3 @@
-import { NavBar } from "../../components/NavBar";
-import { Footer } from "../../components/Footer";
 import React, { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
 import {
@@ -204,7 +202,6 @@ export function Product() {
   // };
   return (
     <>
-      <NavBar />
       <ContainerDad>
         <h1>{product.nome || "Não encontrado"}</h1>
         <Container>
@@ -280,7 +277,6 @@ export function Product() {
           {/* <ButtonRight onClick={() => scroll(containerRef.current.offsetWidth)}>▶</ButtonRight> */}
         </ContainerSemelhantes>
       </ContainerDad>
-      <Footer />
     </>
   );
 }

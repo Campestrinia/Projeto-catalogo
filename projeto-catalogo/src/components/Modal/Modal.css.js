@@ -1,4 +1,4 @@
-import styled, { keyframes, css } from 'styled-components';
+import styled, { keyframes, css } from "styled-components";
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(-20px); }
@@ -11,7 +11,8 @@ const fadeOut = keyframes`
 `;
 
 const animationStyles = css`
-  animation: ${({ isClosing }) => (isClosing ? fadeOut : fadeIn)} 0.3s ease forwards;
+  animation: ${({ isClosing }) => (isClosing ? fadeOut : fadeIn)} 0.3s ease
+    forwards;
 `;
 
 const Backdrop = styled.div`
@@ -20,7 +21,7 @@ const Backdrop = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 10;
   display: flex;
   justify-content: center;

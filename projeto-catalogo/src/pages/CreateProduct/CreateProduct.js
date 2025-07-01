@@ -15,7 +15,7 @@ import {
   Select,
   ContainerButton,
 } from "./createProduct.css.js";
-import { LoginContext } from '../../context/Lcontext.js'
+import { LoginContext } from "../../context/Lcontext.js";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export function CreateProduct() {
@@ -109,11 +109,12 @@ export function CreateProduct() {
     try {
       const response = await axios.post(
         `${apiUrl}/api/product`,
-        formDataWithImage, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
+        formDataWithImage,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
       );
       console.log(response.data);
       navigate(previousPage);
@@ -124,7 +125,6 @@ export function CreateProduct() {
 
   return (
     <>
-      <NavBar />
       <form onSubmit={finish}>
         <ContainerDad>
           <h1>Criando produto</h1>
@@ -225,7 +225,6 @@ export function CreateProduct() {
             </ContainerSon>
           </Container>
         </ContainerDad>
-        <Footer />
       </form>
     </>
   );

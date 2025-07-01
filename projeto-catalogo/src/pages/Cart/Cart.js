@@ -1,9 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { NavBar } from '../../components/NavBar';
-import { Footer } from '../../components/Footer';
-import { Products } from '../../components/Products/Products';
-import axios from 'axios';
-import { LoginContext } from '../../context/Lcontext';
+import React, { useEffect, useState, useContext } from "react";
+import { Products } from "../../components/Products/Products";
+import axios from "axios";
+import { LoginContext } from "../../context/Lcontext";
 
 export function Cart() {
   const { user } = useContext(LoginContext);
@@ -30,20 +28,26 @@ export function Cart() {
         console.log("🔍 API URL:", apiUrl);
         console.log("👤 Usuário:", user);
 
-        const carrinhoRes = await axios.get(`${apiUrl}/api/carrinho/usuario/${user.id}`, {
-          headers: {
-            Authorization: `Bearer ${user.token}`
+        const carrinhoRes = await axios.get(
+          `${apiUrl}/api/carrinho/usuario/${user.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
           }
-        });
+        );
         console.log("✅ Carrinho encontrado:", carrinhoRes.data);
 
         const idCarrinho = carrinhoRes.data.id;
 
-        const itemsRes = await axios.get(`${apiUrl}/api/carrinhoItem/carrinho/${idCarrinho}`, {
-          headers: {
-            Authorization: `Bearer ${user.token}`
+        const itemsRes = await axios.get(
+          `${apiUrl}/api/carrinhoItem/carrinho/${idCarrinho}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
           }
-        });
+        );
         console.log("📦 Itens do carrinho:", itemsRes.data);
 
         setProductsInCart(itemsRes.data);
@@ -59,13 +63,11 @@ export function Cart() {
 
   return (
     <>
-      <NavBar />
       {loading ? (
         <p>Carregando carrinho...</p>
       ) : (
         <Products products={productsInCart} />
       )}
-      <Footer />
     </>
   );
 }

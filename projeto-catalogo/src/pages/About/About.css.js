@@ -1,16 +1,21 @@
-import styled from 'styled-components';
+// no seu arquivo /pages/About/About.css.js
 
-const Container = styled.div`
-  background-color: #222731;
-  min-height: 100vh;
-  padding: 40px 20px;
+import styled from "styled-components";
+
+// ... (o resto do seu arquivo, como AboutContainer, Section, etc., continua igual)
+// Vou omitir as partes que não mudam para ser mais breve.
+
+export const AboutContainer = styled.div`
+  padding: 40px 5%;
+  max-width: 1200px;
+  margin: 0 auto;
 `;
 
-const Section = styled.section`
-  margin: 40px 0;
+export const Section = styled.section`
+  margin-bottom: 60px;
 `;
 
-const Geral = styled.div`
+export const FlexWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -18,116 +23,90 @@ const Geral = styled.div`
   gap: 40px;
 `;
 
-const Left = styled.div`
+export const LeftColumn = styled.div`
   flex: 1;
   min-width: 300px;
 `;
 
-const Right = styled.div`
+export const RightColumn = styled.div`
   flex: 1;
   min-width: 300px;
 
   img {
     width: 100%;
-    max-width: 717px;
-    max-height: 300px;
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
   }
 `;
 
-const Card = styled.div`
-  background: #f2f4f9; /* um tom mais claro que #222731 para destacar o card */
-  border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  padding: 30px;
-`;
-
-const Title = styled.h1`
-  font-size: 2rem;
-  color: ##222731;
-  text-align: center;
-  margin-bottom: 20px;
-`;
-
-const BarW = styled.div`
-  width: 80px;
-  height: 4px;
+// ========================================================================
+// A MUDANÇA ESTÁ AQUI
+// ========================================================================
+export const LightCard = styled.div`
   background: #f2f4f9;
-  margin: 10px auto 20px;
-  border-radius: 2px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  padding: 40px;
+
+  /*
+    * A CORREÇÃO:
+    * Forçamos que qualquer título (h1, h2, h3) ou parágrafo (p)
+    * DENTRO deste card tenha a cor escura do nosso tema.
+    * Isso resolve o problema de legibilidade.
+  */
+  h1,
+  h2,
+  h3,
+  p {
+    color: var(--cor-fundo); /* --cor-fundo é #222731 */
+  }
 `;
 
-const BarB = styled.div`
-  width: 80px;
-  height: 4px;
-  background: #222731;
-  margin: 10px auto 20px;
-  border-radius: 2px;
-`;
-
-const TextOne = styled.p`
-  font-size: 1rem;
-  color: #222731;
-  line-height: 1.6;
-  text-align: justify;
-`;
-
-const Text = styled.p`
-  font-size: 1rem;
-  color: #f2f4f9;
-  line-height: 1.6;
-  text-align: justify;
-`;
-
-const CardsValores = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-  margin-top: 30px;
-`;
-
-const ValorCard = styled.div`
-  background: #2c3242; /* mesmo background dos cards principais */
-  border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  padding: 30px;
-  flex: 1;
-  min-width: 250px;
-  max-width: 350px;
-`;
-
-const ValorTitle = styled.div`
-  font-weight: bold;
-  font-size: 1.4rem;
-  color: #f2f4f9;
+export const SectionTitle = styled.h1`
+  font-size: 2.2rem;
   text-align: center;
   margin-bottom: 10px;
 `;
 
-const ValorBar = styled.div`
-  width: 60px;
+export const Divider = styled.div`
+  width: 80px;
   height: 4px;
-  background: #4caf50;
-  margin: 0 auto 20px;
+  background: var(--cor-primaria);
+  margin: 0 auto 30px;
   border-radius: 2px;
 `;
 
-export {
-    Container,
-    Section,
-    Geral,
-    Left,
-    Right,
-    Card,
-    Title,
-    BarW,
-    BarB,
-    Text,
-    CardsValores,
-    ValorCard,
-    ValorTitle,
-    ValorBar,
-    TextOne
-};
+export const Text = styled.p`
+  font-size: 1rem;
+  line-height: 1.7;
+  text-align: justify;
+`;
+
+// ... (O resto do arquivo, como ValuesGrid e ValueCard, continua igual)
+export const ValuesGrid = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+`;
+
+export const ValueCard = styled.div`
+  background: var(--cor-superficie);
+  border-radius: 12px;
+  padding: 30px;
+  flex: 1;
+  min-width: 250px;
+  max-width: 350px;
+  text-align: center;
+
+  h3 {
+    font-size: 1.5rem;
+    color: #fff; /* Texto claro no card escuro */
+    margin-bottom: 10px;
+  }
+
+  /* Adicionamos a cor para o texto do card de valor também */
+  p {
+    color: var(--cor-texto);
+  }
+`;

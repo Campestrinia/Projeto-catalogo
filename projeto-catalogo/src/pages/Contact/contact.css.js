@@ -1,234 +1,115 @@
+// no seu arquivo /pages/Contact/contact.css.js
+
 import styled from "styled-components";
-import { createGlobalStyle } from "styled-components";
+import { FaChevronDown } from "react-icons/fa";
 
-const GlobalStyle = createGlobalStyle`
-  body {
-  margin: 0px;
-  padding: 0px;
-  }
+// Container principal da página
+export const PageContainer = styled.div`
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
 `;
 
-const BoxAll = styled.div`
-  background-color: #f2f4f9;
-  height: 120%;
-  width: 100%;
-  box-sizing: border-box;
-`;
-
-const Box1 = styled.div`
-  background-image: linear-gradient(359deg, #222731, #222731);
-  width: 100%;
-  height: 200px;
-  margin: auto;
-  display: flex;
-`;
-
-const Text = styled.div`
-  margin: 0;
-  color: #f2f4f9;
-  font-family: system-ui;
-  margin-left: 60px;
-  h1 {
-    margin: 0px;
-    margin-top: 20px;
-    margin-block-end: 10px;
-  }
-  p {
-    margin: 0px;
-  }
-`;
-
-const Img = styled.div`
-  background-color: #222731;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 16px;
-
-  img {
-    max-width: 100%;
-    max-height: 200px;
-    object-fit: contain;
-  }
-`;
-
-const Box2 = styled.div`
-  width: 356px;
-  height: 300px;
-  background-color: #222731;
-  margin-right: 20px;
-  margin-top: 20px;
-  box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
-  border-radius: 4px;
-
-  ul {
-    list-style: none;
-    padding-left: 0px;
-  }
-  a {
-    text-decoration: none;
-    margin: 10px;
-    color: white;
-    font-family: monospace;
-    font-size: 17px;
-    height: 10px;
-  }
-`;
-
-const Box2mini = styled.div`
-    text-align: center;
-    
-    h3{
-    font-family: sans-serif;
-    margin: 0px
-        font-family: sans-serif;
-    margin: 0px;
-    border-bottom: ridge #f2f4f9;
-    color: #f2f4f9;
-    
-    }
-
-    
-`;
-
-const Box3 = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: #222731;
-  margin-right: 10%;
-  margin-top: 20px;
-  box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
-  border-radius: 10px;
-
-  p {
-    font-family: system-ui;
-  }
-  h4 {
-    text-align: center;
-    font-family: sans-serif;
-    font-size: 18px;
-  }
-  H6 {
-    text-align: center;
-    font-size: 20px;
-    font-family: monospace;
-    color: #f2f4f9;
-    margin-top: 20px;
-  }
-`;
-
-const Boxin = styled.div`
-  display: flex;
-`;
-
-const Box3Hidde = styled.div``;
-
-const Conteiner = styled.div`
-    height: 80%;
-    box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
-    height: 80%;
-    background-color: #f2f4f9;
-    border-radius: 20px;
-    padding: 5px;
-    margin-block-end: 10px;
-     margin-left: 20px;
-     margin-right: 20px;
-    -
-`;
-
-const Cont = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const BoxUlt = styled.div`
-  background-color: white;
-  width: 400px;
-  height: 151px;
-  margin-left: 100px;
-  margin-right: 100px;
-  padding: 16px 24px;
-  margin-block-end: 50px;
-  box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
-  border-radius: 10px;
-  h4 {
-    margin: 0px;
-    margin-top: 1px;
-    margin-left: 5px;
-    font-family: system-ui;
-  }
-  h3 {
-    font-family: cursive;
-    color: #222731;
-    margin-right: 195px;
-  }
-  h5 {
-    font-size: 15px;
-    font-family: system-ui;
-    margin-top: 20px;
-    color: #222731;
-  }
-`;
-
-const Tend = styled.div`
-  display: flex;
-  justify-content: center;
+// Cabeçalho da página
+export const PageHeader = styled.div`
   text-align: center;
+  margin-bottom: 50px;
 
-  h2 {
-    font-family: sans-serif;
-    color: #f2f4f9;
-    border-bottom: solid white;
-    width: 300px;
-
-    text-align: center;
+  h1 {
+    font-size: 2.8rem;
+    color: #fff;
+    margin-bottom: 10px;
   }
+
   p {
-    margin-left: 10px;
+    font-size: 1.1rem;
+    color: var(--cor-texto-secundario);
+    max-width: 600px;
+    margin: 0 auto;
   }
 `;
-const Boxn = styled.div`
-  display: flex;
+
+// Seção de Contato Direto (Telefone e Email)
+export const ContactInfoWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 60px;
 `;
 
-const Boxwn = styled.div`
+export const ContactCard = styled.div`
+  background: var(--cor-superficie);
+  padding: 25px;
+  border-radius: 8px;
+  border: 1px solid var(--cor-borda);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  .icon {
+    font-size: 2rem;
+    color: var(--cor-primaria);
+  }
+
+  h3 {
+    margin-bottom: 5px;
+    color: #fff;
+  }
+
+  p,
+  a {
+    color: var(--cor-texto-secundario);
+    text-decoration: none;
+  }
+`;
+
+// Seção de Perguntas Frequentes (FAQ)
+export const FaqSection = styled.section`
+  width: 100%;
+`;
+
+// Cada item individual do Acordeão (pergunta + resposta)
+export const AccordionItem = styled.div`
+  background: var(--cor-superficie);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border: 1px solid var(--cor-borda);
+  overflow: hidden; /* Garante que a resposta não vaze durante a animação */
+`;
+
+// A parte da pergunta, que é clicável
+export const QuestionHeader = styled.div`
+  padding: 20px;
   display: flex;
   justify-content: space-between;
-`;
-const Arrow = styled.div`
-  overflow: hidden;
+  align-items: center;
   cursor: pointer;
-  transform: rotate(180deg);
-  img {
-    -webkit-transition: -webkit-transform 0.5s ease;
-    transition: transform 0.5s ease;
-  }
-  img:hover {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-    transform: rotate(-180deg);
+
+  h4 {
+    font-size: 1.1rem;
+    color: var(--cor-texto);
+    margin: 0;
   }
 `;
 
-export {
-  GlobalStyle,
-  BoxAll,
-  Box1,
-  Text,
-  Img,
-  Box2,
-  Box3,
-  Boxin,
-  Box2mini,
-  Box3Hidde,
-  Conteiner,
-  Cont,
-  BoxUlt,
-  Tend,
-  Boxn,
-  Arrow,
-  Boxwn,
-};
+// Ícone de seta que rotaciona
+export const ArrowIcon = styled(FaChevronDown)`
+  color: var(--cor-texto-secundario);
+  transition: transform 0.3s ease-in-out;
+  /* 'isopen' é uma prop que vamos passar do React para o styled-component */
+  transform: ${({ isopen }) => (isopen ? "rotate(180deg)" : "rotate(0deg)")};
+`;
+
+// A parte da resposta, que expande e retrai
+export const Answer = styled.div`
+  max-height: ${({ isopen }) =>
+    isopen ? "500px" : "0"}; /* Define a altura máxima quando aberto */
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
+  color: var(--cor-texto-secundario);
+
+  p {
+    padding: 0 20px 20px 20px;
+    line-height: 1.6;
+  }
+`;

@@ -1,4 +1,3 @@
-import { NavBar } from "../../components/NavBar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
@@ -157,7 +156,6 @@ export function ManageProduct() {
 
   return (
     <>
-      <NavBar />
       <form onSubmit={finish}>
         <ContainerDad>
           <h1>Editando produto</h1>

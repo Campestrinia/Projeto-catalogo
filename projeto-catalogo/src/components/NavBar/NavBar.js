@@ -2,7 +2,6 @@ import {
   Container,
   Logo,
   Menu,
-  GlobalStyle,
   NoLink,
   Foto,
   LoginAndRegister,
@@ -17,7 +16,6 @@ export function NavBar() {
 
   return (
     <Container>
-      <GlobalStyle />
       <Logo>
         <NoLink href="/">
           <Foto src={imagem} alt="logo" />
