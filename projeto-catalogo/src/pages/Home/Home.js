@@ -4,10 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 // Componentes da página
-import { NavBar } from "../../components/NavBar";
-import { Footer } from "../../components/Footer";
 import { Highlight } from "../../components/Highlight/Highlights";
-import { Products } from "../../components/Products/Products";
 
 // Estilos importados do arquivo .css.js (somente os que vamos usar)
 import { GlobalStyle, MainContainer, HeroSection, CtaButton } from "./home.css";
