@@ -100,7 +100,7 @@ export function CreateProduct() {
     formDataWithImage.append("idUsuario", user.id);
     formDataWithImage.append("nome", formData.nome);
     formDataWithImage.append("quantidade", formData.quantidade);
-    formDataWithImage.append("preco", formData.preco);
+    formDataWithImage.append("preco", `R$${formData.preco}`);
     formDataWithImage.append("descricao", formData.descricao);
     console.log(formDataWithImage);
     console.log(formData);
