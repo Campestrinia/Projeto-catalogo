@@ -1,181 +1,288 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import InputMask from "react-input-mask";
 import { Link } from "react-router-dom";
 
-const MainContainer = styled.div`
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 24px;
-  background-color: #222731;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  h1 {
-    color: #f2f4f9;
-  }
-`;
+// --- Paleta de Cores "HardwareHerói" ---
+const bgColor = "#1e222a";
+const cardColor = "#2c3340";
+const textColor = "#f2f4f9";
+const primary = "#00a8ff";
+const danger = "#e74c3c";
 
-const GridContainer = styled.div`
+// ======================================
+// DEFINIÇÃO DOS COMPONENTES DE LAYOUT
+// ======================================
+
+const ProfilePageLayout = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  gap: 24px;
+  min-height: 100vh;
+  padding: 24px;
+  background-color: ${bgColor};
 
-  @media (max-width: 768px) {
+  @media (max-width: 992px) {
     flex-direction: column;
   }
 `;
 
-const CardContainer = styled.div`
-  background: #222731;
-  border-radius: 12px;
-  padding: 0px 10px 10px;
+const SidebarNav = styled.nav`
+  flex: 0 0 280px;
+  background-color: ${cardColor};
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 992px) {
+    width: 100%;
+    flex-basis: auto;
+  }
 `;
-const Cards = styled.div`
-  flex: 1;
-  min-width: 280px;
-  background: #222731;
-  border-radius: 12px;
-  padding: 10px 15px;
-  transition: 0.2s;
-  max-height: 520px;
-  min-height: 520px;
-  overflow-y: auto;
+
+const SidebarHeader = styled.div`
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid ${bgColor};
+
+  h3 {
+    margin: 8px 0 4px 0;
+    color: ${textColor};
+    font-size: 1.25rem;
+  }
 
   p {
-    color: #f2f4f9;
+    color: #bdc3c7;
+    font-size: 0.9rem;
+    margin: 0;
   }
-
-  /* Esconde a scrollbar no Chrome, Edge e Safari */
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Esconde a scrollbar no Firefox */
-  scrollbar-width: none;
-
-  /* Esconde a scrollbar no Internet Explorer e Edge antigo */
-  -ms-overflow-style: none;
 `;
 
-const Title = styled.h2`
-  font-size: 1.5rem;
-  margin-bottom: 12px;
-  margin-top: 10px;
-  color: #f2f4f9;
+const NavMenu = styled.div`
+  flex-grow: 1;
+`;
+
+const NavItem = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
   font-weight: 600;
+  text-align: left;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: ${textColor};
+  background-color: transparent;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background-color: ${bgColor};
+  }
+
+  ${(props) =>
+    props.isActive &&
+    css`
+      background-color: ${primary};
+      color: ${bgColor} !important;
+      &:hover {
+        background-color: ${primary};
+      }
+    `}
+`;
+
+const SidebarFooter = styled.div`
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+const ContentPanel = styled.main`
+  flex: 1;
+  background-color: ${cardColor};
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  overflow: hidden; /* Previne que algo vaze do painel */
+`;
+
+// ======================================
+// DEFINIÇÃO DOS COMPONENTES DE CONTEÚDO
+// ======================================
+
+const Title = styled.h2`
+  font-size: 1.8rem;
+  margin: 0 0 24px 0;
+  padding-bottom: 16px;
+  color: ${textColor};
+  font-weight: 600;
+  border-bottom: 1px solid ${bgColor};
+`;
+
+const Cards = styled.div`
+  /* Estilo padrão para listas (Endereços, Cartões) */
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 8px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: ${primary};
+    border-radius: 3px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: ${bgColor};
+  }
+
+  /* Seletor :has() para aplicar o grid APENAS se os filhos forem links (Favoritos, Vendas) */
+  &:has(> a) {
+    display: grid;
+    /* Cria colunas responsivas com um mínimo de 200px */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    padding-right: 4px;
+  }
+`;
+
+const InfoItem = styled.div`
+  background-color: ${bgColor};
+  border-radius: 8px;
+  padding: 12px;
+  border-left: 4px solid ${primary};
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0; /* Removido para funcionar bem na grade */
+
+  p {
+    margin: 4px 0;
+    font-size: 0.95rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  strong {
+    color: #bdc3c7;
+  }
+`;
+
+const ProductImage = styled.img`
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 4 / 3; /* Proporção da imagem para evitar distorção */
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 12px;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  display: block;
 `;
 
 const Button = styled.button`
-  background-color: #f2f4f9;
-  color: #222731;
+  background-color: ${primary};
+  color: ${bgColor};
   border: none;
-  padding: 8px 8px;
-  font-size: 16px;
-  border: 2px solid #222731;
-  border-radius: 30px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
   font-weight: bold;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  align-self: center;
+  transition: opacity 0.2s ease;
+  margin-top: 24px;
+  width: auto;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-    opacity: 0.95;
+    opacity: 0.9;
   }
 
-  &:active {
-    transform: translateY(1px);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-  }
+  ${(props) =>
+    props.variant === "danger" &&
+    css`
+      background-color: ${danger};
+      color: ${textColor};
+    `}
+
+  ${(props) =>
+    props.fullWidth &&
+    css`
+      width: 100%;
+    `}
 `;
-const ButtonOnSubmit = styled.button`
-  background-color: #f2f4f9;
-  color: #222731;
-  border: none;
-  padding: 8px 8px;
-  font-size: 16px;
-  border: 2px solid #f2f4f9;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: bold;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  align-self: center;
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-    opacity: 0.95;
-  }
-
-  &:active {
-    transform: translateY(1px);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-  }
-`;
+// ======================================
+// DEFINIÇÃO DOS COMPONENTES DE FORMULÁRIO
+// ======================================
 
 const InputStyled = styled(InputMask)`
   width: 100%;
-  height: 40px;
-  padding: 0 35px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  background-color: #f9f9f9;
-  margin: 8px 0;
-  transition: border-color 0.3s ease, background-color 0.3s ease;
+  height: 48px;
+  padding: 0 16px 0 45px;
+  font-size: 1rem;
+  border: 2px solid ${bgColor};
+  border-radius: 8px;
+  background-color: ${bgColor};
+  color: ${textColor};
+  transition: border-color 0.3s ease;
+
+  &::placeholder {
+    color: #7f8c8d;
+  }
 
   &:focus {
-    border-color: #f2f4f9;
-    background-color: #fff;
+    outline: none;
+    border-color: ${primary};
   }
 `;
 
 const InputWithIcon = styled.div`
-  display: flex;
-  align-items: center;
   position: relative;
   width: 100%;
 `;
 
 const LeftIconWrapper = styled.div`
   position: absolute;
-  left: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-`;
-const TitleModal = styled.div`
-  font-size: 32px;
-  margin-bottom: 24px;
-  text-align: center;
-  color: #f2f4f9;
-`;
-const ProductImage = styled.img`
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 8px;
-`;
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: inherit; /* opcional, para manter a cor dos textos dentro */
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7f8c8d;
 `;
 
+const TitleModal = styled.h2`
+  font-size: 2rem;
+  margin-bottom: 24px;
+  text-align: center;
+  color: ${textColor};
+`;
+
+// ======================================
+// BLOCO DE EXPORTAÇÃO ÚNICO E CORRIGIDO
+// ======================================
 export {
-  MainContainer,
-  GridContainer,
-  CardContainer,
-  Cards,
+  ProfilePageLayout,
+  SidebarNav,
+  SidebarHeader,
+  NavMenu,
+  NavItem,
+  SidebarFooter,
+  ContentPanel,
   Title,
+  Cards,
+  InfoItem,
+  ProductImage,
+  StyledLink,
   Button,
   InputStyled,
   InputWithIcon,
   LeftIconWrapper,
   TitleModal,
-  ButtonOnSubmit,
-  ProductImage,
-  StyledLink,
 };
