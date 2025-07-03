@@ -2,10 +2,14 @@ const produtoService = require("../service/produto");
 
 async function getAllproduct(req, res) {
   try {
-    const rows = await produtoService.getAllproduct();
+    const searchTerm = req.query.nome; 
+
+    // 2. Passar o searchTerm para o serviço
+    const rows = await produtoService.getAllproduct(searchTerm); 
 
     res.status(200).json(rows);
   } catch (error) {
+    console.error("Error getting product in controller:", error);
     res.status(500).send({
       message: "Error getting product",
       body: error.message,
@@ -127,5 +131,5 @@ module.exports = {
   getAllproductById,
   updateProductNoImage,
   getAllproductByCategoria,
-  getAllproductByUsuario
-}
+  getAllproductByUsuario,
+};

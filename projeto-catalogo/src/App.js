@@ -21,10 +21,12 @@ import { Profile } from "./pages/Profile/Profile";
 
 // Seu contexto
 import { LoginProvider } from "./context/Lcontext";
+import { SearchProvider } from "./context/SearchContext";
 
 function App() {
   return (
     <LoginProvider>
+       <SearchProvider>
       <Router>
         <GlobalStyle />
         <NavBar />
@@ -48,6 +50,7 @@ function App() {
 
         <Footer />
       </Router>
+       </SearchProvider>
     </LoginProvider>
   );
 }

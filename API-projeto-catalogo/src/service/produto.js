@@ -1,12 +1,25 @@
 const mysql = require("mysql2/promise");
 const databaseConfig = require("../config/database.js");
 
-async function getAllproduct() {
-  const connnetion = await mysql.createConnection(databaseConfig);
-  const [rows] = await connnetion.query("SELECT * FROM product");
+async function getAllproduct(searchTerm) { 
+  const connection = await mysql.createConnection(databaseConfig);
+  let query = "SELECT * FROM product"; 
 
-  await connnetion.end();
-  return rows;
+  const params = []; 
+
+  if (searchTerm) {
+    query += " WHERE nome LIKE ?"; 
+    params.push(`%${searchTerm}%`); 
+  }
+
+  try {
+    const [rows] = await connection.query(query, params);
+    await connection.end();
+    return rows;
+  } catch (error) {
+    console.error("Erro no serviço getAllproduct:", error); 
+    throw error; 
+  }
 }
 
 async function createProduct(
@@ -45,7 +58,7 @@ async function updateProduct(
 ) {
   const connection = await mysql.createConnection(databaseConfig);
   const updateProduct =
-    "UPDATE product Set nome = ?,  preco = ?, descricao = ?, quantidade = ?, imagem =?, idCategoria = ?, idUsuario = ? WHERE id = ?";
+    "UPDATE product Set nome = ?, preco = ?, descricao = ?, quantidade = ?, imagem =?, idCategoria = ?, idUsuario = ? WHERE id = ?";
   await connection.query(updateProduct, [
     nome,
     preco,
@@ -70,7 +83,7 @@ async function updateProductNoImage(
 ) {
   const connection = await mysql.createConnection(databaseConfig);
   const updateProduct =
-    "UPDATE product Set nome = ?,  preco = ?, descricao = ?, quantidade = ?, idCategoria = ?, idUsuario = ? WHERE id = ?";
+    "UPDATE product Set nome = ?, preco = ?, descricao = ?, quantidade = ?, idCategoria = ?, idUsuario = ? WHERE id = ?";
   await connection.query(updateProduct, [
     nome,
     preco,
@@ -130,5 +143,5 @@ module.exports = {
   getAllproductById,
   updateProductNoImage,
   getAllproductByCategoria,
-  getAllproductByUsuario
+  getAllproductByUsuario,
 };

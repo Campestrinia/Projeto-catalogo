@@ -43,6 +43,7 @@ export function Product() {
   const [usuario, setUsuario] = useState({});
   const [categoria, setCategoria] = useState({});
   const [favoritado, setFavoritado] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const navigateToManageProduct = () => {
     navigate(`/manage-product/${id}`, { state: { from: location.pathname } });
@@ -190,16 +191,11 @@ export function Product() {
       };
       fetchUsuario();
     }
-  }, [product.idUsuario, apiUrl]);
 
-  // const scroll = (scrollOffset) => {
-  //     if (containerRef.current) {
-  //         containerRef.current.scrollBy({
-  //             left: scrollOffset,
-  //             behavior: 'smooth',
-  //         });
-  //     }
-  // };
+
+  }
+  , [product.idUsuario, apiUrl]);
+    
   return (
     <>
       <ContainerDad>
