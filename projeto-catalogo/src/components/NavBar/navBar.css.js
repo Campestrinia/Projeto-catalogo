@@ -11,6 +11,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-height: 5rem;
 `;
 
 export const Logo = styled.div`

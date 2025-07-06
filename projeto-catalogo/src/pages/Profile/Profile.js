@@ -51,6 +51,7 @@ export function Profile() {
   const [favoritos, setFavoritos] = useState([]);
   const [enderecos, setEnderecos] = useState([]);
   const [myProducts, setMyProducts] = useState([]);
+  const [myCompras, setCompras] = useState([]);
 
   // Estados para controlar a interface
   const [isLoading, setIsLoading] = useState(true);
@@ -296,6 +297,31 @@ export function Profile() {
             <Button onClick={goToPostPage}>Postar Novo Item</Button>
           </>
         );
+      case "compras":
+        return (
+          <>
+            <Title>Minhas compras</Title>
+            <Cards>
+              {myProducts.length > 0 ? (
+                myProducts.map((product) => (
+                  <StyledLink to={`/product/${product.id}`} key={product.id}>
+                    <InfoItem>
+                      <ProductImage
+                        src={`${apiBackEnd}/images/${product.imagem}`}
+                        alt={product.nome}
+                      />
+                      <p>
+                        <strong>{product.nome}</strong>
+                      </p>
+                    </InfoItem>
+                  </StyledLink>
+                ))
+              ) : (
+                <p>Você ainda não realizou nenhuma compra.</p>
+              )}
+            </Cards>
+          </>
+        );
       case "favoritos":
         return (
           <>
@@ -366,6 +392,12 @@ export function Profile() {
               onClick={() => setActiveView("vendas")}
             >
               <FaShoppingBag /> Minhas Vendas
+            </NavItem>
+            <NavItem
+              isActive={activeView === "compras"}
+              onClick={() => setActiveView("compras")}
+            >
+              <FaShoppingBag /> Minhas compras
             </NavItem>
             <NavItem
               isActive={activeView === "favoritos"}

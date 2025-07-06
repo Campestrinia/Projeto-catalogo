@@ -16,7 +16,8 @@ const danger = "#e74c3c";
 const ProfilePageLayout = styled.div`
   display: flex;
   gap: 24px;
-  min-height: 100vh;
+  min-height: 60vh;
+  max-height: 89vh;
   padding: 24px;
   background-color: ${bgColor};
 
@@ -68,7 +69,7 @@ const NavItem = styled.button`
   align-items: center;
   gap: 12px;
   width: 100%;
-  padding: 16px;
+  padding: 10px;
   margin-bottom: 8px;
   font-size: 1.1rem;
   font-weight: 600;
@@ -117,7 +118,7 @@ const ContentPanel = styled.main`
 
 const Title = styled.h2`
   font-size: 1.8rem;
-  margin: 0 0 24px 0;
+  margin: 0 0 5px 0;
   padding-bottom: 16px;
   color: ${textColor};
   font-weight: 600;
@@ -126,7 +127,7 @@ const Title = styled.h2`
 
 const Cards = styled.div`
   /* Estilo padrão para listas (Endereços, Cartões) */
-  max-height: 500px;
+  max-height: 480px;
   overflow-y: auto;
   padding-right: 8px;
 
@@ -158,7 +159,7 @@ const InfoItem = styled.div`
   border-left: 4px solid ${primary};
   display: flex;
   flex-direction: column;
-  margin-bottom: 0; /* Removido para funcionar bem na grade */
+  margin-bottom: 5px;
 
   p {
     margin: 4px 0;
@@ -198,7 +199,7 @@ const Button = styled.button`
   cursor: pointer;
   font-weight: bold;
   transition: opacity 0.2s ease;
-  margin-top: 24px;
+  margin-top: 10px;
   width: auto;
 
   &:hover {
