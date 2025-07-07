@@ -23,23 +23,23 @@ export function NavBar() {
           <Foto src={imagem} alt="logo" />
         </NoLink>
       </Logo>
+      <input
+        type="text"
+        placeholder="Buscar produtos..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        style={{
+          padding: "5px 10px",
+          borderRadius: "5px",
+          border: "1px solid #ccc",
+          marginLeft: "10px",
+          width: "35rem"
+        }}
+      />
       <Menu>
         <NoLink href="/">Início</NoLink>
         <NoLink href="/about">Sobre nós</NoLink>
         <NoLink href="/contact">Contato</NoLink>
-
-        <input
-          type="text"
-          placeholder="Buscar produtos..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            padding: "5px 10px",
-            borderRadius: "5px",
-            border: "1px solid #ccc",
-            marginLeft: "10px",
-          }}
-        />
 
         {user && user.id ? (
           <>

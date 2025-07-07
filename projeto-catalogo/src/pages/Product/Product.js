@@ -43,7 +43,7 @@ export function Product() {
   const [usuario, setUsuario] = useState({});
   const [categoria, setCategoria] = useState({});
   const [favoritado, setFavoritado] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+  // const [searchTerm, setSearchTerm] = useState("");
 
   const navigateToManageProduct = () => {
     navigate(`/manage-product/${id}`, { state: { from: location.pathname } });
@@ -194,8 +194,8 @@ export function Product() {
 
 
   }
-  , [product.idUsuario, apiUrl]);
-    
+    , [product.idUsuario, apiUrl]);
+
   return (
     <>
       <ContainerDad>
