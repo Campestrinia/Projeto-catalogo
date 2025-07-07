@@ -46,8 +46,8 @@ export function NavBar() {
             <NoLink href="/cart">
               <FaShoppingCart />
             </NoLink>
-            <LoginAndRegister>
-              <NoLink href="/profile">
+            <LoginAndRegister href="/profile">
+              <NoLink >
                 <FaUserAlt />
               </NoLink>
             </LoginAndRegister>

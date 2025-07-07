@@ -14,6 +14,9 @@ import {
   FaShoppingBag,
   FaStar,
   FaCreditCard,
+  FaTrashAlt,
+  FaCalendarAlt,
+  FaLock
 } from "react-icons/fa";
 import { LoginContext } from "../../context/Lcontext";
 import { useNavigate } from "react-router-dom";
@@ -59,6 +62,7 @@ export function Profile() {
 
   // Estados para o formulário do Modal
   const [modalEndereco, setModalEndereco] = useState(false);
+  const [modalCartao, setModalCartao] = useState(false);
   const [enviandoEndereco, setEnviandoEndereco] = useState(false);
   const [CEP, setCEP] = useState("");
   const [rua, setRua] = useState("");
@@ -67,6 +71,14 @@ export function Profile() {
   const [bairro, setBairro] = useState("");
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
+
+  // Estados para o formulário do Modal
+  const [numeroCartao, setNumeroCartao] = useState("");
+  const [nomeTitular, setNomeTitular] = useState("");
+  const [validade, setValidade] = useState("");
+  const [cvv, setCvv] = useState("");
+  const [enviandoCartao, setEnviandoCartao] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -101,6 +113,7 @@ export function Profile() {
         setProfile(profileRes.data);
         setMyProducts(productsRes.data);
         setEnderecos(addressRes.data);
+        setCompras(addressRes.data);
 
         // Processa os favoritos para buscar os detalhes de cada produto
         if (favRes.data.length > 0) {
@@ -147,7 +160,6 @@ export function Profile() {
     navigate("/");
   };
   const goToPostPage = () => navigate("/createProduct");
-  const goToCardPage = () => navigate("/post/cartao");
 
   // Funções do Modal de Endereço
   const closeModalEndereco = () => {
@@ -161,7 +173,31 @@ export function Profile() {
     setEstado("");
     setEnviandoEndereco(false);
   };
+  // Funções do Modal de cartao
+  const closeModalCartao = () => {
+    setModalCartao(false);
+    setNumeroCartao('')
+    setNomeTitular('')
+    setValidade('')
+    setCvv('')
+    setEnviandoCartao(false)
+  };
 
+  const excluirEndereco = async (id) => {
+    try {
+
+      const response = await axios.delete(`${apiBackEnd}/api/endereco/${id}`, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
+      console.log(response.data)
+      // Atualiza lista local após exclusão
+      setEnderecos(prev => prev.filter(end => end.id !== id));
+      message.success('Endereço excluido com sucesso!')
+    } catch (error) {
+      message.error('Erro ao excluir endereço')
+      console.log(error)
+    }
+  };
   const handleCEPChange = async (e) => {
     const cep = e.target.value;
     setCEP(cep);
@@ -216,6 +252,50 @@ export function Profile() {
       setEnviandoEndereco(false);
     }
   };
+  const handleSubmitCartao = async (e) => {
+    e.preventDefault();
+    if (!numeroCartao || !nomeTitular || !validade || !cvv) {
+      message.warning("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
+    setEnviandoCartao(true);
+    try {
+      //Função para adicionar cartão
+      //pegar do finalizar compra
+      // const response = await axios.post(
+      //   `${apiBackEnd}/api/endereco`,
+      //   {
+      //     CEP,
+      //     rua,
+      //     numero: Number(numero),
+      //     complemento,
+      //     bairro,
+      //     cidade,
+      //     estado,
+      //     idUsuario: user.id,
+      //   },
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${user.token}`,
+      //       "Content-Type": "application/json",
+      //     },
+      //   }
+      // );
+
+      // if (response.data.message === "Success") {
+      //   fetchEnderecos();
+      //   closeModalEndereco();
+      //   message.success("Endereço cadastrado com sucesso");
+      // } else {
+      //   message.error("Erro ao adicionar seu endereço.");
+      // }
+    } catch (error) {
+      console.error("Erro ao cadastrar endereço:", error);
+      message.error("Ocorreu um erro no servidor.");
+    } finally {
+      setEnviandoEndereco(false);
+    }
+  };
 
   // Tela de Carregamento Principal
   if (isLoading) {
@@ -245,27 +325,31 @@ export function Profile() {
               {enderecos.length > 0 ? (
                 enderecos.map((addr, idx) => (
                   <InfoItem key={idx}>
-                    <p>
-                      <strong>Endereço {idx + 1}</strong>
-                    </p>
-                    <p>
-                      <strong>CEP:</strong> {addr.CEP}
-                    </p>
-                    <p>
-                      <strong>Rua:</strong> {addr.rua}, {addr.numero}
-                    </p>
-                    <p>
-                      <strong>Bairro:</strong> {addr.bairro}
-                    </p>
-                    <p>
-                      <strong>Cidade:</strong> {addr.cidade} - {addr.estado}
-                    </p>
+                    {/* Ícone da lixeira */}
+                    <FaTrashAlt
+                      onClick={() => excluirEndereco(addr.id)}
+                      style={{
+                        position: 'absolute',
+                        top: '10px',
+                        right: '10px',
+                        color: 'red',
+                        cursor: 'pointer'
+                      }}
+                    />
+
+                    <p><strong>Endereço {idx + 1}</strong></p>
+                    <p><strong>CEP:</strong> {addr.CEP}</p>
+                    <p><strong>Rua:</strong> {addr.rua}, {addr.numero}</p>
+                    <p><strong>Complemento:</strong> {addr.complemento}</p>
+                    <p><strong>Bairro:</strong> {addr.bairro}</p>
+                    <p><strong>Cidade:</strong> {addr.cidade} - {addr.estado}</p>
                   </InfoItem>
                 ))
               ) : (
                 <p>Nenhum endereço cadastrado.</p>
               )}
             </Cards>
+
             <Button onClick={() => setModalEndereco(true)}>
               Cadastrar Endereço
             </Button>
@@ -302,8 +386,8 @@ export function Profile() {
           <>
             <Title>Minhas compras</Title>
             <Cards>
-              {myProducts.length > 0 ? (
-                myProducts.map((product) => (
+              {myCompras.length > 0 ? (
+                myCompras.map((product) => (
                   <StyledLink to={`/product/${product.id}`} key={product.id}>
                     <InfoItem>
                       <ProductImage
@@ -362,7 +446,7 @@ export function Profile() {
                 <p>Nenhum cartão cadastrado.</p>
               )}
             </Cards>
-            <Button onClick={goToCardPage}>Cadastrar Cartão</Button>
+            <Button onClick={() => { setModalCartao(true) }}>Cadastrar Cartão</Button>
           </>
         );
       default:
@@ -531,6 +615,81 @@ export function Profile() {
           </Button>
         </form>
       </Modal>
+      <Modal isOpen={modalCartao} onClose={closeModalCartao}>
+        <form
+          onSubmit={handleSubmitCartao} // Lembre de criar essa função
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "12px",
+            width: "100%",
+            maxWidth: "400px",
+            margin: "0 auto",
+          }}
+        >
+          <TitleModal>Cadastrar Cartão de Crédito</TitleModal>
+
+          <InputWithIcon>
+            <LeftIconWrapper>
+              <FaCreditCard />
+            </LeftIconWrapper>
+            <InputStyled
+              mask="9999 9999 9999 9999"
+              type="text"
+              placeholder="Número do Cartão"
+              value={numeroCartao}
+              onChange={(e) => setNumeroCartao(e.target.value)}
+              required
+            />
+          </InputWithIcon>
+
+          <InputWithIcon>
+            <LeftIconWrapper>
+              <FaUser />
+            </LeftIconWrapper>
+            <InputStyled
+              type="text"
+              placeholder="Nome no Cartão"
+              value={nomeTitular}
+              onChange={(e) => setNomeTitular(e.target.value)}
+              required
+            />
+          </InputWithIcon>
+
+          <InputWithIcon>
+            <LeftIconWrapper>
+              <FaCalendarAlt />
+            </LeftIconWrapper>
+            <InputStyled
+              mask="99/99"
+              type="text"
+              placeholder="Validade (MM/AA)"
+              value={validade}
+              onChange={(e) => setValidade(e.target.value)}
+              required
+            />
+          </InputWithIcon>
+
+          <InputWithIcon>
+            <LeftIconWrapper>
+              <FaLock />
+            </LeftIconWrapper>
+            <InputStyled
+              mask="999"
+              type="text"
+              placeholder="CVV"
+              value={cvv}
+              onChange={(e) => setCvv(e.target.value)}
+              required
+            />
+          </InputWithIcon>
+
+          <Button type="submit" disabled={enviandoCartao}>
+            {enviandoCartao ? "Salvando..." : "Salvar Cartão"}
+          </Button>
+        </form>
+      </Modal>
+
     </>
   );
 }

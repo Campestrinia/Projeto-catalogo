@@ -48,7 +48,7 @@ export const Foto = styled.img`
   height: 70px;
 `;
 
-export const LoginAndRegister = styled.div`
+export const LoginAndRegister = styled.a`
   margin: 10px;
   display: flex;
   align-items: center;

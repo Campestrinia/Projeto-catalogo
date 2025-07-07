@@ -80,12 +80,22 @@ export function Product() {
   const adicionarAoCarrinho = async (comprador, product_id, quantidade, preco, nomeVendedor) => {
     console.log(comprador, product_id, quantidade, preco, nomeVendedor)
     try {
+      const carrinhoRes = await axios.get(
+        `${apiUrl}/api/carrinho/${user.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      console.log(carrinhoRes.data);
+      const itemJaExiste = carrinhoRes.data.some(item => item.product_id === product_id);
 
       if (user === nomeVendedor) {
-        message.error('Você não pode adicionar um produto seu ao carrinho')
+        message.error('Você não pode adicionar um produto seu ao carrinho!')
         return
-      } else if (user === nomeVendedor) {
-
+      } else if (itemJaExiste) {
+        message.error('Esse item ja está no seu carrinho!')
       } else {
         console.log(user)
         console.log(user.token)

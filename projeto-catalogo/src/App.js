@@ -18,6 +18,7 @@ import { ManageProduct } from "./pages/manage-product";
 import { CreateProduct } from "./pages/CreateProduct/CreateProduct";
 import { ProductWithCategoria } from "./pages/ProductWithCategoria/ProductWithCategoria";
 import { Profile } from "./pages/Profile/Profile";
+import { FinalizarCompra } from "./pages/FinalizarCompra/FinalizarCompra"
 
 // Seu contexto
 import { LoginProvider } from "./context/Lcontext";
@@ -26,31 +27,33 @@ import { SearchProvider } from "./context/SearchContext";
 function App() {
   return (
     <LoginProvider>
-       <SearchProvider>
-      <Router>
-        <GlobalStyle />
-        <NavBar />
+      <SearchProvider>
+        <Router>
+          <GlobalStyle />
+          <NavBar />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/product/:id" element={<Product />} />
-          <Route path="/manage-product/:id" element={<ManageProduct />} />
-          <Route path="/createProduct" element={<CreateProduct />} />
-          <Route
-            path="/productWithCategoria/:id"
-            element={<ProductWithCategoria />}
-          />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/product/:id" element={<Product />} />
+            <Route path="/manage-product/:id" element={<ManageProduct />} />
+            <Route path="/createProduct" element={<CreateProduct />} />
+            <Route path="/finalizar" element={<FinalizarCompra />} />
 
-        <Footer />
-      </Router>
-       </SearchProvider>
+            <Route
+              path="/productWithCategoria/:id"
+              element={<ProductWithCategoria />}
+            />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+
+          <Footer />
+        </Router>
+      </SearchProvider>
     </LoginProvider>
   );
 }

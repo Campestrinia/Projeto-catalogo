@@ -153,6 +153,7 @@ const Cards = styled.div`
 `;
 
 const InfoItem = styled.div`
+position: relative;
   background-color: ${bgColor};
   border-radius: 8px;
   padding: 12px;
@@ -262,7 +263,7 @@ const TitleModal = styled.h2`
   font-size: 2rem;
   margin-bottom: 24px;
   text-align: center;
-  color: ${textColor};
+  color: black;
 `;
 
 // ======================================
