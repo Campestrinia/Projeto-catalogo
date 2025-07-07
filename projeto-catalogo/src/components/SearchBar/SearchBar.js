@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { SearchContext } from '../../context/SearchContext'; // Ajuste o caminho se necessário
+import { SearchContext } from '../../context/SearchContext';
 
 const SearchBar = () => {
   const { searchTerm, setSearchTerm } = useContext(SearchContext);
