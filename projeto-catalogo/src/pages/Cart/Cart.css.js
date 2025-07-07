@@ -8,7 +8,8 @@ export const StyledLink = styled(Link)`
 `;
 
 export const Image = styled.img`
-  width: 20%;
+  width: 5rem;
+  height: 5rem;
   object-fit: contain; /* NOVO: imagem inteira visível sem distorcer */
   border-radius: 10px;
 `;

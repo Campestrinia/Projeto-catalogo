@@ -8,7 +8,6 @@ const favoritoRouter = require("./router/favoritoRouter.js")
 const cors = require('cors')
 const path = require('path');
 const carrinhoRouter = require("./router/carrinhoRouter.js");
-const carrinhoItemRouter = require("./router/carrinhoItemRouter.js");
 
 const PORT = 3001;
 
@@ -28,7 +27,6 @@ app.use("/api", enderecoRouter);
 app.use("/api", categoriaRouter);
 app.use("/api", favoritoRouter);
 app.use("/api", carrinhoRouter);
-app.use("/api", carrinhoItemRouter);
 
 app.listen(PORT, () => {
   console.log("servidor online");

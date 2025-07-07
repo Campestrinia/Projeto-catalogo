@@ -7,11 +7,15 @@ async function createCarrinhoTable() {
 
     await connection.query(`USE ${databaseConfig.database}`);
 
-    await connection.query(`CREATE TABLE IF NOT EXISTS carrinho(
-        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        idUsuario INT NOT NULL,
-        FOREIGN KEY (idUsuario) REFERENCES usuario (id)
-    )`);
+    await connection.query(`CREATE TABLE cart (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    idUsuario INT,
+    product_id INT,
+    quantidade INT DEFAULT 1,
+    preco_unitario DECIMAL(10,2),
+    FOREIGN KEY (idUsuario) REFERENCES usuario(id),
+    FOREIGN KEY (product_id) REFERENCES product(id)
+)`);
 
     await connection.end();
     console.log("Table carrinho Created");

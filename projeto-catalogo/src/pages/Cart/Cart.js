@@ -19,19 +19,9 @@ export function Cart() {
         return;
       }
 
-      if (!apiUrl) {
-        console.error("❌ Variável REACT_APP_API_URL não definida.");
-        setLoading(false);
-        return;
-      }
-
       try {
-        console.log("📦 Iniciando fetchCartProducts");
-        console.log("🔍 API URL:", apiUrl);
-        console.log("👤 Usuário:", user);
-
         const carrinhoRes = await axios.get(
-          `${apiUrl}/api/carrinho/usuario/${user.id}`,
+          `${apiUrl}/api/carrinho/${user.id}`,
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
@@ -39,20 +29,21 @@ export function Cart() {
           }
         );
         console.log("✅ Carrinho encontrado:", carrinhoRes.data);
+        if (!carrinhoRes?.data?.length) return;
 
-        const idCarrinho = carrinhoRes.data.id;
-
-        const itemsRes = await axios.get(
-          `${apiUrl}/api/carrinhoItem/carrinho/${idCarrinho}`,
-          {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
-          }
+        const promises = carrinhoRes.data.map(item =>
+          axios.get(`${apiUrl}/api/product/${item.product_id}`).then(response => {
+            // Aqui junta os dados do produto com o idCarrinho do item original
+            return {
+              ...response.data,      // dados do produto detalhado
+              idCarrinho: item.id,   // ou item.idCarrinho, conforme seu campo
+            };
+          })
         );
-        console.log("📦 Itens do carrinho:", itemsRes.data);
 
-        setProductsInCart(itemsRes.data);
+        const dados = await Promise.all(promises);
+        setProductsInCart(dados);
+
       } catch (error) {
         console.error("❌ Erro ao carregar carrinho:", error);
       } finally {
@@ -64,50 +55,103 @@ export function Cart() {
   }, [user, apiUrl]);
 
   const removeCart = async (id) => {
-    message.info(id)
+    try {
+      const headers = {
+        Authorization: `Bearer ${user.token}`
+      };
+
+      await axios.delete(`${apiUrl}/api/carrinho/${id}`, { headers });
+
+      // Atualiza o state removendo o item com o id passado
+      setProductsInCart(prevProducts =>
+        prevProducts.filter(product => product.idCarrinho !== id)
+      );
+
+      message.success('Item removido com sucesso');
+    } catch (error) {
+      console.error("Erro ao remover item:", error);
+      message.error('Erro ao remover o item do carrinho');
+    }
   };
   return (
     <>
-      {loading ? (
-        <p>Carregando carrinho...</p>
-      ) : (
-        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: '10px' }}>
+      {productsInCart && (
+        loading ? (
+          <p>Carregando carrinho...</p>
+        ) : (
+          <div style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: '10px' }}>
+            <div style={{
+              display: "flex",
+              border: '1px solid',
+              width: '50%',
+              flexDirection: 'column',
+              padding: '10px',
+              background: '#f2f4f9',
+              borderRadius: '10px'
+            }}>
+              <h2>Carrinho</h2>
+              {productsInCart.length > 0 ? (
 
-          <div style={{ display: "flex", border: '1px solid', width: '50%', flexDirection: 'column', padding: '10px' }}>
-            Carrinho
-            {
-              productsInCart.map((product) => (
-                <React.Fragment key={product.id}>
-                  <div style={{ display: "flex", background: '#f2f4f9', padding: '10px', border: '1px solid', borderRadius: '10px', flexDirection: 'column' }}>
-
-                    <div style={{ background: '#2a303c', width: '100%', display: 'flex', padding: '15px', borderRadius: '10px', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <StyledLink to={`/product/${product.id}`}>
-                        <Image
-                          src={`${apiUrl}/images/${product.imagem}`}
-                          alt={product.nome}
+                <div style={{
+                  display: "flex",
+                  padding: '10px',
+                  border: '1px solid',
+                  borderRadius: '10px',
+                  flexDirection: 'column'
+                }}>
+                  {productsInCart.map(product => (
+                    <React.Fragment key={product.id}>
+                      <div style={{
+                        background: '#2a303c',
+                        width: '100%',
+                        display: 'flex',
+                        padding: '10px',
+                        marginTop: '5px',
+                        borderRadius: '10px',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                      }}>
+                        <StyledLink to={`/product/${product.id}`}>
+                          <Image
+                            src={`${apiUrl}/images/${product.imagem}`}
+                            alt={product.nome}
+                          />
+                          <div style={{
+                            background: '#2a303c',
+                            display: 'flex',
+                            width: '100%',
+                            justifyContent: 'space-between',
+                            padding: '15px',
+                            margin: '5px',
+                            borderRadius: '10px',
+                            alignItems: 'center'
+                          }}>
+                            <Text>{product.nome}</Text>
+                            <Text>R${product.preco}</Text>
+                            <Text>Quantidade: {product.quantidade}</Text>
+                          </div>
+                        </StyledLink>
+                        <FaRegTrashAlt
+                          style={{ cursor: 'pointer' }}
+                          color="red"
+                          size={20}
+                          onClick={() => removeCart(product.idCarrinho)}
                         />
-                        <div style={{
-                          background: '#2a303c', display: 'flex', width: '100%', justifyContent: 'space-between', padding: '15px', margin: '5px', borderRadius: '10px',
-                          alignItems: 'center'
-                        }}>
-                          <Text>{product.nome}</Text>
-                          <Text>R${product.preco}</Text>
-                          <Text>Quantidade: {product.quantidade}</Text>
-                        </div>
-                      </StyledLink>
-                      <FaRegTrashAlt color="red" size={20} onClick={() => removeCart(product.id)} />
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'center', margin: '5px' }}>
-                      <button style={{ margin: '5px', padding: '3px' }}>Limpar carrinho</button>
-                      <button style={{ margin: '5px', padding: '3px' }}>Finalizar carrinho</button>
-                    </div>
+                      </div>
+                    </React.Fragment>
+                  ))}
+                </div>
+              ) : (
+                <h1 style={{ color: 'black' }}>Nenhum item seu no carrinho</h1>
+              )}
 
-                  </div>
-                </React.Fragment>
-              ))
-            }
+              <div style={{ display: 'flex', justifyContent: 'center', margin: '5px' }}>
+                <button style={{ margin: '5px', padding: '3px' }}>Limpar carrinho</button>
+                <button style={{ margin: '5px', padding: '3px' }}>Finalizar carrinho</button>
+              </div>
+            </div>
           </div>
-        </div>
+        )
       )}
     </>
   );

@@ -5,6 +5,7 @@ select * from usuario;
 select * from product ;
 select * from endereco;
 Select * from favoritos;
+Select * from cart;
 
 CREATE TABLE favoritos (
     id INT AUTO_INCREMENT PRIMARY KEY,

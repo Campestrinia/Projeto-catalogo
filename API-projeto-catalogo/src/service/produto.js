@@ -1,15 +1,15 @@
 const mysql = require("mysql2/promise");
 const databaseConfig = require("../config/database.js");
 
-async function getAllproduct(searchTerm) { 
+async function getAllproduct(searchTerm) {
   const connection = await mysql.createConnection(databaseConfig);
-  let query = "SELECT * FROM product"; 
+  let query = "SELECT * FROM product";
 
-  const params = []; 
+  const params = [];
 
   if (searchTerm) {
-    query += " WHERE nome LIKE ?"; 
-    params.push(`%${searchTerm}%`); 
+    query += " WHERE nome LIKE ?";
+    params.push(`%${searchTerm}%`);
   }
 
   try {
@@ -17,8 +17,8 @@ async function getAllproduct(searchTerm) {
     await connection.end();
     return rows;
   } catch (error) {
-    console.error("Erro no serviço getAllproduct:", error); 
-    throw error; 
+    console.error("Erro no serviço getAllproduct:", error);
+    throw error;
   }
 }
 

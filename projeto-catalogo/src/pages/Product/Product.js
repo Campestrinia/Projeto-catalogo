@@ -19,7 +19,6 @@ import {
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { LoginContext } from "../../context/Lcontext.js";
 import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
-import { adicionarAoCarrinho } from "../../components/Cart/cartHelpers.js";
 
 import styled from "styled-components";
 import { message } from "antd";
@@ -75,6 +74,39 @@ export function Product() {
         navigate("/login");
       }
     } catch (error) {
+      console.error("Erro ao favoritar produto:", error);
+    }
+  };
+  const adicionarAoCarrinho = async (comprador, product_id, quantidade, preco, nomeVendedor) => {
+    console.log(comprador, product_id, quantidade, preco, nomeVendedor)
+    try {
+
+      if (user === nomeVendedor) {
+        message.error('Você não pode adicionar um produto seu ao carrinho')
+        return
+      } else if (user === nomeVendedor) {
+
+      } else {
+        console.log(user)
+        console.log(user.token)
+        const response = await axios.post(
+          `${apiUrl}/api/carrinho`,
+          {
+            idUsuario: comprador,
+            product_id: product_id,
+            quantidade: quantidade,
+            preco_unitario: preco
+          },
+          {
+            headers: { Authorization: `Bearer ${user.token}` },
+          }
+        );
+        console.log(response.data)
+        message.success("item adicionado ao carrinho")
+
+      }
+    } catch (error) {
+      message.error("erro ao adicionar item ao carrinho")
       console.error("Erro ao favoritar produto:", error);
     }
   };
@@ -197,82 +229,84 @@ export function Product() {
     , [product.idUsuario, apiUrl]);
 
   return (
-    <>
-      <ContainerDad>
-        <h1>{product.nome || "Não encontrado"}</h1>
-        <Container>
-          <ImagamProduct>
-            <Imagi
-              src={`${apiUrl}/images/${product.imagem}`}
-              alt={product.nome || "Imagem não encontrada"}
-            />
-          </ImagamProduct>
-          <ContainerSon>
-            <ContainerButtonAndAbout>
-              <About>
-                <h3>Preço: {product.preco || "Não encontrado"}</h3>
-                <h3>Categoria: {categoria.nome || "Não encontrado"}</h3>
-                <h4>Descrição: {product.descricao || "Não encontrado"}</h4>
-                <h5>Vendido por {usuario.nome || "Não encontrado"}</h5>
-              </About>
-              <ContainerButton>
-                <HeartIcon>
-                  {favoritado ? (
-                    <FaHeart onClick={() => desfavorito()} />
-                  ) : (
-                    <FaRegHeart
-                      onClick={() =>
-                        favorito(user.id, product.id, product.idUsuario)
-                      }
-                    />
+    user && product && (
+      <>
+        <ContainerDad>
+          <h1>{product.nome || "Não encontrado"}</h1>
+          <Container>
+            <ImagamProduct>
+              <Imagi
+                src={`${apiUrl}/images/${product.imagem}`}
+                alt={product.nome || "Imagem não encontrada"}
+              />
+            </ImagamProduct>
+            <ContainerSon>
+              <ContainerButtonAndAbout>
+                <About>
+                  <h3>Preço: {product.preco || "Não encontrado"}</h3>
+                  <h3>Categoria: {categoria.nome || "Não encontrado"}</h3>
+                  <h4>Descrição: {product.descricao || "Não encontrado"}</h4>
+                  <h5>Vendido por {usuario.nome || "Não encontrado"}</h5>
+                </About>
+                <ContainerButton>
+                  <HeartIcon>
+                    {favoritado ? (
+                      <FaHeart onClick={() => desfavorito()} />
+                    ) : (
+                      <FaRegHeart
+                        onClick={() =>
+                          favorito(user.id, product.id, product.idUsuario)
+                        }
+                      />
+                    )}
+                  </HeartIcon>
+
+                  {usuario.id === user.id && (
+                    <Button onClick={navigateToManageProduct}>Editar</Button>
                   )}
-                </HeartIcon>
 
-                {usuario.id === user.id && (
-                  <Button onClick={navigateToManageProduct}>Editar</Button>
-                )}
+                  <Button>Comprar</Button>
 
-                <Button>Comprar</Button>
-
-                <Button
-                  onClick={() =>
-                    adicionarAoCarrinho(user, product.idUsuario, product.id)
-                  }
-                >
-                  Carrinho
-                </Button>
-              </ContainerButton>
-            </ContainerButtonAndAbout>
-          </ContainerSon>
-        </Container>
-        <h3>Produtos semelhantes:</h3>
-        <ContainerSemelhantes ref={containerRef}>
-          {/* <ButtonLeft onClick={() => scroll(-containerRef.current.offsetWidth)}>◀</ButtonLeft> */}
-          {productsSemelhante ? (
-            productsSemelhante.map((productSemelhante) => (
-              <React.Fragment key={productSemelhante.id}>
-                <StyledLink to={`/product/${productSemelhante.id}`}>
-                  <Card>
-                    <Image
-                      src={`${apiUrl}/images/${productSemelhante.imagem}`}
-                      alt={productSemelhante.nome}
-                    />
-                    <AboutSemelhantes>
-                      R${productSemelhante.preco}
-                    </AboutSemelhantes>
-                    <AboutSemelhantes>
-                      {productSemelhante.nome}
-                    </AboutSemelhantes>
-                  </Card>
-                </StyledLink>
-              </React.Fragment>
-            ))
-          ) : (
-            <h3>Carregando....</h3>
-          )}
-          {/* <ButtonRight onClick={() => scroll(containerRef.current.offsetWidth)}>▶</ButtonRight> */}
-        </ContainerSemelhantes>
-      </ContainerDad>
-    </>
+                  <Button
+                    onClick={() =>
+                      adicionarAoCarrinho(user.id, product.id, 1, product.preco, usuario.nome)
+                    }
+                  >
+                    Carrinho
+                  </Button>
+                </ContainerButton>
+              </ContainerButtonAndAbout>
+            </ContainerSon>
+          </Container>
+          <h3>Produtos semelhantes:</h3>
+          <ContainerSemelhantes ref={containerRef}>
+            {/* <ButtonLeft onClick={() => scroll(-containerRef.current.offsetWidth)}>◀</ButtonLeft> */}
+            {productsSemelhante ? (
+              productsSemelhante.map((productSemelhante) => (
+                <React.Fragment key={productSemelhante.id}>
+                  <StyledLink to={`/product/${productSemelhante.id}`}>
+                    <Card>
+                      <Image
+                        src={`${apiUrl}/images/${productSemelhante.imagem}`}
+                        alt={productSemelhante.nome}
+                      />
+                      <AboutSemelhantes>
+                        R${productSemelhante.preco}
+                      </AboutSemelhantes>
+                      <AboutSemelhantes>
+                        {productSemelhante.nome}
+                      </AboutSemelhantes>
+                    </Card>
+                  </StyledLink>
+                </React.Fragment>
+              ))
+            ) : (
+              <h3>Carregando....</h3>
+            )}
+            {/* <ButtonRight onClick={() => scroll(containerRef.current.offsetWidth)}>▶</ButtonRight> */}
+          </ContainerSemelhantes>
+        </ContainerDad>
+      </>
+    )
   );
 }

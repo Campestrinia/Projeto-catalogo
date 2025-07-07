@@ -1,74 +1,46 @@
 const mysql = require("mysql2/promise");
 const databaseConfig = require("../config/database.js");
 
-async function getAllCarrinho() {
+//Cria carrinho para o item do usuario
+async function createCarrinho(idUsuario, product_id, quantidade, preco_unitario) {
   const connection = await mysql.createConnection(databaseConfig);
-  const [rows] = await connection.query("SELECT * FROM carrinho");
-
-  await connection.end();
-  return rows;
-}
-
-async function createCarrinho(UsuarioId) {
-  const connection = await mysql.createConnection(databaseConfig);
-  const insertCategoria = "INSERT into carrinho(UsuarioId) VALUES( ?)";
-  await connection.query(insertCategoria, [UsuarioId]);
+  const insertCategoria = "INSERT INTO cart(idUsuario, product_id, quantidade, preco_unitario) VALUES(?,?,?,?)";
+  await connection.query(insertCategoria, [idUsuario, product_id, quantidade, preco_unitario]);
   await connection.end();
 }
 
-
+//Deleta o item do carrinho
 async function deleteCarrinho(id) {
   const connection = await mysql.createConnection(databaseConfig);
-  await connection.query("DELETE FROM carrinho WHERE id = ?", [id]);
+  await connection.query("DELETE FROM cart WHERE id = ?", [id]);
   await connection.end();
 }
 
-async function getCarrinhoById(id) {
+//Modifica a quantidade do produto ao carrinho
+async function updateQuantidadeCart(quantidade, idUsuario, product_id) {
   const connection = await mysql.createConnection(databaseConfig);
-  const [categoria] = await connection.query(
-    "SELECT * FROM carrinho WHERE id = ?",
+  const [cart] = await connection.query(
+    "UPDATE cart SET quantidade = ? WHERE idUsuario = ? AND product_id = ?;",
+    [quantidade, idUsuario, product_id]
+  );
+  await connection.end();
+}
+
+//Pega os produtos que usuario adicinou ao carrinho
+async function getCarrinhoByIdUser(id) {
+  const connection = await mysql.createConnection(databaseConfig);
+  const [cart] = await connection.query(
+    "SELECT * FROM cart WHERE idUsuario = ?",
     [id]
   );
-  const categoriaClean = categoria[0]
   await connection.end();
-  return categoriaClean;
+  return cart;
 }
-
-async function getOrCreateCarrinhoByUsuarioId(idUsuario) {
-  const connection = await mysql.createConnection(databaseConfig);
-
-  // Verifica se já existe um carrinho para o usuário
-  const [rows] = await connection.query(
-    "SELECT * FROM carrinho WHERE idUsuario = ?",
-    [idUsuario]
-  );
-
-  if (rows.length > 0) {
-    await connection.end();
-    return rows[0]; // já existe
-  }
-
-  // Se não existir, cria um novo carrinho
-  const [result] = await connection.query(
-    "INSERT INTO carrinho (idUsuario) VALUES (?)",
-    [idUsuario]
-  );
-
-  const [newCarrinho] = await connection.query(
-    "SELECT * FROM carrinho WHERE id = ?",
-    [result.insertId]
-  );
-
-  await connection.end();
-  return newCarrinho[0]; // novo carrinho criado
-}
-
 
 module.exports = {
-  getAllCarrinho,
   createCarrinho,
   deleteCarrinho,
-  getCarrinhoById,
-  getOrCreateCarrinhoByUsuarioId, // ✅ exportando a nova função
+  updateQuantidadeCart,
+  getCarrinhoByIdUser
 };
 

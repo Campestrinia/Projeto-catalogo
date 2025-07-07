@@ -11,7 +11,7 @@ async function createProdutoTable() {
     await connection.query(`CREATE TABLE IF NOT EXISTS product         ( 
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
             nome VARCHAR(200),
-            preco FLOAT,
+            preco DECIMAL(10,2),
             descricao VARCHAR(200),
             quantidade INT,
             imagem VARCHAR(255),

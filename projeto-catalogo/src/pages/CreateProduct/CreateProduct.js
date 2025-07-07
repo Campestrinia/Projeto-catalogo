@@ -99,10 +99,12 @@ export function CreateProduct() {
     formDataWithImage.append("idCategoria", formData.idCategoria);
     formDataWithImage.append("idUsuario", user.id);
     formDataWithImage.append("nome", formData.nome);
-    formDataWithImage.append("quantidade", formData.quantidade);
-    formDataWithImage.append("preco", `R$${formData.preco}`);
+    formDataWithImage.append("quantidade", 1);
+    formDataWithImage.append("preco", `${formData.preco}`);
     formDataWithImage.append("descricao", formData.descricao);
-    console.log(formDataWithImage);
+    for (let [key, value] of formDataWithImage.entries()) {
+      console.log(`${key}:`, value);
+    }
     console.log(formData);
     try {
       const response = await axios.post(
@@ -181,15 +183,13 @@ export function CreateProduct() {
                     />
                   </label>
                 </Itens>
-                <Itens>
+                <Itens style={{ display: 'none' }}>
                   <label>
                     Quantidade:
                     <Input
                       type="text"
                       name="quantidade"
-                      value={formData.quantidade}
                       onChange={handleChange}
-                      required={true}
                     />
                   </label>
                 </Itens>
