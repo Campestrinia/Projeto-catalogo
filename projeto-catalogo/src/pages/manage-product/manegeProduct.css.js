@@ -1,137 +1,164 @@
 import styled from "styled-components";
 
-// Paleta de cores
-const bgColor = "#222731";
-const textColor = "#f2f4f9";
-const accent = "#3a3f4b";
+// Os estilos agora usam as variáveis de cores globais da sua aplicação
+// (ex: --cor-fundo, --cor-primaria)
 
-const ContainerDad = styled.div`
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: ${bgColor};
-  color: ${textColor};
+export const ContainerDad = styled.div`
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
   min-height: 100vh;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 40px 20px;
 
   h1 {
-    font-size: 36px;
-    font-weight: bold;
-    margin-bottom: 16px;
-    position: relative;
     text-align: center;
-
-    &::after {
-      content: "";
-      display: block;
-      width: 100%;
-      height: 3px;
-      background-color: ${textColor};
-      margin: 8px auto 0 auto;
-      border-radius: 2px;
-    }
+    font-size: 36px;
+    margin-bottom: 40px;
   }
 `;
 
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
-  margin: 40px 60px;
-  justify-content: space-around;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 50px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: var(--cor-superficie);
+  border-radius: 16px;
+  border: 1px solid var(--cor-borda);
 `;
 
-const ContainerSon = styled.div`
+export const ImagePreviewContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 20px;
-  padding: 24px;
-  border: 1px solid ${accent};
-  border-radius: 16px;
-  background-color: ${accent};
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-  }
+  align-items: center;
+  gap: 20px;
 `;
 
-const Imagi = styled.img`
-  width: 360px;
-  height: 360px;
-  margin: 10px auto;
+export const Imagi = styled.img`
+  width: 300px;
+  height: 300px;
   border-radius: 12px;
   object-fit: cover;
+  border: 1px solid var(--cor-borda);
 `;
 
-const About = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 20px;
-  padding: 24px;
-  width: 420px;
-  border: 1px solid ${accent};
-  border-radius: 16px;
-  background-color: ${accent};
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-`;
-
-const Button = styled.button`
-  margin: 12px;
-  padding: 12px 24px;
-  background-color: ${textColor};
-  color: ${bgColor};
-  border: none;
-  border-radius: 10px;
-  font-weight: bold;
+export const FileInputLabel = styled.label`
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  padding: 10px 20px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  border: 1px solid var(--cor-borda);
+  transition: background-color 0.3s;
 
   &:hover {
-    background-color: #e0e0e0;
-    transform: scale(1.03);
+    background-color: #3c4250; // Um tom um pouco mais claro que a superfície
   }
 `;
 
-const ContainerButton = styled.div`
-  margin: 10px;
+export const FileInput = styled.input`
+  display: none; // O input real fica escondido
+`;
+
+export const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  max-width: 500px;
+`;
+
+export const FormGroup = styled.div`
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
 `;
 
-const ImagemProduct = styled.div`
+export const Label = styled.label`
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  color: var(--cor-texto-secundario);
+`;
+
+const commonInputStyles = `
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--cor-borda);
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+
+  &:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(0, 170, 255, 0.2);
+  }
+`;
+
+export const Input = styled.input`
+  ${commonInputStyles}
+`;
+
+export const Select = styled.select`
+  ${commonInputStyles}
+`;
+
+export const ButtonContainer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 63px 20px 60px 294px;
-  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
 `;
 
-const Itens = styled.div`
-  margin: 5px;
-`;
+export const Button = styled.button`
+  flex-grow: 1;
+  padding: 12px 24px;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
 
-const Input = styled.input`
-  width: 99%;
-`;
+  // Estilo Primário
+  ${(props) =>
+    props.primary &&
+    `
+    background-color: var(--cor-primaria);
+    color: #fff;
+    &:hover {
+      background-color: #0088cc;
+    }
+  `}
 
-const Select = styled.select`
-  width: 99%;
-`;
+  // Estilo de Perigo
+  ${(props) =>
+    props.danger &&
+    `
+    background-color: transparent;
+    color: #ff4d4f;
+    border-color: #ff4d4f;
+    &:hover {
+      background-color: #ff4d4f;
+      color: #fff;
+    }
+  `}
 
-export {
-  ContainerDad,
-  Container,
-  Imagi,
-  ContainerSon,
-  About,
-  Button,
-  ImagemProduct,
-  Itens,
-  Input,
-  Select,
-  ContainerButton,
-};
+  // Estilo Secundário (Padrão)
+  ${(props) =>
+    !props.primary &&
+    !props.danger &&
+    `
+    background-color: transparent;
+    color: var(--cor-texto-secundario);
+    border-color: var(--cor-borda);
+    &:hover {
+      border-color: var(--cor-texto);
+      color: var(--cor-texto);
+    }
+  `}
+`;

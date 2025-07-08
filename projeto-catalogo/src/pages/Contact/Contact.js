@@ -1,15 +1,9 @@
-// no seu arquivo /pages/Contact/Contact.js
-
 import React, { useState } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { GoMail } from "react-icons/go";
 
-// Importando os novos estilos
 import * as S from "./contact.css";
 
-// ========================================================================
-// DADOS DAS PERGUNTAS - Agora fica tudo aqui, fácil de editar!
-// ========================================================================
 const faqData = [
   {
     question: "Preciso acionar a garantia de um produto. Como proceder?",
@@ -35,20 +29,13 @@ const faqData = [
 ];
 
 export function Contact() {
-  // ========================================================================
-  // LÓGICA OTIMIZADA - Um estado para controlar tudo
-  // ========================================================================
   const [openQuestion, setOpenQuestion] = useState(null);
 
   const toggleQuestion = (index) => {
-    // Se a pergunta clicada já estiver aberta, fecha. Senão, abre a nova.
     setOpenQuestion(openQuestion === index ? null : index);
   };
 
   return (
-    // ========================================================================
-    // JSX LIMPO E SEMÂNTICO
-    // ========================================================================
     <S.PageContainer>
       <S.PageHeader>
         <h1>Fale Conosco & FAQ</h1>

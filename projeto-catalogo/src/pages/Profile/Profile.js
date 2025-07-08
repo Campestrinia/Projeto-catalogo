@@ -1,14 +1,12 @@
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import {
-  // Ícones do Modal de Endereço
   FaRoad,
   FaCompass,
   FaPlus,
   FaMapMarkerAlt,
   FaCity,
   FaMap,
-  // Ícones do Menu Lateral
   FaUser,
   FaMapMarkedAlt,
   FaShoppingBag,
@@ -16,12 +14,11 @@ import {
   FaCreditCard,
   FaTrashAlt,
   FaCalendarAlt,
-  FaLock
+  FaLock,
 } from "react-icons/fa";
 import { LoginContext } from "../../context/Lcontext";
 import { useNavigate } from "react-router-dom";
 import {
-  // Componentes do novo layout
   ProfilePageLayout,
   SidebarNav,
   SidebarHeader,
@@ -29,14 +26,12 @@ import {
   NavItem,
   SidebarFooter,
   ContentPanel,
-  // Componentes de conteúdo reutilizados
   Title,
   Cards,
   InfoItem,
   Button,
   ProductImage,
   StyledLink,
-  // Componentes do Modal
   InputStyled,
   InputWithIcon,
   LeftIconWrapper,
@@ -78,7 +73,6 @@ export function Profile() {
   const [validade, setValidade] = useState("");
   const [cvv, setCvv] = useState("");
   const [enviandoCartao, setEnviandoCartao] = useState(false);
-
 
   const navigate = useNavigate();
 
@@ -176,26 +170,25 @@ export function Profile() {
   // Funções do Modal de cartao
   const closeModalCartao = () => {
     setModalCartao(false);
-    setNumeroCartao('')
-    setNomeTitular('')
-    setValidade('')
-    setCvv('')
-    setEnviandoCartao(false)
+    setNumeroCartao("");
+    setNomeTitular("");
+    setValidade("");
+    setCvv("");
+    setEnviandoCartao(false);
   };
 
   const excluirEndereco = async (id) => {
     try {
-
       const response = await axios.delete(`${apiBackEnd}/api/endereco/${id}`, {
         headers: { Authorization: `Bearer ${user.token}` },
-      })
-      console.log(response.data)
+      });
+      console.log(response.data);
       // Atualiza lista local após exclusão
-      setEnderecos(prev => prev.filter(end => end.id !== id));
-      message.success('Endereço excluido com sucesso!')
+      setEnderecos((prev) => prev.filter((end) => end.id !== id));
+      message.success("Endereço excluido com sucesso!");
     } catch (error) {
-      message.error('Erro ao excluir endereço')
-      console.log(error)
+      message.error("Erro ao excluir endereço");
+      console.log(error);
     }
   };
   const handleCEPChange = async (e) => {
@@ -281,7 +274,6 @@ export function Profile() {
       //     },
       //   }
       // );
-
       // if (response.data.message === "Success") {
       //   fetchEnderecos();
       //   closeModalEndereco();
@@ -329,20 +321,32 @@ export function Profile() {
                     <FaTrashAlt
                       onClick={() => excluirEndereco(addr.id)}
                       style={{
-                        position: 'absolute',
-                        top: '10px',
-                        right: '10px',
-                        color: 'red',
-                        cursor: 'pointer'
+                        position: "absolute",
+                        top: "10px",
+                        right: "10px",
+                        color: "red",
+                        cursor: "pointer",
                       }}
                     />
 
-                    <p><strong>Endereço {idx + 1}</strong></p>
-                    <p><strong>CEP:</strong> {addr.CEP}</p>
-                    <p><strong>Rua:</strong> {addr.rua}, {addr.numero}</p>
-                    <p><strong>Complemento:</strong> {addr.complemento}</p>
-                    <p><strong>Bairro:</strong> {addr.bairro}</p>
-                    <p><strong>Cidade:</strong> {addr.cidade} - {addr.estado}</p>
+                    <p>
+                      <strong>Endereço {idx + 1}</strong>
+                    </p>
+                    <p>
+                      <strong>CEP:</strong> {addr.CEP}
+                    </p>
+                    <p>
+                      <strong>Rua:</strong> {addr.rua}, {addr.numero}
+                    </p>
+                    <p>
+                      <strong>Complemento:</strong> {addr.complemento}
+                    </p>
+                    <p>
+                      <strong>Bairro:</strong> {addr.bairro}
+                    </p>
+                    <p>
+                      <strong>Cidade:</strong> {addr.cidade} - {addr.estado}
+                    </p>
                   </InfoItem>
                 ))
               ) : (
@@ -446,7 +450,13 @@ export function Profile() {
                 <p>Nenhum cartão cadastrado.</p>
               )}
             </Cards>
-            <Button onClick={() => { setModalCartao(true) }}>Cadastrar Cartão</Button>
+            <Button
+              onClick={() => {
+                setModalCartao(true);
+              }}
+            >
+              Cadastrar Cartão
+            </Button>
           </>
         );
       default:
@@ -689,7 +699,6 @@ export function Profile() {
           </Button>
         </form>
       </Modal>
-
     </>
   );
 }

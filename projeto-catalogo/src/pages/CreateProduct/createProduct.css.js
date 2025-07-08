@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
-// 🎨 Paleta de cores "Herói"
 const bgColor = "#1e222a";
 const cardColor = "#2c3340";
 const textColor = "#f2f4f9";
-const primary = "#00a8ff"; // Azul principal para destaque
+const primary = "#00a8ff";
 
 const ContainerDad = styled.div`
   margin: 0;

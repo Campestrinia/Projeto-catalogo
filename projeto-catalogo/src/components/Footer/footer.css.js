@@ -1,8 +1,5 @@
-// no seu arquivo /components/Footer/footer.css.js
-
 import styled from "styled-components";
 
-// O container principal do footer. Usamos a tag semântica <footer>
 export const FooterWrapper = styled.footer`
   background-color: var(--cor-superficie); /* Cor de fundo consistente */
   color: var(--cor-texto-secundario);

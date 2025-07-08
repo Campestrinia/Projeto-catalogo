@@ -1,9 +1,4 @@
-// no seu arquivo /pages/About/About.css.js
-
 import styled from "styled-components";
-
-// ... (o resto do seu arquivo, como AboutContainer, Section, etc., continua igual)
-// Vou omitir as partes que não mudam para ser mais breve.
 
 export const AboutContainer = styled.div`
   padding: 40px 5%;
@@ -39,9 +34,6 @@ export const RightColumn = styled.div`
   }
 `;
 
-// ========================================================================
-// A MUDANÇA ESTÁ AQUI
-// ========================================================================
 export const LightCard = styled.div`
   background: #f2f4f9;
   border-radius: 12px;
@@ -82,7 +74,6 @@ export const Text = styled.p`
   text-align: justify;
 `;
 
-// ... (O resto do arquivo, como ValuesGrid e ValueCard, continua igual)
 export const ValuesGrid = styled.div`
   display: flex;
   flex-wrap: wrap;

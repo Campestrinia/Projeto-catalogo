@@ -1,10 +1,6 @@
-// Em: /pages/Home/home.css.js
-
 import { createGlobalStyle, styled } from "styled-components";
+import { Link } from "react-router-dom";
 
-// ========================================================================
-// ESTILO GLOBAL - Com a sua paleta de cores original adaptada
-// ========================================================================
 export const GlobalStyle = createGlobalStyle`
   :root {
     /* Paleta de cores baseada no seu background original */
@@ -41,10 +37,8 @@ export const MainContainer = styled.main`
   width: 100%;
 `;
 
-// Seção HERO (Banner principal)
 export const HeroSection = styled.section`
   height: 50vh;
-  /* ATUALIZADO: O texto no placeholder da imagem agora é HardwareHerói */
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
     url("https://placehold.co/1920x1080/222731/e0e0e0?text=HardwareHerói");
   background-size: cover;
@@ -78,5 +72,51 @@ export const CtaButton = styled.a`
   &:hover {
     background-color: #0088cc;
     transform: scale(1.05);
+  }
+`;
+
+export const SectionTitle = styled.h2`
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 40px;
+  color: var(--cor-texto);
+`;
+
+export const CategoriesSection = styled.section`
+  padding: 60px 20px;
+  background-color: var(--cor-superficie);
+`;
+
+export const CategoryGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+`;
+
+export const CategoryCard = styled(Link)`
+  background-color: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--cor-texto-secundario);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+
+  i {
+    font-size: 40px;
+    color: var(--cor-primaria);
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: var(--cor-primaria);
   }
 `;

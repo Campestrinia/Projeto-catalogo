@@ -9,10 +9,6 @@ const textColor = "#f2f4f9";
 const primary = "#00a8ff";
 const danger = "#e74c3c";
 
-// ======================================
-// DEFINIÇÃO DOS COMPONENTES DE LAYOUT
-// ======================================
-
 const ProfilePageLayout = styled.div`
   display: flex;
   gap: 24px;
@@ -153,7 +149,7 @@ const Cards = styled.div`
 `;
 
 const InfoItem = styled.div`
-position: relative;
+  position: relative;
   background-color: ${bgColor};
   border-radius: 8px;
   padding: 12px;

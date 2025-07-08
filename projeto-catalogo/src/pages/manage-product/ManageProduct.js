@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import {
   ContainerDad,
   Container,
   Imagi,
-  ContainerSon,
-  About,
-  Button,
-  ImagemProduct,
-  Itens,
+  FormContainer,
+  FormGroup,
+  Label,
   Input,
   Select,
-  ContainerButton,
+  ButtonContainer,
+  Button,
+  ImagePreviewContainer,
+  FileInputLabel,
+  FileInput,
 } from "./manegeProduct.css";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { message, Modal } from "antd";
+import { LoginContext } from "../../context/Lcontext";
 
 export function ManageProduct() {
   const apiUrl = process.env.REACT_APP_API_URL;
@@ -21,6 +25,10 @@ export function ManageProduct() {
   const navigate = useNavigate();
   const location = useLocation();
   const previousPage = location.state?.from || "/";
+
+  // 3. OBTENDO O USUÁRIO DO CONTEXTO
+  const { user } = useContext(LoginContext);
+
   const [formData, setFormData] = useState({
     nome: "",
     preco: "",
@@ -32,84 +40,54 @@ export function ManageProduct() {
   const [categorias, setCategorias] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-  const [ifImage, setIfImage] = useState(false);
-  const [categoriaSelecionada, setCategoriaSelecionada] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/api/product/${id}`);
-        setFormData({
-          id: response.data.id,
-          idCategoria: response.data.idCategoria,
-          idUsuario: response.data.idUsuario,
-          nome: response.data.nome,
-          quantidade: response.data.quantidade,
-          imagem: response.data.imagem,
-          preco: response.data.preco,
-          descricao: response.data.descricao,
-        });
-        console.log(response.data);
-        setCategoriaSelecionada(response.data.idCategoria);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
-    fetchProducts();
-  }, [id, apiUrl]);
+    // Se não houver usuário, não permitir acesso à página
+    if (!user) {
+      message.error("Você precisa estar logado para editar um produto.");
+      navigate("/login");
+      return;
+    }
 
-  useEffect(() => {
-    const fetchCategori = async () => {
+    const fetchInitialData = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/api/categoria`);
-        console.log(response.data);
-        setCategorias(response.data);
+        const [productResponse, categoriesResponse] = await Promise.all([
+          axios.get(`${apiUrl}/api/product/${id}`),
+          axios.get(`${apiUrl}/api/categoria`),
+        ]);
+
+        // Verifica se o usuário logado é o dono do produto
+        if (user.id !== productResponse.data.idUsuario) {
+          message.error("Você não tem permissão para editar este produto.");
+          navigate("/");
+          return;
+        }
+
+        const productData = productResponse.data;
+        setFormData(productData);
+        setCategorias(categoriesResponse.data);
+        setImagePreview(`${apiUrl}/images/${productData.imagem}`);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Erro ao buscar dados iniciais:", error);
+        message.error("Não foi possível carregar os dados para edição.");
+      } finally {
+        setLoading(false);
       }
     };
-    fetchCategori();
-  }, [categoriaSelecionada, apiUrl]);
+    fetchInitialData();
+  }, [id, apiUrl, user, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setImageFile(file);
-    setIfImage(true);
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImagePreview(reader.result);
-    };
     if (file) {
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleChangeCategori = (e) => {
-    const { name, value } = e.target;
-    setCategoriaSelecionada(value);
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const DeleteProduct = async () => {
-    try {
-      console.log(id);
-      navigate("/");
-      const response = await axios.delete(`${apiUrl}/api/product/${id}`);
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error deleting product:", error);
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
@@ -117,144 +95,156 @@ export function ManageProduct() {
     navigate(previousPage);
   };
 
+  const DeleteProduct = () => {
+    Modal.confirm({
+      title: "Você tem certeza que deseja deletar este produto?",
+      content: "Esta ação não poderá ser desfeita.",
+      okText: "Sim, deletar",
+      okType: "danger",
+      cancelText: "Cancelar",
+      onOk: async () => {
+        try {
+          // 4. ADICIONADO O HEADER DE AUTORIZAÇÃO
+          await axios.delete(`${apiUrl}/api/product/${id}`, {
+            headers: { Authorization: `Bearer ${user.token}` },
+          });
+          message.success("Produto deletado com sucesso!");
+          navigate("/");
+        } catch (error) {
+          console.error("Erro ao deletar produto:", error);
+          message.error("Falha ao deletar o produto.");
+        }
+      },
+    });
+  };
+
   const finish = async (e) => {
     e.preventDefault();
-
-    const formDataWithImage = new FormData();
-
-    if (imageFile) {
-      formDataWithImage.append("imagem", imageFile);
-    }
-    formDataWithImage.append("idCategoria", categoriaSelecionada);
-    formDataWithImage.append("idUsuario", formData.idUsuario);
-    formDataWithImage.append("nome", formData.nome);
-    formDataWithImage.append("quantidade", formData.quantidade);
-    formDataWithImage.append("preco", formData.preco);
-    formDataWithImage.append("descricao", formData.descricao);
     try {
-      console.log(ifImage);
-      if (ifImage) {
-        const response = await axios.put(
-          `${apiUrl}/api/product/${id}`,
-          formDataWithImage
-        );
-        console.log(response.data);
-      } else if (!ifImage) {
-        console.log(!ifImage);
-        const response = await axios.put(
-          `${apiUrl}/api/productNoImage/${id}`,
-          formData
-        );
-        console.log(response.data);
+      if (imageFile) {
+        const formDataWithImage = new FormData();
+        formDataWithImage.append("imagem", imageFile);
+        Object.keys(formData).forEach((key) => {
+          if (key !== "imagem") {
+            formDataWithImage.append(key, formData[key]);
+          }
+        });
+        // 5. ADICIONADO O HEADER DE AUTORIZAÇÃO
+        await axios.put(`${apiUrl}/api/product/${id}`, formDataWithImage, {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+      } else {
+        // 6. ADICIONADO O HEADER DE AUTORIZAÇÃO
+        await axios.put(`${apiUrl}/api/productNoImage/${id}`, formData, {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
       }
-
+      message.success("Produto atualizado com sucesso!");
       navigate(previousPage);
     } catch (error) {
-      console.error("Error updating product:", error);
+      console.error("Erro ao atualizar produto:", error);
+      message.error("Falha ao atualizar o produto. Verifique os dados.");
     }
   };
 
+  if (loading) {
+    return (
+      <ContainerDad>
+        <h1>Carregando...</h1>
+      </ContainerDad>
+    );
+  }
+
   return (
-    <>
+    <ContainerDad>
       <form onSubmit={finish}>
-        <ContainerDad>
-          <h1>Editando produto</h1>
-          <Container>
-            <ImagemProduct>
-              <Imagi
-                src={
-                  imagePreview ||
-                  `${apiUrl}/images/${formData.imagem || "Não encontrado"}`
-                }
-                alt={formData.imagem}
+        <h1>Editando produto</h1>
+        <Container>
+          <ImagePreviewContainer>
+            <Imagi src={imagePreview} alt="Pré-visualização do produto" />
+            <FileInputLabel htmlFor="file-upload">Trocar Imagem</FileInputLabel>
+            <FileInput
+              id="file-upload"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
+          </ImagePreviewContainer>
+          <FormContainer>
+            <FormGroup>
+              <Label>Nome:</Label>
+              <Input
+                type="text"
+                name="nome"
+                value={formData.nome}
+                onChange={handleChange}
+                required
               />
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
+            </FormGroup>
+            <FormGroup>
+              <Label>Preço:</Label>
+              <Input
+                type="number"
+                name="preco"
+                value={formData.preco}
+                onChange={handleChange}
+                required
+                step="0.01"
               />
-            </ImagemProduct>
-            <ContainerSon>
-              <About>
-                <Itens>
-                  <label>
-                    Nome:
-                    <Input
-                      type="text"
-                      name="nome"
-                      value={formData.nome}
-                      onChange={handleChange}
-                      required={true}
-                    />
-                  </label>
-                </Itens>
-                <Itens>
-                  <label>
-                    Preço:
-                    <Input
-                      type="text"
-                      name="preco"
-                      value={formData.preco}
-                      onChange={handleChange}
-                      required={true}
-                    />
-                  </label>
-                </Itens>
-                <Itens>
-                  <label>
-                    Descrição:
-                    <Input
-                      type="text"
-                      name="descricao"
-                      value={formData.descricao}
-                      onChange={handleChange}
-                      required={true}
-                    />
-                  </label>
-                </Itens>
-                <Itens>
-                  <label>
-                    Quantidade:
-                    <Input
-                      type="text"
-                      name="quantidade"
-                      value={formData.quantidade}
-                      onChange={handleChange}
-                      required={true}
-                    />
-                  </label>
-                </Itens>
-                <Itens>
-                  <label>
-                    Categoria:
-                    <Select
-                      name="idCategoria"
-                      value={categoriaSelecionada}
-                      onChange={handleChangeCategori}
-                      required={true}
-                    >
-                      {categorias.map((categoria) => (
-                        <option key={categoria.id} value={categoria.id}>
-                          {categoria.nome}
-                        </option>
-                      ))}
-                    </Select>
-                  </label>
-                </Itens>
-              </About>
-              <ContainerButton>
-                <Button type="submit">Atualizar produto</Button>
-                <Button type="button" onClick={DeleteProduct}>
-                  Deletar produto
-                </Button>
-                <Button type="button" onClick={Back}>
-                  Cancelar
-                </Button>
-              </ContainerButton>
-            </ContainerSon>
-          </Container>
-        </ContainerDad>
+            </FormGroup>
+            <FormGroup>
+              <Label>Descrição:</Label>
+              <Input
+                as="textarea"
+                rows="4"
+                name="descricao"
+                value={formData.descricao}
+                onChange={handleChange}
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label>Quantidade:</Label>
+              <Input
+                type="number"
+                name="quantidade"
+                value={formData.quantidade}
+                onChange={handleChange}
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label>Categoria:</Label>
+              <Select
+                name="idCategoria"
+                value={formData.idCategoria}
+                onChange={handleChange}
+                required
+              >
+                <option value="" disabled>
+                  Selecione uma categoria
+                </option>
+                {categorias.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.nome}
+                  </option>
+                ))}
+              </Select>
+            </FormGroup>
+            <ButtonContainer>
+              <Button type="submit" primary>
+                Atualizar produto
+              </Button>
+              <Button type="button" danger onClick={DeleteProduct}>
+                Deletar produto
+              </Button>
+              <Button type="button" onClick={Back}>
+                Cancelar
+              </Button>
+            </ButtonContainer>
+          </FormContainer>
+        </Container>
       </form>
-    </>
+    </ContainerDad>
   );
 }

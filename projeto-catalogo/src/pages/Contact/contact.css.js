@@ -1,16 +1,12 @@
-// no seu arquivo /pages/Contact/contact.css.js
-
 import styled from "styled-components";
 import { FaChevronDown } from "react-icons/fa";
 
-// Container principal da página
 export const PageContainer = styled.div`
   max-width: 900px;
   margin: 0 auto;
   padding: 40px 20px;
 `;
 
-// Cabeçalho da página
 export const PageHeader = styled.div`
   text-align: center;
   margin-bottom: 50px;
@@ -68,7 +64,6 @@ export const FaqSection = styled.section`
   width: 100%;
 `;
 
-// Cada item individual do Acordeão (pergunta + resposta)
 export const AccordionItem = styled.div`
   background: var(--cor-superficie);
   border-radius: 8px;

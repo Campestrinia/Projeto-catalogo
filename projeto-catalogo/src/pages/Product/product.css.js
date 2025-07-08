@@ -1,222 +1,177 @@
 import styled from "styled-components";
 
-// Paleta de cores
-const bgColor = "#222731";
-const textColor = "#f2f4f9";
-const accent = "#3a3f4b";
-
 const ContainerDad = styled.div`
-  margin: 0;
-  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${bgColor};
-  color: ${textColor};
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
   min-height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 40px 20px;
 
   h1 {
     font-size: 36px;
     font-weight: bold;
-    position: relative;
     text-align: center;
+    margin-bottom: 40px;
+  }
 
-    &::after {
-      content: "";
-      display: block;
-      width: 100%;
-      height: 3px;
-      background-color: ${textColor};
-      border-radius: 2px;
-    }
+  h3 {
+    font-size: 24px;
+    margin-top: 50px;
+    margin-bottom: 20px;
   }
 `;
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 30px;
+  width: 100%;
+  max-width: 1200px;
+`;
+
+const ImagamProduct = styled.div`
+  flex-shrink: 0;
+`;
+
+const Imagi = styled.img`
+  width: 400px;
+  height: 400px;
+  border-radius: 16px;
+  object-fit: cover;
+  background-color: var(--cor-superficie);
 `;
 
 const ContainerSon = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 20px;
-  padding: 24px;
-  border: 1px solid ${accent};
-  border-radius: 16px;
-  background-color: ${accent};
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-  }
+  max-width: 600px;
 `;
 
-const Imagi = styled.img`
-  width: 360px;
-  height: 360px;
-  margin: 10px auto;
-  border-radius: 12px;
-  object-fit: cover;
+const ContainerButtonAndAbout = styled.div`
+  display: flex;
+  gap: 20px;
 `;
 
 const About = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 20px;
+  gap: 15px;
   padding: 24px;
-  width: 420px;
-  border: 1px solid ${accent};
   border-radius: 16px;
-  background-color: ${textColor};
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  flex-grow: 1;
+
+  h3,
+  h4,
+  h5 {
+    margin: 0;
+    color: var(--cor-texto);
+  }
 
   h3 {
-    color: ${bgColor};
+    font-size: 28px;
   }
 
   h4 {
-    color: ${bgColor};
+    font-weight: normal;
+    line-height: 1.5;
   }
 
   h5 {
-    color: ${bgColor};
+    font-size: 14px;
+    color: var(--cor-texto-secundario);
   }
 `;
 
+const ContainerButton = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+`;
+
 const Button = styled.button`
-  margin: 12px;
   padding: 12px 24px;
-  background-color: ${textColor};
-  color: ${bgColor};
-  border: none;
-  border-radius: 10px;
+  width: 150px;
   font-weight: bold;
+  font-size: 16px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
+  border: 2px solid var(--cor-primaria);
+
+  // Estilo primário (com fundo) e secundário (vazado)
+  background-color: ${(props) =>
+    props.primary ? "var(--cor-primaria)" : "transparent"};
+  color: ${(props) => (props.primary ? "#fff" : "var(--cor-primaria)")};
 
   &:hover {
-    background-color: #e0e0e0;
-    transform: scale(1.03);
+    background-color: ${(props) =>
+      props.primary ? "#0088cc" : "var(--cor-primaria)"};
+    color: #fff;
+    transform: scale(1.05);
   }
 `;
 
 const HeartIcon = styled.div`
-  font-size: 24px;
-  color: ${textColor};
+  font-size: 32px;
+  color: var(--cor-texto);
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.2s, color 0.2s;
 
   &:hover {
     transform: scale(1.1);
+    color: var(--cor-primaria);
   }
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 8px;
-`;
-
-const ContainerButton = styled.div`
-  margin: 10px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const ImagamProduct = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 12px;
-`;
-
-const ContainerButtonAndAbout = styled.div`
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  flex-wrap: wrap;
 `;
 
 const ContainerSemelhantes = styled.div`
   display: flex;
-  width: 73%;
-  margin: 10px 10px;
+  width: 100%;
+  max-width: 1200px;
   overflow-x: auto;
-  background-color: ${accent};
-  border-radius: 16px;
-  padding: 16px;
-  gap: 12px;
-  height: 205px;
+  gap: 16px;
+  padding-bottom: 15px; // Evita que a scrollbar corte a sombra
 `;
 
 const Card = styled.div`
-  background-color: ${textColor};
-  width: 7vw;
-  height: 180px;
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  width: 200px;
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  scroll-snap-align: start;
   border-radius: 16px;
-  padding: 12px;
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
   transition: transform 0.2s;
+  overflow: hidden;
 
   &:hover {
-    transform: scale(1.05);
+    transform: translateY(-5px);
+    border-color: var(--cor-primaria);
   }
 `;
 
 const Image = styled.img`
   width: 100%;
-  height: 100px;
-  object-fit: contain;
-  border-radius: 10px;
-`;
-
-const NavButton = styled.button`
-  position: absolute;
-  top: 85%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.4);
-  color: ${textColor};
-  border: none;
-  padding: 8px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  z-index: 10;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: rgba(60, 60, 60, 0.7);
-  }
-`;
-
-const ButtonLeft = styled(NavButton)`
-  left: 5%;
-`;
-
-const ButtonRight = styled(NavButton)`
-  right: 5%;
+  height: 180px;
+  object-fit: cover;
 `;
 
 const AboutSemelhantes = styled.div`
-  color: ${bgColor};
-  font-weight: bold;
+  padding: 12px;
   font-size: 14px;
   text-align: center;
-  margin-top: 8px;
-  text-decoration: none;
-  cursor: pointer;
+  color: var(--cor-texto);
 
-  &:hover {
-    text-decoration: underline;
+  // Para que o preço e nome fiquem em linhas separadas
+  &:first-of-type {
+    font-weight: bold;
+    font-size: 16px;
   }
 `;
 
@@ -234,7 +189,5 @@ export {
   ContainerSemelhantes,
   Card,
   Image,
-  ButtonLeft,
-  ButtonRight,
   AboutSemelhantes,
 };

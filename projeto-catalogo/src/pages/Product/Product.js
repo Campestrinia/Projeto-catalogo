@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import {
   ContainerDad,
@@ -18,15 +18,13 @@ import {
 } from "./product.css";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { LoginContext } from "../../context/Lcontext.js";
-import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
-
+import { useParams, useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { message } from "antd";
 
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
-  height: 140px;
 `;
 
 export function Product() {
@@ -34,41 +32,30 @@ export function Product() {
   const { user } = useContext(LoginContext);
   const { id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
-  const containerRef = useRef(null);
 
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState(null);
   const [productsSemelhante, setProductsSemelhante] = useState([]);
   const [usuario, setUsuario] = useState({});
   const [categoria, setCategoria] = useState({});
   const [favoritado, setFavoritado] = useState(false);
-  // const [searchTerm, setSearchTerm] = useState("");
 
   const navigateToManageProduct = () => {
-    navigate(`/manage-product/${id}`, { state: { from: location.pathname } });
+    navigate(`/manage-product/${id}`);
   };
+
   const favorito = async (idUsuario, idProduct, idUsuarioProduct) => {
     try {
-      console.log(user);
       if (user && Object.keys(user).length > 0) {
-        console.log(user.id);
-        console.log(idUsuarioProduct);
-        console.log(Number(user.id) === Number(idUsuarioProduct));
         if (Number(user.id) === Number(idUsuarioProduct)) {
           message.error("Você não pode favoritar um produto vendido por você!");
           return;
         }
-
         const response = await axios.post(
           `${apiUrl}/api/favorito/`,
           { idUsuario, idProduct },
-          {
-            headers: { Authorization: `Bearer ${user.token}` },
-          }
+          { headers: { Authorization: `Bearer ${user.token}` } }
         );
-        console.log(response.data);
         setFavoritado(true);
-        console.log("Produto favoritado:", response.data);
         message.success("Produto favoritado com sucesso!");
       } else {
         navigate("/login");
@@ -77,246 +64,213 @@ export function Product() {
       console.error("Erro ao favoritar produto:", error);
     }
   };
-  const adicionarAoCarrinho = async (comprador, product_id, quantidade, preco, nomeVendedor) => {
-    console.log(comprador, product_id, quantidade, preco, nomeVendedor)
-    try {
-      const carrinhoRes = await axios.get(
-        `${apiUrl}/api/carrinho/${user.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
-      console.log(carrinhoRes.data);
-      const itemJaExiste = carrinhoRes.data.some(item => item.product_id === product_id);
 
-      if (user === nomeVendedor) {
-        message.error('Você não pode adicionar um produto seu ao carrinho!')
-        return
+  const adicionarAoCarrinho = async (
+    comprador,
+    product_id,
+    quantidade,
+    preco,
+    nomeVendedor
+  ) => {
+    try {
+      if (!user) {
+        navigate("/login");
+        return;
+      }
+      const carrinhoRes = await axios.get(`${apiUrl}/api/carrinho/${user.id}`, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+      const itemJaExiste = carrinhoRes.data.some(
+        (item) => item.product_id === product_id
+      );
+
+      if (user.id === product.idUsuario) {
+        message.error("Você não pode adicionar um produto seu ao carrinho!");
+        return;
       } else if (itemJaExiste) {
-        message.error('Esse item ja está no seu carrinho!')
+        message.error("Esse item já está no seu carrinho!");
       } else {
-        console.log(user)
-        console.log(user.token)
         const response = await axios.post(
           `${apiUrl}/api/carrinho`,
           {
             idUsuario: comprador,
             product_id: product_id,
             quantidade: quantidade,
-            preco_unitario: preco
+            preco_unitario: preco,
           },
-          {
-            headers: { Authorization: `Bearer ${user.token}` },
-          }
+          { headers: { Authorization: `Bearer ${user.token}` } }
         );
-        console.log(response.data)
-        message.success("item adicionado ao carrinho")
-
+        message.success("Item adicionado ao carrinho");
       }
     } catch (error) {
-      message.error("erro ao adicionar item ao carrinho")
-      console.error("Erro ao favoritar produto:", error);
+      message.error("Erro ao adicionar item ao carrinho");
+      console.error("Erro ao adicionar ao carrinho:", error);
     }
   };
+
   const desfavorito = async () => {
     try {
-      const favorito = await axios.get(`${apiUrl}/api/favorito/${user.id}`, {
+      const favoritoRes = await axios.get(`${apiUrl}/api/favorito/${user.id}`, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
-      const itemFavorito = favorito.data.find(
+      const itemFavorito = favoritoRes.data.find(
         (item) => Number(item.idProduct) === Number(id)
       );
-      console.log(itemFavorito);
-      const response = await axios.delete(
-        `${apiUrl}/api/favorito/${itemFavorito.id}`,
-        {
+      if (itemFavorito) {
+        await axios.delete(`${apiUrl}/api/favorito/${itemFavorito.id}`, {
           headers: { Authorization: `Bearer ${user.token}` },
-        }
-      );
-      setFavoritado(false);
-      console.log(response.data);
-      message.success("Produto desfavoritado com sucesso!");
+        });
+        setFavoritado(false);
+        message.success("Produto desfavoritado com sucesso!");
+      }
     } catch (error) {
-      console.error("Erro ao favoritar produto:", error);
+      console.error("Erro ao desfavoritar produto:", error);
     }
   };
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchProductData = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/api/product/${id}`);
-        setProduct(response.data);
+        // Busca produto
+        const productResponse = await axios.get(`${apiUrl}/api/product/${id}`);
+        const productData = productResponse.data;
+        setProduct(productData);
+
+        if (productData.idUsuario) {
+          const usuarioResponse = await axios.get(
+            `${apiUrl}/api/usuario/${productData.idUsuario}`
+          );
+          setUsuario(usuarioResponse.data);
+        }
+        if (productData.idCategoria) {
+          const categoriaResponse = await axios.get(
+            `${apiUrl}/api/categoria/${productData.idCategoria}`
+          );
+          setCategoria(categoriaResponse.data);
+
+          const semelhanteResponse = await axios.get(
+            `${apiUrl}/api/productWithCategoria/${productData.idCategoria}`
+          );
+          const filteredSemelhantes = semelhanteResponse.data.filter(
+            (item) => item.id !== productData.id
+          );
+          setProductsSemelhante(filteredSemelhantes.slice(-8));
+        }
       } catch (error) {
-        console.error("Error fetching product or image:", error);
+        console.error("Erro ao carregar dados do produto:", error);
+        setProduct({});
       }
     };
-    fetchProduct();
+    fetchProductData();
   }, [id, apiUrl]);
 
   useEffect(() => {
-    const fetchfavorite = async () => {
-      try {
-        if (!user) {
-          setFavoritado(false);
-        } else {
-          console.log("User:", user);
-          if (!user || !user.id || !user.token) return;
-
-          const favorito = await axios.get(
+    if (user && product) {
+      const fetchFavoriteStatus = async () => {
+        try {
+          const favoritoRes = await axios.get(
             `${apiUrl}/api/favorito/${user.id}`,
             {
               headers: { Authorization: `Bearer ${user.token}` },
             }
           );
-          const isFavorito = favorito.data.some(
+          const isFavorito = favoritoRes.data.some(
             (item) => Number(item.idProduct) === Number(id)
           );
-          console.log(isFavorito);
           setFavoritado(isFavorito);
-        }
-      } catch (error) {
-        console.error("Error fetching product or image:", error);
-      }
-    };
-    fetchfavorite();
-  }, [user, apiUrl, id]);
-
-  useEffect(() => {
-    if (product.idCategoria) {
-      const fetchProduct = async () => {
-        try {
-          const response = await axios.get(
-            `${apiUrl}/api/productWithCategoria/${product.idCategoria}`
-          );
-          const products = response.data.filter(
-            (item) => item.id !== product.id
-          );
-          setProductsSemelhante(products.slice(-8));
-          console.log(response.data);
         } catch (error) {
-          console.error("Error fetching product or image:", error);
+          console.error("Erro ao buscar status de favorito:", error);
         }
       };
-      fetchProduct();
+      fetchFavoriteStatus();
     }
-  }, [product.idCategoria, product.id, apiUrl]);
+  }, [user, product, id, apiUrl]);
 
-  useEffect(() => {
-    if (product.idCategoria) {
-      const fetchProductsCategoria = async () => {
-        try {
-          const response = await axios.get(
-            `${apiUrl}/api/categoria/${product.idCategoria}`
-          );
-          setCategoria(response.data);
-        } catch (error) {
-          console.error("Error fetching product or image:", error);
-        }
-      };
-      fetchProductsCategoria();
-    }
-  }, [product.idCategoria, apiUrl]);
-
-  useEffect(() => {
-    if (product.idUsuario) {
-      const fetchUsuario = async () => {
-        try {
-          const response = await axios.get(
-            `${apiUrl}/api/usuario/${product.idUsuario}`
-          );
-          setUsuario(response.data);
-        } catch (error) {
-          console.error("Error fetching product or image:", error);
-        }
-      };
-      fetchUsuario();
-    }
-
-
+  if (!product || !user) {
+    return (
+      <ContainerDad>
+        <h1>Carregando...</h1>
+      </ContainerDad>
+    );
   }
-    , [product.idUsuario, apiUrl]);
+  if (!product.id) {
+    return (
+      <ContainerDad>
+        <h1>Produto não encontrado</h1>
+      </ContainerDad>
+    );
+  }
 
   return (
-    user && product && (
-      <>
-        <ContainerDad>
-          <h1>{product.nome || "Não encontrado"}</h1>
-          <Container>
-            <ImagamProduct>
-              <Imagi
-                src={`${apiUrl}/images/${product.imagem}`}
-                alt={product.nome || "Imagem não encontrada"}
-              />
-            </ImagamProduct>
-            <ContainerSon>
-              <ContainerButtonAndAbout>
-                <About>
-                  <h3>Preço: {product.preco || "Não encontrado"}</h3>
-                  <h3>Categoria: {categoria.nome || "Não encontrado"}</h3>
-                  <h4>Descrição: {product.descricao || "Não encontrado"}</h4>
-                  <h5>Vendido por {usuario.nome || "Não encontrado"}</h5>
-                </About>
-                <ContainerButton>
-                  <HeartIcon>
-                    {favoritado ? (
-                      <FaHeart onClick={() => desfavorito()} />
-                    ) : (
-                      <FaRegHeart
-                        onClick={() =>
-                          favorito(user.id, product.id, product.idUsuario)
-                        }
-                      />
-                    )}
-                  </HeartIcon>
-
-                  {usuario.id === user.id && (
-                    <Button onClick={navigateToManageProduct}>Editar</Button>
-                  )}
-
-                  <Button>Comprar</Button>
-
-                  <Button
+    <ContainerDad>
+      <h1>{product.nome}</h1>
+      <Container>
+        <ImagamProduct>
+          <Imagi
+            src={`${apiUrl}/images/${product.imagem}`}
+            alt={product.nome}
+          />
+        </ImagamProduct>
+        <ContainerSon>
+          <ContainerButtonAndAbout>
+            <About>
+              <h3>Preço: R$ {product.preco}</h3>
+              <h3>Categoria: {categoria.nome || "..."}</h3>
+              <h4>Descrição: {product.descricao}</h4>
+              <h5>Vendido por {usuario.nome || "Usuário não encontrado"}</h5>
+            </About>
+            <ContainerButton>
+              <HeartIcon>
+                {favoritado ? (
+                  <FaHeart color="var(--cor-primaria)" onClick={desfavorito} />
+                ) : (
+                  <FaRegHeart
                     onClick={() =>
-                      adicionarAoCarrinho(user.id, product.id, 1, product.preco, usuario.nome)
+                      favorito(user.id, product.id, product.idUsuario)
                     }
-                  >
-                    Carrinho
-                  </Button>
-                </ContainerButton>
-              </ContainerButtonAndAbout>
-            </ContainerSon>
-          </Container>
-          <h3>Produtos semelhantes:</h3>
-          <ContainerSemelhantes ref={containerRef}>
-            {/* <ButtonLeft onClick={() => scroll(-containerRef.current.offsetWidth)}>◀</ButtonLeft> */}
-            {productsSemelhante ? (
-              productsSemelhante.map((productSemelhante) => (
-                <React.Fragment key={productSemelhante.id}>
-                  <StyledLink to={`/product/${productSemelhante.id}`}>
-                    <Card>
-                      <Image
-                        src={`${apiUrl}/images/${productSemelhante.imagem}`}
-                        alt={productSemelhante.nome}
-                      />
-                      <AboutSemelhantes>
-                        R${productSemelhante.preco}
-                      </AboutSemelhantes>
-                      <AboutSemelhantes>
-                        {productSemelhante.nome}
-                      </AboutSemelhantes>
-                    </Card>
-                  </StyledLink>
-                </React.Fragment>
-              ))
-            ) : (
-              <h3>Carregando....</h3>
-            )}
-            {/* <ButtonRight onClick={() => scroll(containerRef.current.offsetWidth)}>▶</ButtonRight> */}
-          </ContainerSemelhantes>
-        </ContainerDad>
-      </>
-    )
+                  />
+                )}
+              </HeartIcon>
+              {usuario.id === user.id && (
+                <Button onClick={navigateToManageProduct}>Editar</Button>
+              )}
+              <Button primary>Comprar</Button>
+              <Button
+                onClick={() =>
+                  adicionarAoCarrinho(
+                    user.id,
+                    product.id,
+                    1,
+                    product.preco,
+                    usuario.nome
+                  )
+                }
+              >
+                Carrinho
+              </Button>
+            </ContainerButton>
+          </ContainerButtonAndAbout>
+        </ContainerSon>
+      </Container>
+      <h3>Produtos semelhantes:</h3>
+      <ContainerSemelhantes>
+        {productsSemelhante.map((productSemelhante) => (
+          <StyledLink
+            key={productSemelhante.id}
+            to={`/product/${productSemelhante.id}`}
+            onClick={() => window.scrollTo(0, 0)}
+          >
+            <Card>
+              <Image
+                src={`${apiUrl}/images/${productSemelhante.imagem}`}
+                alt={productSemelhante.nome}
+              />
+              <AboutSemelhantes>R$ {productSemelhante.preco}</AboutSemelhantes>
+              <AboutSemelhantes>{productSemelhante.nome}</AboutSemelhantes>
+            </Card>
+          </StyledLink>
+        ))}
+      </ContainerSemelhantes>
+    </ContainerDad>
   );
 }

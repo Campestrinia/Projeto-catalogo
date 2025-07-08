@@ -1,13 +1,9 @@
-// no seu arquivo /components/Footer/Footer.js
-
 import React from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { GoMail } from "react-icons/go";
 
-// Importando os novos e ajustados componentes de estilo
 import * as S from "./footer.css";
 
-// --- Dados para os links, para um código mais limpo ---
 const productLinks = [
   { href: "/productWithCategoria/1", text: "Processadores" },
   { href: "/productWithCategoria/2", text: "Fontes de Alimentação" },
