@@ -24,5 +24,6 @@ router.delete("/product/:id", jwt.validateJWT, produtoController.deleteProduct);
 router.get("/product/:id", produtoController.getAllproductById);
 router.get("/product/usuario/:idUsuario", jwt.validateJWT, produtoController.getAllproductByUsuario);
 router.get("/productWithCategoria/:idCategoria", produtoController.getAllproductByCategoria);
+router.get("/productSearch", produtoController.searchProductByName);
 
 module.exports = router;
