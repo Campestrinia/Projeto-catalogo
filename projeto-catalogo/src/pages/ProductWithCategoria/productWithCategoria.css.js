@@ -1,21 +1,12 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-// --- Paleta de Cores "HardwareHerói" ---
-const bgColor = "#1e222a";
-const cardColor = "#2c3340";
-const textColor = "#f2f4f9";
-const primary = "#00a8ff";
-const accent = "#4a5568";
-
-// --- Layout Principal da Página ---
-
 export const PageContainer = styled.div`
   display: flex;
   gap: 24px;
   padding: 24px;
-  background-color: ${bgColor};
-  color: ${textColor};
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
   min-height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
@@ -27,12 +18,12 @@ export const PageContainer = styled.div`
 // --- Barra de Filtros (Sidebar) ---
 
 export const FilterSidebar = styled.aside`
-  flex: 0 0 250px; /* Largura fixa para a barra lateral */
-  background-color: ${cardColor};
+  flex: 0 0 250px;
+  background-color: var(--cor-superficie);
   border-radius: 16px;
   padding: 24px;
-  height: fit-content; /* Faz a altura se ajustar ao conteúdo */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  height: fit-content;
+  border: 1px solid var(--cor-borda);
 
   @media (max-width: 768px) {
     width: 100%;
@@ -41,13 +32,13 @@ export const FilterSidebar = styled.aside`
 `;
 
 export const FilterGroup = styled.div`
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 
   label {
     display: block;
     margin-bottom: 8px;
     font-size: 0.9rem;
-    color: #bdc3c7;
+    color: var(--cor-texto-secundario);
   }
 `;
 
@@ -55,23 +46,23 @@ export const FilterTitle = styled.h3`
   font-size: 1.2rem;
   margin: 0 0 16px 0;
   padding-bottom: 8px;
-  border-bottom: 1px solid ${accent};
-  color: ${primary};
+  border-bottom: 1px solid var(--cor-borda);
+  color: var(--cor-primaria);
 `;
 
 export const FilterInput = styled.input`
   width: 100%;
   padding: 10px;
-  background-color: ${bgColor};
-  border: 1px solid ${accent};
+  background-color: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
   border-radius: 8px;
-  color: ${textColor};
+  color: var(--cor-texto);
   font-size: 1rem;
   margin-bottom: 10px;
 
   &:focus {
     outline: none;
-    border-color: ${primary};
+    border-color: var(--cor-primaria);
   }
 
   /* Remove as setas do input de número */
@@ -85,6 +76,28 @@ export const FilterInput = styled.input`
   }
 `;
 
+// --- Link de Categoria (Novo Componente) ---
+export const CategoryLink = styled(Link)`
+  display: block;
+  text-decoration: none;
+  padding: 8px 12px;
+  margin-bottom: 4px;
+  border-radius: 6px;
+  transition: background-color 0.2s, color 0.2s;
+
+  // Estilo condicional para o link ativo, baseado na prop 'isactive'
+  background-color: ${(props) =>
+    props.isactive ? "var(--cor-primaria)" : "transparent"};
+  color: ${(props) =>
+    props.isactive ? "#fff" : "var(--cor-texto-secundario)"};
+  font-weight: ${(props) => (props.isactive ? "bold" : "normal")};
+
+  &:hover {
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+  }
+`;
+
 // --- Grade de Produtos ---
 
 export const ProductGridContainer = styled.main`
@@ -94,7 +107,7 @@ export const ProductGridContainer = styled.main`
     font-size: 2rem;
     margin: 0 0 24px 0;
     padding-bottom: 16px;
-    border-bottom: 1px solid ${cardColor};
+    border-bottom: 1px solid var(--cor-borda);
   }
 `;
 
@@ -107,19 +120,20 @@ export const ProductGrid = styled.div`
 // --- Card de Produto ---
 
 export const ProductCard = styled(Link)`
-  background-color: ${cardColor};
+  background-color: var(--cor-superficie);
   border-radius: 16px;
   overflow: hidden;
   text-decoration: none;
-  color: ${textColor};
+  color: var(--cor-texto);
   display: flex;
   flex-direction: column;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--cor-borda);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    border-color: var(--cor-primaria);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   }
 `;
 
@@ -146,7 +160,7 @@ export const ProductName = styled.h4`
 export const ProductPrice = styled.p`
   font-size: 1.25rem;
   font-weight: bold;
-  color: ${primary};
+  color: var(--cor-primaria);
   margin: 0;
   align-self: flex-end;
 `;

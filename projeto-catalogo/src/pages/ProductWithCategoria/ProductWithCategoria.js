@@ -2,13 +2,12 @@ import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-// Importando os componentes, incluindo o novo FilterInput
 import {
   PageContainer,
   FilterSidebar,
   FilterGroup,
   FilterTitle,
-  FilterInput, // <-- NOVO
+  FilterInput,
   ProductGridContainer,
   ProductGrid,
   ProductCard,
@@ -16,35 +15,36 @@ import {
   ProductInfo,
   ProductName,
   ProductPrice,
+  CategoryLink,
 } from "./productWithCategoria.css";
 
 export function ProductWithCategoria() {
   const apiUrl = process.env.REACT_APP_API_URL;
   const { id } = useParams();
 
-  // --- ESTADOS ATUALIZADOS ---
-  const [allProducts, setAllProducts] = useState([]); // Guarda a lista original da API
-  const [filteredProducts, setFilteredProducts] = useState([]); // Guarda a lista que será exibida
+  const [allProducts, setAllProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [categoryName, setCategoryName] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-
-  // --- NOVOS ESTADOS PARA O FILTRO DE PREÇO ---
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
+  const [allCategories, setAllCategories] = useState([]);
 
-  // 1. useEffect para buscar os dados da API APENAS UMA VEZ
   useEffect(() => {
     const fetchCategoryProducts = async () => {
       setIsLoading(true);
       try {
-        const [productsResponse, categoryResponse] = await Promise.all([
-          axios.get(`${apiUrl}/api/productWithCategoria/${id}`),
-          axios.get(`${apiUrl}/api/categoria/${id}`),
-        ]);
+        const [productsResponse, categoryResponse, allCategoriesResponse] =
+          await Promise.all([
+            axios.get(`${apiUrl}/api/productWithCategoria/${id}`),
+            axios.get(`${apiUrl}/api/categoria/${id}`),
+            axios.get(`${apiUrl}/api/categoria`),
+          ]);
 
-        setAllProducts(productsResponse.data); // Guarda a lista completa
-        setFilteredProducts(productsResponse.data); // Exibe a lista completa inicialmente
+        setAllProducts(productsResponse.data);
+        setFilteredProducts(productsResponse.data);
         setCategoryName(categoryResponse.data.nome);
+        setAllCategories(allCategoriesResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -55,20 +55,14 @@ export function ProductWithCategoria() {
     fetchCategoryProducts();
   }, [id, apiUrl]);
 
-  // 2. NOVO useEffect para aplicar o filtro sempre que os preços ou a lista principal mudarem
   useEffect(() => {
     let products = [...allProducts];
-
-    // Filtra por preço mínimo
     if (minPrice) {
       products = products.filter((p) => p.preco >= parseFloat(minPrice));
     }
-
-    // Filtra por preço máximo
     if (maxPrice) {
       products = products.filter((p) => p.preco <= parseFloat(maxPrice));
     }
-
     setFilteredProducts(products);
   }, [minPrice, maxPrice, allProducts]);
 
@@ -110,14 +104,25 @@ export function ProductWithCategoria() {
             onChange={(e) => setMaxPrice(e.target.value)}
           />
         </FilterGroup>
-        {/* Você pode adicionar outros grupos de filtro aqui no futuro */}
+
+        <FilterGroup>
+          <FilterTitle>Categorias</FilterTitle>
+          {allCategories.map((cat) => (
+            <CategoryLink
+              key={cat.id}
+              to={`/productWithCategoria/${cat.id}`}
+              isactive={cat.id.toString() === id}
+            >
+              {cat.nome}
+            </CategoryLink>
+          ))}
+        </FilterGroup>
       </FilterSidebar>
 
       <ProductGridContainer>
         <h1>{categoryName || "Produtos"}</h1>
         {filteredProducts.length > 0 ? (
           <ProductGrid>
-            {/* Mapeando a lista FILTRADA */}
             {filteredProducts.map((product) => (
               <ProductCard to={`/product/${product.id}`} key={product.id}>
                 <ProductImage
