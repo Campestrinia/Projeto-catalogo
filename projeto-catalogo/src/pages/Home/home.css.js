@@ -120,3 +120,70 @@ export const CategoryCard = styled(Link)`
     border-color: var(--cor-primaria);
   }
 `;
+
+// --- Grade de Produtos ---
+
+export const ProductGridContainer = styled.main`
+  flex: 1; /* Ocupa o restante do espaço */
+
+  h1 {
+    font-size: 2rem;
+    margin: 0 0 24px 0;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--cor-borda);
+  }
+`;
+
+export const ProductGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+`;
+
+// --- Card de Produto ---
+
+export const ProductCard = styled(Link)`
+  background-color: var(--cor-superficie);
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--cor-texto);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--cor-borda);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: var(--cor-primaria);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+`;
+
+export const ProductImage = styled.img`
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+`;
+
+export const ProductInfo = styled.div`
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+`;
+
+export const ProductName = styled.h4`
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  flex-grow: 1;
+`;
+
+export const ProductPrice = styled.p`
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--cor-primaria);
+  margin: 0;
+  align-self: flex-end;
+`;

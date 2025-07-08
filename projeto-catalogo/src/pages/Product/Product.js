@@ -55,6 +55,7 @@ export function Product() {
           { idUsuario, idProduct },
           { headers: { Authorization: `Bearer ${user.token}` } }
         );
+        console.log(response)
         setFavoritado(true);
         message.success("Produto favoritado com sucesso!");
       } else {
@@ -100,6 +101,7 @@ export function Product() {
           },
           { headers: { Authorization: `Bearer ${user.token}` } }
         );
+        console.log(response)
         message.success("Item adicionado ao carrinho");
       }
     } catch (error) {

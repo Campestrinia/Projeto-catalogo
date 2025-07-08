@@ -9,12 +9,13 @@ async function createCarrinho(idUsuario, product_id, quantidade, preco_unitario)
   await connection.end();
 }
 
-//Deleta o item do carrinho
-async function deleteCarrinho(id) {
+// Deleta todos os itens do carrinho de um usuário
+async function deleteCarrinho(idUsuario) {
   const connection = await mysql.createConnection(databaseConfig);
-  await connection.query("DELETE FROM cart WHERE id = ?", [id]);
+  await connection.query("DELETE FROM cart WHERE idUsuario = ?", [idUsuario]);
   await connection.end();
 }
+
 
 //Modifica a quantidade do produto ao carrinho
 async function updateQuantidadeCart(quantidade, idUsuario, product_id) {

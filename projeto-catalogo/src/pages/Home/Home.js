@@ -18,7 +18,7 @@ import {
 } from "react-icons/fa";
 
 import { Highlight } from "../../components/Highlight/Highlights";
-
+import { Pagination } from 'antd';
 import {
   GlobalStyle,
   MainContainer,
@@ -28,6 +28,13 @@ import {
   CategoriesSection,
   CategoryGrid,
   CategoryCard,
+  ProductGridContainer,
+  ProductGrid,
+  ProductCard,
+  ProductImage,
+  ProductInfo,
+  ProductName,
+  ProductPrice,
 } from "./home.css";
 
 const getCategoryIcon = (categoryName) => {
@@ -57,6 +64,7 @@ const getCategoryIcon = (categoryName) => {
 
 export function Home() {
   const [products, setProducts] = useState([]);
+  const [ProductsByOrdem, setProductsByOrde] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const apiBackEnd = process.env.REACT_APP_API_URL;
@@ -70,6 +78,7 @@ export function Home() {
           axios.get(`${apiBackEnd}/api/categoria`),
         ]);
         setProducts(productsResponse.data);
+        setProductsByOrde(productsResponse.data);
         setCategories(categoriesResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -114,6 +123,34 @@ export function Home() {
           <Highlight products={products.slice(-18)} />
         </div>
       </MainContainer>
+      <ProductGridContainer>
+        {ProductsByOrdem.length > 0 ? (
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{ minWidth: '80%' }}>
+
+              <ProductGrid>
+                {ProductsByOrdem.map((product) => (
+                  <ProductCard to={`/product/${product.id}`} key={product.id}>
+                    <ProductImage
+                      src={`${apiBackEnd}/images/${product.imagem}`}
+                      alt={product.nome}
+                    />
+                    <ProductInfo>
+                      <ProductName>{product.nome}</ProductName>
+                      <ProductPrice>
+                        R$ {Number(product.preco).toFixed(2).replace(".", ",")}
+                      </ProductPrice>
+                    </ProductInfo>
+                  </ProductCard>
+                ))}
+              </ProductGrid>
+              <Pagination style={{ justifyContent: 'center', marginTop: '15px', marginBottom: '15px' }} defaultCurrent={6} total={ProductsByOrdem.length} />
+            </div>
+          </div>
+        ) : (
+          <p>Nenhum produto encontrado.</p>
+        )}
+      </ProductGridContainer>
     </>
   );
 }

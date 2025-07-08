@@ -1,0 +1,20 @@
+.my-custom-search .ant-input-search-button.ant-btn-color-primary {
+    background-color: black !important;
+    border-color: black !important;
+    color: white !important;
+}
+
+.my-custom-search .ant-input-search-button.ant-btn-color-primary:hover,
+.my-custom-search .ant-input-search-button.ant-btn-color-primary:focus {
+    background-color: #222 !important;
+    border-color: #222 !important;
+    color: white !important;
+}
+
+.my-custom-search .ant-input:hover,
+.my-custom-search .ant-input:focus,
+.my-custom-search .ant-input-focused {
+    border-color: black !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2) !important;
+    outline: none;
+}

@@ -10,11 +10,10 @@ import { FaUserAlt, FaShoppingCart } from "react-icons/fa";
 import imagem from "../imagem.png";
 import { useContext } from "react";
 import { LoginContext } from "../../context/Lcontext";
-import { SearchContext } from "../../context/SearchContext";
+import { SearchBar } from './../SearchBar/SearchBar'
 
 export function NavBar() {
   const { user } = useContext(LoginContext);
-  const { searchTerm, setSearchTerm } = useContext(SearchContext);
 
   return (
     <Container>
@@ -23,19 +22,7 @@ export function NavBar() {
           <Foto src={imagem} alt="logo" />
         </NoLink>
       </Logo>
-      <input
-        type="text"
-        placeholder="Buscar produtos..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        style={{
-          padding: "5px 10px",
-          borderRadius: "5px",
-          border: "1px solid #ccc",
-          marginLeft: "10px",
-          width: "35rem"
-        }}
-      />
+      <SearchBar />
       <Menu>
         <NoLink href="/">Início</NoLink>
         <NoLink href="/about">Sobre nós</NoLink>

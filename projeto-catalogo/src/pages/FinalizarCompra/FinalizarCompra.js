@@ -34,6 +34,7 @@ export function FinalizarCompra() {
     const [metodoPagamento, setMetodoPagamento] = useState(""); // novo estado
     const [enderecos, setEnderecos] = useState([]);
     const [enderecoSelecionado, setEnderecoSelecionado] = useState(null);
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     // Estados para o formulário do Modal
     const [modalEndereco, setModalEndereco] = useState(false);
@@ -146,11 +147,84 @@ export function FinalizarCompra() {
     }, [user, apiBackEnd]);
 
 
-    const confirmarPedido = () => {
-        // Simular finalização (você pode integrar com API depois)
-        alert("Pedido finalizado com sucesso!");
-        navigate("/"); // ou para uma página de confirmação
+    const confirmarPedido = async (
+        userID,
+        enderecoSelecionado,
+        productsInCart,
+        total,
+        metado,
+        cartaoSelecionado,
+        token,
+        navigate // se estiver usando react-router
+    ) => {
+        // Validações
+        if (!enderecoSelecionado) {
+            message.error("Adicione um endereço!");
+            return;
+        }
+
+        if (!metado) {
+            message.error("Selecione uma forma de pagamento!");
+            return;
+        }
+
+        if (metado === "Cartão de Crédito" && !cartaoSelecionado) {
+            message.error("Adicione um cartão!");
+            return;
+        }
+
+        if (!userID || !productsInCart?.length || !total) {
+            message.error("Informações faltando!");
+            return;
+        }
+
+        try {
+            // 1. Criar pedido
+            const responsePedido = await axios.post(
+                `${apiUrl}/api/ordens`,
+                {
+                    idUsuario: userID,
+                    idEndereco: enderecoSelecionado.id,
+                    status: "Criado",
+                    total: total,
+                    payment_method: metado,
+                },
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+
+            const idOrdem = responsePedido.data.id;
+            console.log(idOrdem)
+            // 2. Adicionar produtos à ordem
+            // 1. Adicionar todos os produtos à ordem
+            await Promise.all(
+                productsInCart.map((produto) =>
+                    axios.post(`${apiUrl}/api/ordem-produto`, {
+                        idOrdem: idOrdem,
+                        idProduto: produto.id
+                    }, {
+                        headers: { Authorization: `Bearer ${token}` },
+                    })
+                )
+            );
+
+            // 2. Limpar o carrinho após adicionar os produtos
+            await axios.delete(`${apiUrl}/api/carrinho/${userID}`, {
+                headers: { Authorization: `Bearer ${user.token}` },
+            });
+
+            message.success("Pedido finalizado com sucesso!");
+            navigate("/"); // Redirecionar após o pedido
+
+            return { message: "Pedido e produtos adicionados com sucesso", idOrdem };
+        } catch (error) {
+            console.error("Erro ao criar pedido completo:", error);
+            message.error("Erro ao finalizar o pedido. Tente novamente.");
+            throw error;
+        }
     };
+
 
     const calcularFrete = async (endereco) => {
         setEnderecoSelecionado(endereco);
@@ -621,7 +695,18 @@ export function FinalizarCompra() {
                         </button>
 
                         <button
-                            onClick={confirmarPedido}
+                            onClick={() => confirmarPedido(
+                                user.id,
+                                enderecoSelecionado,
+                                productsInCart,
+                                total,
+                                metodoPagamento,
+                                cartaoSelecionado,
+                                user.token,
+                                navigate
+                            )}
+
+                            navigate
                             style={{
                                 padding: '10px 20px',
                                 background: '#4CAF50',

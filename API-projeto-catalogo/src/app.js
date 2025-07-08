@@ -8,6 +8,8 @@ const favoritoRouter = require("./router/favoritoRouter.js")
 const cors = require('cors')
 const path = require('path');
 const carrinhoRouter = require("./router/carrinhoRouter.js");
+const ordemPedidoRoutes = require("./router/ordermPedidoRouter.js");
+const ordemProdutoRouter = require("./router/ordemProdutoRouter.js");
 
 const PORT = 3001;
 
@@ -27,6 +29,8 @@ app.use("/api", enderecoRouter);
 app.use("/api", categoriaRouter);
 app.use("/api", favoritoRouter);
 app.use("/api", carrinhoRouter);
+app.use("/api", ordemPedidoRoutes);
+app.use("/api", ordemProdutoRouter);
 
 app.listen(PORT, () => {
   console.log("servidor online");

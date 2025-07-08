@@ -27,6 +27,7 @@ import { SearchProvider } from "./context/SearchContext";
 function App() {
   return (
     <LoginProvider>
+
       <SearchProvider>
         <Router>
           <GlobalStyle />
